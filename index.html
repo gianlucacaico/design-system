@@ -1,0 +1,215 @@
+---
+layout: default
+---
+{%- comment -%}
+  The docs page. Tokens come from _data/kit.yml (the same file that builds gc.css).
+  The playground shows the demo page in a frame and restyles it live (see assets/docs.js).
+{%- endcomment -%}
+{%- assign kit = site.data.kit %}
+{%- assign colour_count = 0 %}
+{%- for g in kit.colours %}{% assign colour_count = colour_count | plus: g.tokens.size %}{% endfor %}
+{%- assign token_count = colour_count | plus: kit.art.size | plus: kit.type.size | plus: kit.radii.size | plus: kit.motion.size | plus: kit.layout.size %}
+<main id="docs">
+  <section class="page-head sys-head">
+    <div class="mesh" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow">Design system</p>
+      <h1 class="page-title">The system behind gianlucacaico.com</h1>
+      <p class="lede">A mini design system reverse engineered from gianlucacaico.com: the tokens and components every page is built from. Try them live in the playground, then use them anywhere with one line.</p>
+      <div class="cta-row">
+        <a class="btn-pill" href="#playground">Open the playground</a>
+        <a class="btn-ghost" href="#use">Use it anywhere</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bordered" id="foundations">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Foundations</h2>
+        <span class="count">{{ token_count }} tokens</span>
+      </div>
+      <p class="section-intro">The decisions every component inherits. Change one and everything built on it follows.</p>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Colour</h3>
+        <p class="sys-note">Ink and violet carry the brand, coral partners violet in gradients, and the neutrals do the rest.</p>
+        {%- for group in kit.colours %}
+        <p class="sys-k">{{ group.group }}</p>
+        <ul class="sys-swatches">
+          {%- for t in group.tokens %}
+          <li class="sys-swatch"><span class="sys-chip" style="background:{{ t.value }}"></span><span class="sys-name">--{{ t.name }}</span><span class="sys-val">{{ t.value }}</span><span class="sys-use">{{ t.use }}</span></li>
+          {%- endfor %}
+        </ul>
+        {%- endfor %}
+        <p class="sys-k">Card art</p>
+        <ul class="sys-swatches art">
+          {%- for t in kit.art %}
+          <li class="sys-swatch"><span class="sys-chip" style="background:{{ t.value }}"></span><span class="sys-name">--{{ t.name }}</span><span class="sys-use">{{ t.use }}</span></li>
+          {%- endfor %}
+        </ul>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Type</h3>
+        <p class="sys-note">Inter throughout, from 400 to 800. Headings are 700 with tight tracking, body copy is 16px with generous line height.</p>
+        <ul class="sys-type">
+          {%- for t in kit.type %}
+          <li><p class="sys-sample" style="font-size:{{ t.size }}; font-weight:{{ t.weight }};{% if t.weight == 700 %} letter-spacing:-0.025em;{% endif %}{% if t.colour %} color:var(--{{ t.colour }});{% endif %}">{{ t.sample }}</p><p class="sys-spec"><b>{{ t.label }}</b>{{ t.spec }}</p></li>
+          {%- endfor %}
+        </ul>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Shape</h3>
+        <p class="sys-note">Pills for anything you tap, softer corners as things get bigger. In the kit, every radius scales with one setting.</p>
+        <ul class="sys-radii">
+          {%- for t in kit.radii %}
+          <li><span class="sys-shape" style="border-radius:{{ t.value }}"></span><span class="sys-name">--{{ t.name }}</span><span class="sys-val">{{ t.value }}</span><span class="sys-use">{{ t.use }}</span></li>
+          {%- endfor %}
+        </ul>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Material and motion</h3>
+        <p class="sys-note">Liquid glass for anything that floats, and a spring for anything that moves. Tap the control to feel it.</p>
+        <div class="sys-material">
+          <div class="sys-stage">
+            <div class="glass sys-pane"><strong>Liquid glass</strong><span>Blur, saturation and a light inner edge</span></div>
+            <div class="seg glass" role="group" aria-label="Motion demo">
+              <span class="lens" aria-hidden="true"></span>
+              <button type="button" aria-pressed="true">Home</button>
+              <button type="button" aria-pressed="false">Work</button>
+              <button type="button" aria-pressed="false">Blog</button>
+            </div>
+          </div>
+          <dl class="ds-pairs sys-pairs">
+            {%- for t in kit.motion %}
+            <div><dt>--{{ t.name }}</dt><dd>{{ t.use }}<code>{{ t.value }}</code></dd></div>
+            {%- endfor %}
+          </dl>
+        </div>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Layout</h3>
+        <p class="sys-note">One page width, one reading measure and five breakpoints, from wide screens down to phones.</p>
+        <dl class="ds-pairs sys-pairs">
+          {%- for t in kit.layout %}
+          <div><dt>--{{ t.name }}</dt><dd>{{ t.use }}<code>{{ t.value }}</code></dd></div>
+          {%- endfor %}
+          {%- for t in kit.breakpoints %}
+          <div><dt>Under {{ t.value }}</dt><dd>{{ t.use }}</dd></div>
+          {%- endfor %}
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bordered" id="playground">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Playground</h2>
+        <span class="count">Rendered by the kit alone</span>
+      </div>
+      <p class="section-intro">Every component here comes from the kit's single stylesheet and nothing else. Pick an accent, flip the surface, change the roundness or the frost, and watch them all follow.</p>
+      <div class="sys-play">
+        <aside class="sys-controls glass" aria-label="Playground settings">
+          <div class="sys-ctl sys-ctl-accent">
+            <span class="sys-k" id="ctl-accent">Accent</span>
+            <div class="sys-dots" role="group" aria-labelledby="ctl-accent" data-set="accent">
+              <button type="button" class="sys-dot" style="--c:#635BFF" data-value="#635BFF" data-deep="#4B44D6" aria-pressed="true" aria-label="Violet"></button>
+              <button type="button" class="sys-dot" style="--c:#EB5D76" data-value="#EB5D76" aria-pressed="false" aria-label="Coral"></button>
+              <button type="button" class="sys-dot" style="--c:#0E97AA" data-value="#0E97AA" aria-pressed="false" aria-label="Cyan"></button>
+              <button type="button" class="sys-dot" style="--c:#D9822B" data-value="#D9822B" aria-pressed="false" aria-label="Amber"></button>
+              <button type="button" class="sys-dot" style="--c:#0A2540" data-value="#0A2540" aria-pressed="false" aria-label="Ink"></button>
+              <label class="sys-dot sys-pick"><input type="color" value="#635BFF" aria-label="Choose any accent colour"></label>
+            </div>
+          </div>
+          <div class="sys-ctl">
+            <span class="sys-k" id="ctl-partner">Gradient partner</span>
+            <div class="sys-dots" role="group" aria-labelledby="ctl-partner" data-set="partner">
+              <button type="button" class="sys-dot" style="--c:#EB5D76" data-value="#EB5D76" aria-pressed="true" aria-label="Coral"></button>
+              <button type="button" class="sys-dot" style="--c:#FFA659" data-value="#FFA659" aria-pressed="false" aria-label="Amber"></button>
+              <button type="button" class="sys-dot" style="--c:#0E97AA" data-value="#0E97AA" aria-pressed="false" aria-label="Cyan"></button>
+              <button type="button" class="sys-dot" style="--c:#635BFF" data-value="#635BFF" aria-pressed="false" aria-label="Violet"></button>
+            </div>
+          </div>
+          <div class="sys-ctl">
+            <span class="sys-k" id="ctl-surface">Surface</span>
+            <div class="seg glass sys-surface" role="group" aria-labelledby="ctl-surface">
+              <span class="lens" aria-hidden="true"></span>
+              <button type="button" aria-pressed="true" data-value="light">Light</button>
+              <button type="button" aria-pressed="false" data-value="dark">Dark</button>
+            </div>
+          </div>
+          <div class="sys-ctl">
+            <label class="sys-k" for="ctl-round">Roundness <output>100%</output></label>
+            <input class="sys-range" id="ctl-round" type="range" min="0" max="150" step="5" value="100">
+          </div>
+          <div class="sys-ctl">
+            <label class="sys-k" for="ctl-glass">Glass frost <output>20px</output></label>
+            <input class="sys-range" id="ctl-glass" type="range" min="0" max="40" step="1" value="20">
+          </div>
+          <button type="button" class="btn-ghost sys-reset">Reset</button>
+        </aside>
+        <div class="sys-canvas">
+          <iframe class="sys-frame" src="{{ '/demo' | relative_url }}" title="Kit components, rendered by the kit alone"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bordered" id="use">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Use it anywhere</h2>
+        <span class="count">One line</span>
+      </div>
+      <p class="section-intro">The kit is one stylesheet hosted here. Paste it into any page or prototype that takes HTML and it picks up this look.</p>
+      <ol class="sys-steps">
+        <li>
+          <span class="ds-n">1</span>
+          <div>
+            <h3>Add the look</h3>
+            <p>Paste this line inside the page's head. Colours, type, buttons, glass and cards come with it.</p>
+            <div class="sys-code"><pre id="code-css">&lt;link rel="stylesheet" href="{{ '/gc.css' | absolute_url }}"&gt;</pre><button type="button" class="btn-ghost sys-copy" data-copy="code-css">Copy</button></div>
+          </div>
+        </li>
+        <li>
+          <span class="ds-n">2</span>
+          <div>
+            <h3>Add the interactions</h3>
+            <p>Only needed for segmented controls. Everything else works without it.</p>
+            <div class="sys-code"><pre id="code-js">&lt;script src="{{ '/gc.js' | absolute_url }}" defer&gt;&lt;/script&gt;</pre><button type="button" class="btn-ghost sys-copy" data-copy="code-js">Copy</button></div>
+          </div>
+        </li>
+        <li>
+          <span class="ds-n">3</span>
+          <div>
+            <h3>Make it yours</h3>
+            <p>Your playground settings, ready to paste after the first line.</p>
+            <div class="sys-code"><pre id="code-theme">&lt;style&gt;
+  :root{
+    --accent:#635BFF;
+    --accent-deep:#4B44D6;
+    --accent-2:#EB5D76;
+    --round:1;
+    --glass-blur:20px;
+  }
+&lt;/style&gt;</pre><button type="button" class="btn-ghost sys-copy" data-copy="code-theme">Copy</button></div>
+          </div>
+        </li>
+        <li>
+          <span class="ds-n">4</span>
+          <div>
+            <h3>Copy the components you need</h3>
+            <p>Every component in the demo has its code underneath, ready to paste.</p>
+            <div class="cta-row sys-cta"><a class="btn-pill" href="{{ '/demo' | relative_url }}">Open the demo</a></div>
+          </div>
+        </li>
+      </ol>
+      <p class="sys-note sys-poc">A proof of concept. Class names match gianlucacaico.com, and the kit is served from here, so any change to it reaches every page that uses it.</p>
+    </div>
+  </section>
+</main>

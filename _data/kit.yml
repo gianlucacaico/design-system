@@ -1,0 +1,69 @@
+# Design tokens for the kit (/kit/gc.css) and the design system page (/system).
+# Both are built from this one file, so the docs can never disagree with the kit.
+# Colour values mirror :root in assets/css/site.css: if one changes there, change it here too.
+
+colours:
+  - group: Brand
+    tokens:
+      - { name: ink, value: "#0A2540", use: "Headings, body text, dark sections" }
+      - { name: violet, value: "#635BFF", use: "Primary accent, buttons" }
+      - { name: violet-deep, value: "#4B44D6", use: "Hover, links, eyebrows" }
+      - { name: violet-wash, value: "rgba(99,91,255,0.08)", use: "Tag backgrounds" }
+      - { name: coral, value: "#EB5D76", use: "Gradient partner, flags" }
+      - { name: amber, value: "#FFA659", use: "Warm highlight, agentic lane" }
+      - { name: amber-deep, value: "#D9822B", use: "Warm accent on light" }
+      - { name: cyan, value: "#0E97AA", use: "Cool accent" }
+  - group: Neutrals
+    tokens:
+      - { name: paper, value: "#FFFFFF", use: "Page background" }
+      - { name: panel, value: "#F6F9FC", use: "Soft panels" }
+      - { name: text, value: "#0A2540", use: "Body text (same as ink)" }
+      - { name: muted, value: "#425466", use: "Secondary text" }
+      - { name: faint, value: "#8792A2", use: "Meta text" }
+      - { name: border, value: "#E3E8EF", use: "Lines and card borders" }
+  - group: On dark
+    tokens:
+      - { name: muted-on-ink, value: "#A6B4CC", use: "Secondary text on dark" }
+      - { name: border-on-ink, value: "#233A5C", use: "Borders on dark" }
+
+art:
+  - { name: art-fs, use: "Financial services", value: "radial-gradient(55% 75% at 20% 25%, rgba(99,91,255,0.95), transparent 70%), radial-gradient(50% 70% at 85% 80%, rgba(18,181,203,0.8), transparent 70%), #0A2540" }
+  - { name: art-health, use: "Health", value: "radial-gradient(55% 75% at 25% 30%, rgba(235,93,118,0.95), transparent 70%), radial-gradient(50% 70% at 85% 75%, rgba(255,166,89,0.8), transparent 70%), #3B1330" }
+  - { name: art-energy, use: "Energy", value: "radial-gradient(55% 75% at 75% 25%, rgba(255,166,89,0.95), transparent 70%), radial-gradient(50% 70% at 20% 85%, rgba(235,93,118,0.6), transparent 70%), #13233F" }
+  - { name: art-sport, use: "Sport", value: "radial-gradient(55% 75% at 25% 70%, rgba(18,181,203,0.9), transparent 70%), radial-gradient(50% 70% at 80% 20%, rgba(99,91,255,0.75), transparent 70%), #0B3B4A" }
+  - { name: art-saas, use: "SaaS", value: "radial-gradient(55% 75% at 70% 30%, rgba(99,91,255,0.9), transparent 70%), radial-gradient(50% 70% at 20% 80%, rgba(235,93,118,0.7), transparent 70%), #1B1446" }
+
+# Type: Inter, 400 to 800. Headings are 700 with tight tracking.
+type:
+  - { name: fs-display, label: "Display", size: "clamp(2.1rem, 5vw, 3.6rem)", weight: 700, spec: "Hero headline, 34 to 58px, 700", sample: "Outcome-first, in plain language" }
+  - { name: fs-h1, label: "Page title", size: "clamp(2.1rem, 4.6vw, 3.2rem)", weight: 700, spec: "Page headers, 34 to 51px, 700", sample: "Thinking on CX and delivery" }
+  - { name: fs-h2, label: "Section title", size: "1.6rem", weight: 700, spec: "Section heads, 26px, 700", sample: "Outcomes I've driven" }
+  - { name: fs-h3, label: "Card title", size: "1.12rem", weight: 700, spec: "Cards and list items, 18px, 700", sample: "Enterprise design system strategy" }
+  - { name: fs-lede, label: "Lede", size: "1.15rem", weight: 400, colour: muted, spec: "Intro paragraphs, 18px, 400, muted", sample: "Notes from the work: what holds up and what doesn't." }
+  - { name: fs-body, label: "Body", size: "1rem", weight: 400, spec: "Everything else, 16px, 400, 1.6 line height", sample: "Short paragraphs, evidence first, then the point." }
+  - { name: fs-meta, label: "Meta", size: "0.8rem", weight: 600, colour: faint, spec: "Dates, counts and labels, 13px, 600, faint", sample: "15 October 2026 · 6 min read" }
+
+# Every radius is multiplied by --round (0 is square, 1 is the site as it is).
+radii:
+  - { name: r-pill, value: "999px", use: "Buttons, tags, controls" }
+  - { name: r-xl, value: "28px", use: "Hero portrait, glass panels" }
+  - { name: r-lg, value: "20px", use: "Feature cards" }
+  - { name: r-md, value: "16px", use: "Panels and groups" }
+  - { name: r-sm, value: "12px", use: "Cards inside panels" }
+
+motion:
+  - { name: ease-spring, value: "cubic-bezier(.34,1.56,.64,1)", use: "Things that move: the glass lens, pressed nodes" }
+  - { name: ease-out, value: "cubic-bezier(.22,1,.36,1)", use: "Entrances and reveals" }
+  - { name: dur-fast, value: ".18s", use: "Hovers and colour changes" }
+  - { name: dur-lens, value: ".55s", use: "The sliding glass lens" }
+
+layout:
+  - { name: wide, value: "1120px", use: "Page width" }
+  - { name: max, value: "700px", use: "Reading measure" }
+
+breakpoints:
+  - { value: "1000px", use: "Models and panels stack" }
+  - { value: "900px", use: "Two-column grids stack" }
+  - { value: "760px", use: "Desktop nav swaps to the phone tab bar" }
+  - { value: "640px", use: "Cards go single column" }
+  - { value: "520px", use: "Stat grids go single column" }
