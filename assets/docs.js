@@ -107,4 +107,7 @@
     if (!sized){ sized = true; apply(); }
   });
   frame.addEventListener('load', apply);
+  // The demo may have loaded before this script ran (it often does on a repeat visit), so say hello now too.
+  // It answers any settings message with its height.
+  apply();
 })();
