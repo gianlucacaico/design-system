@@ -142,10 +142,10 @@ layout: default
 
       <div class="sys-block">
         <h3 class="sys-h">Project pictograms</h3>
-        <p class="sys-note">Each project's key artefact, drawn for the right side of its card at full height and cropped by the card's edges. The eye goes logo, then the pictogram's focal point, then the labels, with no frame or tile around it. The tints are under Colour, in Artwork.</p>
+        <p class="sys-note">Each project's key artefact, drawn for the right side of its card at full height and cropped by the card's edges. The eye goes from the client's name, to the pictogram's focal point, to the labels, with no frame or tile around it. The tints are under Colour, in Artwork.</p>
         <div class="sys-img-rule">
           <figure class="sys-diagram">
-            <svg viewBox="0 0 240 156" role="img" aria-label="Pictogram canvas, 240 by 156, with the logo corner and label corner kept clear and one focal point inside">
+            <svg viewBox="0 0 240 156" role="img" aria-label="Pictogram canvas, 240 by 156, with the name corner and label corner kept clear and one focal point inside">
               <defs><clipPath id="pic-clip"><rect width="240" height="156" rx="8"/></clipPath></defs>
               <g clip-path="url(#pic-clip)">
                 <rect class="d-canvas" width="240" height="156"/>
@@ -161,7 +161,7 @@ layout: default
             <figcaption>240 &times; 156, the right of the card at full height (sample pictogram)</figcaption>
           </figure>
           <ol class="sys-rules">
-            <li><b>Logo corner stays clear:</b> x under 40, y under 56.</li>
+            <li><b>Name corner stays clear:</b> x under 40, y under 56.</li>
             <li><b>Label corner stays clear:</b> x under 110, y over 112.</li>
             <li><b>One focal point, fully inside.</b> Draw big and let context run off the right, top or bottom edge, fading in from the left. A half-cut icon reads as a mistake.</li>
             <li><b>White, then one tint.</b> White for main shapes, white at 20 to 45% for secondary ones, and exactly one tint for the insight, picked to contrast with the card.</li>
@@ -171,14 +171,11 @@ layout: default
       </div>
 
       <div class="sys-block">
-        <h3 class="sys-h">Client logos</h3>
-        <p class="sys-note">On project cards, the client's logo takes the place of its written name, top left.</p>
+        <h3 class="sys-h">Client names</h3>
+        <p class="sys-note">Project cards write the client's name as text, top left, rather than showing its logo. A logo needs the client's formal permission, so the written name is the default.</p>
         <ul class="sys-rules plain">
-          <li><b>White, single colour.</b> Fill every shape white, or use a knockout where the logo's own lettering is white.</li>
-          <li><b>Sized by eye.</b> About 18px high for wide wordmarks, up to about 32px for square marks.</li>
-          <li><b>Never recolour, stretch or redraw.</b> Start from the client's own artwork.</li>
-          <li><b>The name is the alt text,</b> so screen readers still announce the client.</li>
-          <li><b>Only with permission.</b> Showing a logo needs more than naming a client. Without it, write the name.</li>
+          <li><b>Name as text.</b> White and bold, top left of the card's art, clear of the pictogram.</li>
+          <li><b>Logos only with formal permission.</b> If a client ever gives it: use the brand's own white version, never recoloured, stretched or redrawn, about 18 to 32px high, with the name as alt text.</li>
         </ul>
       </div>
     </div>

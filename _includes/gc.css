@@ -226,7 +226,8 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .work-art .big{position:absolute; left:18px; top:14px; font-size:1.7rem; font-weight:800; letter-spacing:-0.03em; color:#fff;}
 .work-art .chip-g, .post-art .chip-g{color:#fff;}
 /* Work card art, as on gianlucacaico.com: the project's pictogram fills the right side at full height and
-   runs off the edges, the client's white logo sits top left, industry and year are plain text bottom left. */
+   runs off the edges, the client's name sits top left (.big, or .big.logo for a white logo used with permission),
+   industry and year are plain text bottom left. */
 .work-art .big.logo{top:16px; line-height:0;}
 .work-art .big.logo img{display:block; width:auto; filter:drop-shadow(0 2px 10px rgba(0,0,0,0.2));}
 .work-art .work-pic{position:absolute; top:0; right:0; height:100%; width:auto; pointer-events:none;}

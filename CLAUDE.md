@@ -53,10 +53,10 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 
 The docs page's Imagery section holds the rules for the main site's drawn images, first written in gianlucacaico.github.io#10:
 - **Post artwork:** one illustration per post (banner, list thumbnail, featured card, link preview), 1200x630, important parts in the middle 80% of the width, bottom-left corner clear for the Featured label, only words and figures from the post.
-- **Project pictograms:** 240x156, the right of the work card at full height, cropped by the card. Logo corner (x under 40, y under 56) and label corner (x under 110, y over 112) clear, one focal point fully inside, white plus exactly one tint (`--tint-cyan`, `--tint-coral`, `--tint-amber`), no words or figures.
-- **Client logos:** white single colour, about 18 to 32px high, never recoloured, stretched or redrawn, name as alt text, only with the client's permission.
+- **Project pictograms:** 240x156, the right of the work card at full height, cropped by the card. Name corner (x under 40, y under 56) and label corner (x under 110, y over 112) clear, one focal point fully inside, white plus exactly one tint (`--tint-cyan`, `--tint-coral`, `--tint-amber`), no words or figures.
+- **Client names:** written as text, top left of the card's art. Gianluca decided against client logos without formal permission (November 2026). If a client ever gives it: the brand's own white version, never recoloured, stretched or redrawn, about 18 to 32px high, name as alt text.
 
-The main site makes the images (its `tools/art/` and `tools/art.js`); this repo holds the standard. When the main site's rules change, update the Imagery section, the Artwork colour group in `_data/kit.yml`, and the kit's `.work-art`, `.post-feature`, `.row-thumb` and `.article-hero` styles to match. The demo's samples are generic on purpose: never copy a client's pictogram or logo into this repo.
+The main site makes the images (its `tools/art/` and `tools/art.js`); this repo holds the standard. When the main site's rules change, update the Imagery section, the Artwork colour group in `_data/kit.yml`, and the kit's `.work-art`, `.post-feature`, `.row-thumb` and `.article-hero` styles to match. The demo's samples are generic on purpose: never copy a client's pictogram, name artwork or logo into this repo.
 
 ## Versions
 
