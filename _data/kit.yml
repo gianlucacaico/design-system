@@ -1,6 +1,8 @@
 # Design tokens for the kit (/kit/gc.css) and the design system page (/system).
 # Both are built from this one file, so the docs can never disagree with the kit.
 # Colour values mirror :root in assets/css/site.css: if one changes there, change it here too.
+# Groups marked "source: artwork" are used in the site's drawings (post artwork, project pictograms),
+# not in site.css. tools/drift.js checks both.
 
 colours:
   - group: Brand
@@ -25,6 +27,13 @@ colours:
     tokens:
       - { name: muted-on-ink, value: "#A6B4CC", use: "Secondary text on dark" }
       - { name: border-on-ink, value: "#233A5C", use: "Borders on dark" }
+  - group: Artwork
+    source: artwork
+    tokens:
+      - { name: cyan-bright, value: "#12B5CB", use: "Cyan inside colour fields and artwork" }
+      - { name: tint-cyan, value: "#3FD3E3", use: "Pictogram highlight on dark cards" }
+      - { name: tint-coral, value: "#FF8AA0", use: "Pictogram highlight on dark cards" }
+      - { name: tint-amber, value: "#FFB070", use: "Pictogram highlight on dark cards" }
 
 art:
   - { name: art-fs, use: "Financial services", value: "radial-gradient(55% 75% at 20% 25%, rgba(99,91,255,0.95), transparent 70%), radial-gradient(50% 70% at 85% 80%, rgba(18,181,203,0.8), transparent 70%), #0A2540" }
