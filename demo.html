@@ -370,13 +370,14 @@ description: "Every component in the GC kit, built from one stylesheet and one s
     // Inside the design system playground: take its settings, and report this page's height.
     if (document.documentElement.classList.contains('is-framed')){
       var root = document.documentElement, main = document.querySelector('main');
+      var size = function(){ parent.postMessage({type: 'gc-kit-size', height: main.getBoundingClientRect().height}, '*'); };
       window.addEventListener('message', function(e){
         var d = e.data;
         if (!d || d.type !== 'gc-kit-theme' || !d.vars) return;
         Object.keys(d.vars).forEach(function(k){ if (k.indexOf('--') === 0) root.style.setProperty(k, String(d.vars[k])); });
         if (d.surface === 'dark') root.setAttribute('data-surface', 'dark'); else root.removeAttribute('data-surface');
+        size();
       });
-      var size = function(){ parent.postMessage({type: 'gc-kit-size', height: main.getBoundingClientRect().height}, '*'); };
       if (window.ResizeObserver) new ResizeObserver(size).observe(main);
       size();
     }
