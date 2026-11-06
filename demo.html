@@ -1,0 +1,424 @@
+---
+permalink: /demo
+sitemap: false
+title: "Kit demo | Gianluca Caico"
+description: "Every component in the GC kit, built from one stylesheet and one small script."
+---
+{%- comment -%}
+  The kit demo. It loads only the kit (no site styles), so it proves the one-line
+  plug-in works on its own. The docs page (index.html) shows it in its playground.
+  Each component's code panel is filled from its live markup, so it can't go stale.
+{%- endcomment -%}
+{%- assign page_url = page.url | absolute_url -%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{ page.title }}</title>
+<meta name="description" content="{{ page.description }}">
+<link rel="canonical" href="{{ page_url }}">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Gianluca Caico">
+<meta property="og:url" content="{{ page_url }}">
+<meta property="og:title" content="{{ page.title }}">
+<meta property="og:description" content="{{ page.description }}">
+<meta property="og:image" content="{{ '/assets/og-image.jpg' | absolute_url }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ page.title }}">
+<meta name="twitter:description" content="{{ page.description }}">
+<meta name="twitter:image" content="{{ '/assets/og-image.jpg' | absolute_url }}">
+<script>if (window.self !== window.top) document.documentElement.classList.add('is-framed');</script>
+<link rel="stylesheet" href="{{ '/gc.css' | relative_url }}">
+<style>
+  /* Demo page layout only, built from the kit's own tokens */
+  .demo{padding:0 0 80px;}
+  .demo-eyebrow{margin:28px 0 12px;}
+  .spec{padding:32px 0; border-top:1px solid var(--border); scroll-margin-top:16px;}
+  .spec:first-child{border-top:0;}
+  .spec-head h2{font-size:1.15rem;}
+  .spec-head p{margin:4px 0 0; max-width:var(--max); font-size:0.92rem; color:var(--muted);}
+  .spec-stage{margin-top:16px; padding:24px; background:var(--panel); border:1px solid var(--border); border-radius:var(--r-md); display:flex; flex-direction:column; align-items:flex-start; gap:16px;}
+  .spec-stage > *{margin-top:0; margin-bottom:0; max-width:100%;}
+  .spec-stage.fill{align-items:stretch;}
+  .spec-stage.bare{padding:0; overflow:hidden; background:var(--paper);}
+  .spec-stage.on-colour{background:radial-gradient(60% 90% at 15% 25%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 70%), radial-gradient(55% 80% at 85% 75%, color-mix(in srgb, var(--accent-2) 50%, transparent), transparent 70%), var(--panel);}
+  .glass-note{margin:2px 0 0; font-size:0.85rem; color:var(--muted);}
+  .row{display:flex; flex-wrap:wrap; align-items:center; gap:12px;}
+  .surface-demo{padding:28px; border-radius:var(--r-md);}
+  .surface-demo h3{margin-top:4px; font-size:1.25rem; max-width:560px;}
+  .surface-demo p{color:var(--muted); max-width:560px;}
+  .spec-code{margin-top:10px;}
+  .spec-code summary{display:inline-flex; align-items:center; gap:6px; list-style:none; cursor:pointer; font-size:0.82rem; font-weight:700; color:var(--accent-ink);}
+  .spec-code summary::-webkit-details-marker{display:none;}
+  .spec-code summary::before{content:'+'; font-size:1.05rem; line-height:1; transition:transform .2s ease;}
+  .spec-code[open] summary::before{transform:rotate(45deg);}
+  .code-box{position:relative; margin-top:10px;}
+  .code-box pre{margin:0; padding:16px 18px; max-height:340px; overflow:auto; border-radius:var(--r-sm); background:#0A2540; color:#E6EAF2; font:0.76rem/1.6 ui-monospace, SFMono-Regular, Menlo, monospace; white-space:pre;}
+  .code-box .btn-ghost{position:absolute; top:8px; right:8px; padding:4px 12px; font-size:0.75rem;}
+  .is-framed body{background:transparent;}
+  .is-framed .demo-head{display:none;}
+  .is-framed .demo.wrap{padding:6px 24px 24px;}
+  @media (max-width:760px){
+    .spec-stage{padding:18px;}
+    .is-framed .demo.wrap{padding:0 16px 16px;}
+  }
+</style>
+</head>
+<body>
+<main id="view-kit-demo" data-view="kit-demo">
+  <header class="page-head demo-head">
+    <div class="mesh" aria-hidden="true"></div>
+    <div class="wrap">
+      <a class="back glass" href="{{ '/' | relative_url }}">&larr; Design system</a>
+      <p class="eyebrow demo-eyebrow">GC kit 0.1</p>
+      <h1 class="page-title">Component demo</h1>
+      <p class="lede">Everything on this page comes from one stylesheet and one small script. Open the code under any component to copy it into your own page.</p>
+    </div>
+  </header>
+
+  <div class="wrap demo">
+
+    <article class="spec" id="page-header">
+      <div class="spec-head">
+        <h2>Page header</h2>
+        <p>Eyebrow, headline, lede and actions over the colour mesh. One gradient word, at most.</p>
+      </div>
+      <div class="spec-stage bare">
+        <section class="page-head">
+          <div class="mesh" aria-hidden="true"></div>
+          <div class="wrap">
+            <p class="eyebrow">Eyebrow: the page or section</p>
+            <h1 class="display">Lead with the <span class="grad-word">outcome</span>, then the how</h1>
+            <p class="lede">One or two sentences on who it's for and what changes. Keep it under 30 words.</p>
+            <div class="cta-row">
+              <a class="btn-pill" href="#page-header">Primary action</a>
+              <a class="btn-ghost" href="#page-header">Secondary action</a>
+            </div>
+          </div>
+        </section>
+      </div>
+    </article>
+
+    <article class="spec" id="buttons">
+      <div class="spec-head">
+        <h2>Buttons</h2>
+        <p>Pill for the one action that matters, ghost for the rest, glass back link to go up a level.</p>
+      </div>
+      <div class="spec-stage">
+        <div class="row">
+          <a class="btn-pill" href="#buttons">Get in touch</a>
+          <a class="btn-ghost" href="#buttons">Read the blog</a>
+          <a class="back glass" href="#buttons">&larr; All posts</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="glass">
+      <div class="spec-head">
+        <h2>Liquid glass</h2>
+        <p>Frosted panels with a soft sheen, for anything that floats over colour or imagery.</p>
+      </div>
+      <div class="spec-stage on-colour">
+        <div class="glass glass-panel">
+          <strong>Glass panel</strong>
+          <p class="glass-note">Blur, saturation and a light inner edge</p>
+        </div>
+        <span class="chip-g glass">Glass chip</span>
+      </div>
+    </article>
+
+    <article class="spec" id="segmented">
+      <div class="spec-head">
+        <h2>Segmented control</h2>
+        <p>A glass filter with a sliding lens. Pair it with a status line that says what's showing.</p>
+      </div>
+      <div class="spec-stage">
+        <div>
+          <div class="seg glass" role="group" aria-label="Filter by industry">
+            <button type="button" aria-pressed="true" data-value="All">All <small>12</small></button>
+            <button type="button" aria-pressed="false" data-value="Financial services">Financial services <small>5</small></button>
+            <button type="button" aria-pressed="false" data-value="Health">Health <small>3</small></button>
+            <button type="button" aria-pressed="false" data-value="Energy">Energy <small>4</small></button>
+          </div>
+          <p class="filter-status" aria-live="polite">Showing all 12 projects</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="tags">
+      <div class="spec-head">
+        <h2>Tags and chips</h2>
+        <p>Accent tags for topics, grey tags for skills, chips for sources, badges for status.</p>
+      </div>
+      <div class="spec-stage">
+        <ul class="post-tags"><li>Agentic delivery</li><li>Experience design</li><li class="rt">6 min read</li></ul>
+        <ul class="tags"><li>Discovery</li><li>Research</li><li>Governance</li></ul>
+        <div class="chips"><span class="chip">Customer interviews</span><span class="chip">Store visit notes</span></div>
+        <div class="row"><span class="spot-tag">Spotlight</span><span class="soon">Coming soon</span></div>
+      </div>
+    </article>
+
+    <article class="spec" id="stats">
+      <div class="spec-head">
+        <h2>Stat grid</h2>
+        <p>The number first, then what moved and for whom. The figures here are placeholders.</p>
+      </div>
+      <div class="spec-stage fill">
+        <div class="record">
+          <dl><dt>3x</dt><dd>Lead with the number, then what moved</dd></dl>
+          <dl><dt>$1M+</dt><dd>Keep each claim to one checkable line</dd></dl>
+          <dl><dt>80%</dt><dd>Swap these placeholders for your evidence</dd></dl>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="work-card">
+      <div class="spec-head">
+        <h2>Work card</h2>
+        <p>Art, outcome, context and tags. The art follows the accent unless you give it its own.</p>
+      </div>
+      <div class="spec-stage fill">
+        <div class="work-grid">
+          <article class="work-card">
+            <div class="work-art"><span class="big">Brand</span><span class="chip-g glass">Industry</span><span class="chip-g glass">2026</span></div>
+            <div class="work-body">
+              <h3>Project title in a few words</h3>
+              <p class="work-outcome">The outcome in one line, number first</p>
+              <p class="sum">Two lines of context: the scope, the team and what changed for customers.</p>
+              <ul class="tags"><li>Discovery</li><li>Strategy</li></ul>
+              <a class="work-cta" href="#work-card">Request the case study &rarr;</a>
+            </div>
+          </article>
+          <article class="work-card" style="--art:var(--art-health)">
+            <div class="work-art"><span class="big">Brand</span><span class="chip-g glass">Health</span></div>
+            <div class="work-body">
+              <h3>Same card, fixed art</h3>
+              <p class="work-outcome">Set --art to any of the five art tokens</p>
+              <p class="sum">Art tokens keep their colours whatever the accent, like the industry cards on the Work page.</p>
+              <ul class="tags"><li>Design systems</li></ul>
+              <a class="work-cta" href="#work-card">Request the case study &rarr;</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="accordion">
+      <div class="spec-head">
+        <h2>Accordion card</h2>
+        <p>The headline outcome up front, the detail behind the plus. No script needed.</p>
+      </div>
+      <div class="spec-stage fill">
+        <div class="eng-grid">
+          <details class="eng">
+            <summary>
+              <span class="eng-client">Client name</span>
+              <span class="eng-meta">Industry &middot; 2025 &ndash; 26</span>
+              <span class="eng-title">What the engagement was</span>
+              <span class="eng-outcome">The outcome, in one line</span>
+            </summary>
+            <p class="eng-detail">The detail sits here: scope, approach and what happened next.</p>
+          </details>
+          <details class="eng" open>
+            <summary>
+              <span class="eng-client">Open by default</span>
+              <span class="eng-meta">Add the open attribute</span>
+              <span class="eng-title">Useful for the first or latest item</span>
+              <span class="eng-outcome">The accent border shows it's open</span>
+            </summary>
+            <p class="eng-detail">Tap the cross to close it again.</p>
+          </details>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="link-card">
+      <div class="spec-head">
+        <h2>Link card</h2>
+        <p>The whole card is the link, with a short label on top so people know where it goes.</p>
+      </div>
+      <div class="spec-stage fill">
+        <a class="next-post" href="#link-card">
+          <span class="np-k">Next article</span>
+          <span class="np-t">A title that makes a claim worth clicking</span>
+          <span class="np-m">6 November 2026 &middot; 4 min read</span>
+        </a>
+      </div>
+    </article>
+
+    <article class="spec" id="list-card">
+      <div class="spec-head">
+        <h2>List card</h2>
+        <p>Grouped items with a name, a source and a date on the right.</p>
+      </div>
+      <div class="spec-stage fill">
+        <div class="cred-group">
+          <h3>Group heading</h3>
+          <ul>
+            <li><span><span class="c-name">Item name</span><span class="c-issuer">Where it's from</span></span><span class="c-when">2026</span></li>
+            <li><span><span class="c-name">Another item</span><span class="c-issuer">Source</span></span><span class="c-when">2024 &ndash; 25</span></li>
+          </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="post-list">
+      <div class="spec-head">
+        <h2>Post list</h2>
+        <p>Date on the left, title, summary and topics on the right. Stacks on phones.</p>
+      </div>
+      <div class="spec-stage fill">
+        <div class="writing">
+          <article>
+            <time datetime="2026-11-06">6 November 2026</time>
+            <div>
+              <h3><a href="#post-list">A title that makes a claim</a></h3>
+              <p>One or two sentences that earn the click.</p>
+              <ul class="post-tags small"><li>Topic</li><li class="rt">4 min read</li></ul>
+            </div>
+          </article>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="avatars">
+      <div class="spec-head">
+        <h2>Avatars</h2>
+        <p>Initials on the brand gradient, with an optional photo on top.</p>
+      </div>
+      <div class="spec-stage">
+        <div class="row">
+          <span class="av av-xs"><b>GC</b></span>
+          <span class="av"><b>GC</b></span>
+          <span class="av av-md"><b>GC</b><img src="{{ '/assets/avatar.webp' | relative_url }}" alt=""></span>
+          <span class="av av-lg"><b>GC</b></span>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="quote">
+      <div class="spec-head">
+        <h2>Pull quote</h2>
+        <p>One sentence worth remembering per piece, never more.</p>
+      </div>
+      <div class="spec-stage">
+        <p class="pull">Outputs in motion are not the same as outcomes that matter.</p>
+      </div>
+    </article>
+
+    <article class="spec" id="evidence">
+      <div class="spec-head">
+        <h2>Stat strip and callout</h2>
+        <p>Solid blocks for the evidence: a row of figures, or one figure with its story.</p>
+      </div>
+      <div class="spec-stage fill">
+        <dl class="stat-strip">
+          <div><dt>400+</dt><dd>example claims</dd></div>
+          <div><dt>108</dt><dd>example facts</dd></div>
+          <div><dt>17</dt><dd>example themes</dd></div>
+        </dl>
+        <aside class="callout">
+          <div class="callout-stat">1 week &rarr; 1 day</div>
+          <p>One figure, then the sentence that explains why it matters.</p>
+        </aside>
+      </div>
+    </article>
+
+    <article class="spec" id="flow">
+      <div class="spec-head">
+        <h2>Flow and roles</h2>
+        <p>Steps that end in the outcome, and three cards for three audiences.</p>
+      </div>
+      <div class="spec-stage fill">
+        <figure class="flow" aria-label="Strategy, then blueprint, then delivery">
+          <span>Strategy</span><i aria-hidden="true">&rarr;</i><span>Blueprint</span><i aria-hidden="true">&rarr;</i><span>Delivery</span>
+        </figure>
+        <div class="roles">
+          <div><b>For the CFO</b><span>What it saves and when it pays back.</span></div>
+          <div><b>For the CMO</b><span>How fast it moves and what it unlocks.</span></div>
+          <div><b>For CX leaders</b><span>What customers notice first.</span></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="surfaces">
+      <div class="spec-head">
+        <h2>Dark surface</h2>
+        <p>Put data-surface="dark" on any block, or on the whole page, and everything inside follows.</p>
+      </div>
+      <div class="spec-stage bare fill">
+        <div class="surface-demo" data-surface="dark">
+          <p class="eyebrow">Dark surface</p>
+          <h3>Text, cards, tags and glass all switch together</h3>
+          <p>The same tokens, remapped for dark, the way the site's footer and statement band work.</p>
+          <div class="cta-row">
+            <a class="btn-pill" href="#surfaces">Primary action</a>
+            <a class="btn-ghost" href="#surfaces">Secondary action</a>
+          </div>
+          <ul class="post-tags"><li>Accent tag</li><li>On dark</li></ul>
+        </div>
+      </div>
+    </article>
+
+  </div>
+</main>
+<script src="{{ '/gc.js' | relative_url }}"></script>
+<script>
+  /* Demo only: a status line for the filter, and a code panel under each component */
+  (function(){
+    // Inside the design system playground: take its settings, and report this page's height.
+    if (document.documentElement.classList.contains('is-framed')){
+      var root = document.documentElement, main = document.querySelector('main');
+      window.addEventListener('message', function(e){
+        var d = e.data;
+        if (!d || d.type !== 'gc-kit-theme' || !d.vars) return;
+        Object.keys(d.vars).forEach(function(k){ if (k.indexOf('--') === 0) root.style.setProperty(k, String(d.vars[k])); });
+        if (d.surface === 'dark') root.setAttribute('data-surface', 'dark'); else root.removeAttribute('data-surface');
+      });
+      var size = function(){ parent.postMessage({type: 'gc-kit-size', height: main.getBoundingClientRect().height}, '*'); };
+      if (window.ResizeObserver) new ResizeObserver(size).observe(main);
+      size();
+    }
+
+    var status = document.querySelector('#segmented .filter-status');
+    document.querySelector('#segmented .seg').addEventListener('gc:change', function(e){
+      status.textContent = e.detail.value === 'All' ? 'Showing all 12 projects' : 'Showing ' + e.detail.value;
+    });
+
+    function clean(stage){
+      var copy = stage.cloneNode(true);
+      copy.querySelectorAll('.lens').forEach(function(l){ l.remove(); });
+      copy.querySelectorAll('.has-lens').forEach(function(s){ s.classList.remove('has-lens'); });
+      var lines = copy.innerHTML.replace(/ class=""/g, '').split('\n').filter(function(l){ return l.trim(); });
+      var indent = Math.min.apply(null, lines.map(function(l){ return l.match(/^ */)[0].length; }));
+      return lines.map(function(l){ return l.slice(indent); }).join('\n');
+    }
+
+    function copyText(text, btn){
+      function done(){ btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = 'Copy'; }, 1600); }
+      if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(text).then(done, fallback);
+      fallback();
+      function fallback(){
+        var t = document.createElement('textarea');
+        t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
+        document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); done(); } catch (err) {}
+        t.remove();
+      }
+    }
+
+    document.querySelectorAll('.spec').forEach(function(spec){
+      var stage = spec.querySelector('.spec-stage');
+      var d = document.createElement('details');
+      d.className = 'spec-code';
+      d.innerHTML = '<summary>Code</summary><div class="code-box"><pre></pre><button type="button" class="btn-ghost">Copy</button></div>';
+      var pre = d.querySelector('pre');
+      d.addEventListener('toggle', function(){ if (d.open) pre.textContent = clean(stage); });
+      d.querySelector('button').addEventListener('click', function(){ copyText(clean(stage), this); });
+      stage.after(d);
+    });
+  })();
+</script>
+</body>
+</html>
