@@ -31,13 +31,15 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 |---|---|---|
 | `index.html` | Docs page: foundations, playground, "Use it anywhere" | `/design-system/` |
 | `demo.html` | Every component, loading only the kit. Also what the playground shows | `/design-system/demo` |
-| `gc.css` | The kit stylesheet. Tokens are filled in from `_data/kit.yml` at build time | `/design-system/gc.css` |
-| `gc.js` | The kit's only script: segmented controls and their sliding lens | `/design-system/gc.js` |
+| `_includes/gc.css` | The kit stylesheet's source. Tokens are filled in from `_data/kit.yml` at build time | Build only |
+| `_includes/gc.js` | The kit script's source: segmented controls and their sliding lens | Build only |
+| `v1/gc.css`, `v1/gc.js` | Version 1 of the kit, the address pages should use. Each is one line that includes the source | `/design-system/v1/gc.css`, `/v1/gc.js` |
+| `gc.css`, `gc.js` | The latest kit, built from the same source. The demo and docs use it | `/design-system/gc.css`, `/gc.js` |
 | `_data/kit.yml` | Every token: colours, card art, type, radii, motion, layout, breakpoints. One source for the kit and the docs | Build only |
 | `_layouts/default.html` | Docs page shell: head with link preview tags, header, footer, scripts | Build only |
 | `assets/docs.css`, `assets/docs.js` | Docs-only styles (built on the kit's tokens) and the playground script | Published |
 | `assets/avatar.webp`, `assets/og-image.jpg` | Copies of the main site's avatar and link preview image | Published |
-| `tools/` | `build.sh` (GitHub Pages' own Jekyll) and `preview.js` | Not published |
+| `tools/` | `build.sh` (GitHub Pages' own Jekyll), `preview.js` and `drift.js` | Not published |
 
 ## How it works
 
@@ -46,9 +48,17 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 - **The playground.** `assets/docs.js` posts `{type: 'gc-kit-theme', vars, surface}` to the demo frame. The demo applies it and posts back `{type: 'gc-kit-size', height}` so the frame fits. This works wherever the demo is hosted.
 - **Code panels.** Each demo component's Code panel is filled from its live markup, so it cannot go stale.
 
+## Versions
+
+- Pages use `/design-system/v1/gc.css` (and `/v1/gc.js`). Version 1 only takes changes that cannot break a page using it: new tokens, new components, fixes, values that move with the main site's look.
+- A breaking change (a renamed or removed class or token, or a markup change components depend on) becomes version 2: copy `_includes/gc.css` to `_includes/gc-v1.css` and point `v1/gc.css` at it, so v1 is frozen, then add `v2/gc.css` and move the docs' copy lines to v2. Do the same for `gc.js`. Ask Gianluca before any breaking change.
+- `/gc.css` and `/gc.js` are always the latest. Only the demo and docs should rely on them.
+
 ## Keeping it in step with the main site
 
-The kit is a copy, not the source: gianlucacaico.com still runs on its own `assets/css/site.css`. When a colour, type size, radius or component changes there, make the same change here in `_data/kit.yml` (and in `gc.css` for a component). Anything served from here reaches every page that uses the one-line plug-in, so treat changes as carefully as changes to the site.
+The kit is a copy, not the source: gianlucacaico.com still runs on its own `assets/css/site.css`. When a colour, type size, radius or component changes there, make the same change here in `_data/kit.yml` (and in `_includes/gc.css` for a component). Anything served from here reaches every page that uses the one-line plug-in, so treat changes as carefully as changes to the site.
+
+**Drift check** (`node tools/drift.js`, also run at the end of every `tools/preview.js`): compares the kit's colour, card art and layout tokens with the `:root` tokens of the live site stylesheet. It reports DRIFT for any token that differs or exists on only one side (exit code 1), and INFO for colours written straight into rules or drawings that are not tokens yet. Give it other files to check as extra arguments, local paths or URLs: a main site branch's `assets/css/site.css`, its artwork template `tools/art/art.css`, or its pictograms `assets/img/work/*.svg`. Run it against a main site pull request before that pull request merges, so the kit can follow in the same week. Token groups in `_data/kit.yml` marked `source: artwork` live in image files, not in `site.css`, so they are not expected there.
 
 The kit's dark surface values are derived from ink and the main site's on-dark tokens. The main site has no dark mode of its own.
 
@@ -56,7 +66,8 @@ The kit's dark surface values are derived from ink and the main site's on-dark t
 
 Run from the repo root.
 
-- `node tools/preview.js [--full] [--live]`: builds with GitHub Pages' own Jekyll, screenshots both pages at 390px and 1280px into `tools/previews/` (git-ignored), and fails on any missing file, script error, em dash or missing link preview tag. The first run in a fresh session installs the builder and a local copy of the Inter font (a minute or two).
+- `node tools/preview.js [--full] [--live]`: builds with GitHub Pages' own Jekyll, screenshots both pages at 390px and 1280px into `tools/previews/` (git-ignored), and fails on any missing file, script error, em dash or missing link preview tag, or on drift from the live site.
+- `node tools/drift.js [site.css] [more files...]`: the drift check on its own (see "Keeping it in step"). The first run in a fresh session installs the builder and a local copy of the Inter font (a minute or two).
 - `bash tools/build.sh [source] [destination]`: the build on its own.
 
 Send previews to Gianluca with the SendUserFile tool, phone first.
