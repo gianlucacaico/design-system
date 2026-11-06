@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 156" width="240" height="156" fill="none" stroke-linecap="round" stroke-linejoin="round">
+<!-- Sample project pictogram for the kit demo: a generic roadmap, three lanes running off the right edge, one milestone highlighted. Drawn to the Imagery rules: logo corner (x under 40, y under 56) and label corner (x under 110, y over 112) kept clear. -->
+<defs><linearGradient id="fade" x1="48" y1="0" x2="124" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#fff" stop-opacity="0.9"/></linearGradient></defs>
+<rect x="56" y="28" width="204" height="12" rx="6" fill="url(#fade)"/>
+<rect x="118" y="60" width="142" height="12" rx="6" fill="rgba(255,255,255,0.42)"/>
+<rect x="150" y="92" width="110" height="12" rx="6" fill="rgba(255,255,255,0.22)"/>
+<path d="M178 16 V122" stroke="rgba(255,255,255,0.35)" stroke-width="2" stroke-dasharray="3 6"/>
+<circle cx="178" cy="66" r="19" stroke="#3FD3E3" stroke-opacity="0.4" stroke-width="2"/>
+<circle cx="178" cy="66" r="11" fill="#3FD3E3"/>
+</svg>

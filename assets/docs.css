@@ -105,3 +105,25 @@
   .sys-pairs div{grid-template-columns:1fr;}
   .sys-code pre{padding-right:18px; padding-top:44px; white-space:pre-wrap; overflow-wrap:anywhere;}
 }
+
+/* ---------- Imagery: rules beside a diagram of the canvas ---------- */
+.sys-img-rule{display:grid; grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:28px; align-items:start; margin-top:20px;}
+.sys-diagram{margin:0;}
+.sys-diagram svg{display:block; width:100%; height:auto; border-radius:16px;}
+.sys-diagram figcaption{margin-top:8px; font-size:0.8rem; color:var(--faint);}
+.d-canvas{fill:var(--ink);}
+.d-safe{fill:rgba(255,255,255,0.06); stroke:rgba(255,255,255,0.6); stroke-width:3; stroke-dasharray:14 12;}
+.d-clear{fill:rgba(235,93,118,0.3); stroke:var(--coral); stroke-width:2; stroke-dasharray:6 6;}
+.d-ring{fill:none; stroke:#fff; stroke-width:1.5; stroke-dasharray:3 4;}
+.d-mark{fill:#fff;}
+.d-mark.warn{fill:var(--coral);}
+.d-num{font:700 40px var(--font); fill:var(--ink); text-anchor:middle;}
+.d-num.s{font-size:12px;}
+.sys-rules{margin:0; padding-left:1.4em;}
+.sys-rules li{margin:0 0 12px; font-size:0.95rem; line-height:1.55; color:var(--muted);}
+.sys-rules li::marker{color:var(--violet); font-weight:700;}
+.sys-rules b{color:var(--ink);}
+.sys-rules.plain{max-width:var(--max); margin-top:16px;}
+@media (max-width:900px){
+  .sys-img-rule{grid-template-columns:1fr; gap:18px;}
+}

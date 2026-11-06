@@ -29,7 +29,7 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 
 | Path | What it is | Address |
 |---|---|---|
-| `index.html` | Docs page: foundations, playground, "Use it anywhere" | `/design-system/` |
+| `index.html` | Docs page: foundations, imagery, playground, "Use it anywhere" | `/design-system/` |
 | `demo.html` | Every component, loading only the kit. Also what the playground shows | `/design-system/demo` |
 | `_includes/gc.css` | The kit stylesheet's source. Tokens are filled in from `_data/kit.yml` at build time | Build only |
 | `_includes/gc.js` | The kit script's source: segmented controls and their sliding lens | Build only |
@@ -39,6 +39,7 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 | `_layouts/default.html` | Docs page shell: head with link preview tags, header, footer, scripts | Build only |
 | `assets/docs.css`, `assets/docs.js` | Docs-only styles (built on the kit's tokens) and the playground script | Published |
 | `assets/avatar.webp`, `assets/og-image.jpg` | Copies of the main site's avatar and link preview image | Published |
+| `assets/sample-artwork.svg`, `assets/sample-pictogram.svg` | Generic sample post artwork (1200x630) and project pictogram (240x156) for the demo and the Imagery diagrams. No client content | Published |
 | `tools/` | `build.sh` (GitHub Pages' own Jekyll), `preview.js` and `drift.js` | Not published |
 
 ## How it works
@@ -47,6 +48,15 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 - **The docs are built from the kit.** The layout loads `gc.css`, then `assets/docs.css` for the docs-only `sys-*` and `ds-*` classes.
 - **The playground.** `assets/docs.js` posts `{type: 'gc-kit-theme', vars, surface}` to the demo frame. The demo applies it and posts back `{type: 'gc-kit-size', height}` so the frame fits. This works wherever the demo is hosted.
 - **Code panels.** Each demo component's Code panel is filled from its live markup, so it cannot go stale.
+
+## Imagery
+
+The docs page's Imagery section holds the rules for the main site's drawn images, first written in gianlucacaico.github.io#10:
+- **Post artwork:** one illustration per post (banner, list thumbnail, featured card, link preview), 1200x630, important parts in the middle 80% of the width, bottom-left corner clear for the Featured label, only words and figures from the post.
+- **Project pictograms:** 240x156, the right of the work card at full height, cropped by the card. Logo corner (x under 40, y under 56) and label corner (x under 110, y over 112) clear, one focal point fully inside, white plus exactly one tint (`--tint-cyan`, `--tint-coral`, `--tint-amber`), no words or figures.
+- **Client logos:** white single colour, about 18 to 32px high, never recoloured, stretched or redrawn, name as alt text, only with the client's permission.
+
+The main site makes the images (its `tools/art/` and `tools/art.js`); this repo holds the standard. When the main site's rules change, update the Imagery section, the Artwork colour group in `_data/kit.yml`, and the kit's `.work-art`, `.post-feature`, `.row-thumb` and `.article-hero` styles to match. The demo's samples are generic on purpose: never copy a client's pictogram or logo into this repo.
 
 ## Versions
 

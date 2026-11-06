@@ -176,12 +176,12 @@ description: "Every component in the GC kit, built from one stylesheet and one s
     <article class="spec" id="work-card">
       <div class="spec-head">
         <h2>Work card</h2>
-        <p>Art, outcome, context and tags. The art follows the accent unless you give it its own.</p>
+        <p>The project's pictogram fills the right of the art, the client's white logo (or name) sits top left, and industry and year sit bottom left as plain text. The colour field follows the accent unless you give the card its own.</p>
       </div>
       <div class="spec-stage fill">
         <div class="work-grid">
           <article class="work-card">
-            <div class="work-art"><span class="big">Brand</span><span class="chip-g glass">Industry</span><span class="chip-g glass">2026</span></div>
+            <div class="work-art"><img class="work-pic" src="{{ '/assets/sample-pictogram.svg' | relative_url }}" width="240" height="156" alt=""><span class="big">Brand</span><p class="work-meta"><span>Industry</span><span>2026</span></p></div>
             <div class="work-body">
               <h3>Project title in a few words</h3>
               <p class="work-outcome">The outcome in one line, number first</p>
@@ -191,11 +191,11 @@ description: "Every component in the GC kit, built from one stylesheet and one s
             </div>
           </article>
           <article class="work-card" style="--art:var(--art-health)">
-            <div class="work-art"><span class="big">Brand</span><span class="chip-g glass">Health</span></div>
+            <div class="work-art"><img class="work-pic" src="{{ '/assets/sample-pictogram.svg' | relative_url }}" width="240" height="156" alt=""><span class="big">Brand</span><p class="work-meta"><span>Health</span><span>2024 &ndash; 25</span></p></div>
             <div class="work-body">
               <h3>Same card, fixed art</h3>
               <p class="work-outcome">Set --art to any of the five art tokens</p>
-              <p class="sum">Art tokens keep their colours whatever the accent, like the industry cards on the Work page.</p>
+              <p class="sum">Art tokens keep their colours whatever the accent, like the industry cards on the Work page. The pictogram here is a sample.</p>
               <ul class="tags"><li>Design systems</li></ul>
               <a class="work-cta" href="#work-card">Request the case study &rarr;</a>
             </div>
@@ -266,19 +266,48 @@ description: "Every component in the GC kit, built from one stylesheet and one s
     <article class="spec" id="post-list">
       <div class="spec-head">
         <h2>Post list</h2>
-        <p>Date on the left, title, summary and topics on the right. Stacks on phones.</p>
+        <p>Date, then title, summary and topics, then the post's artwork as a thumbnail. On phones the thumbnail moves to the top.</p>
       </div>
       <div class="spec-stage fill">
         <div class="writing">
-          <article>
+          <article class="has-thumb">
             <time datetime="2026-11-06">6 November 2026</time>
             <div>
               <h3><a href="#post-list">A title that makes a claim</a></h3>
               <p>One or two sentences that earn the click.</p>
               <ul class="post-tags small"><li>Topic</li><li class="rt">4 min read</li></ul>
             </div>
+            <a class="row-thumb" href="#post-list" tabindex="-1" aria-hidden="true"><img src="{{ '/assets/sample-artwork.svg' | relative_url }}" width="720" height="378" alt=""></a>
           </article>
         </div>
+      </div>
+    </article>
+
+    <article class="spec" id="featured-post">
+      <div class="spec-head">
+        <h2>Featured post</h2>
+        <p>The newest post, with its artwork filling one side. Keep the bottom-left corner of the artwork clear for the Featured label.</p>
+      </div>
+      <div class="spec-stage fill">
+        <a class="post-feature" href="#featured-post">
+          <div class="post-art has-img"><img src="{{ '/assets/sample-artwork.svg' | relative_url }}" width="1200" height="630" alt=""><span class="chip-g glass">Featured</span></div>
+          <div class="post-text">
+            <span class="post-meta">6 November 2026 &middot; 4 min read</span>
+            <h2>A title that makes a claim worth clicking</h2>
+            <p>One or two sentences that earn the click.</p>
+            <span class="read-more">Read the piece &rarr;</span>
+          </div>
+        </a>
+      </div>
+    </article>
+
+    <article class="spec" id="post-banner">
+      <div class="spec-head">
+        <h2>Post banner</h2>
+        <p>The same artwork, full width under the post's title. It is also the image people see when the post is shared.</p>
+      </div>
+      <div class="spec-stage fill">
+        <figure class="article-hero"><img src="{{ '/assets/sample-artwork.svg' | relative_url }}" width="1200" height="630" alt="Sample artwork: evidence, one insight and an outcome"></figure>
       </div>
     </article>
 
