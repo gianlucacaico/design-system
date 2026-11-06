@@ -1,0 +1,5 @@
+# GitHub Pages' own Jekyll setup, so local previews match what GitHub publishes.
+# Installed into tools/vendor (git-ignored). Not used by GitHub itself.
+source "https://rubygems.org"
+gem "github-pages", group: :jekyll_plugins
+gem "webrick"

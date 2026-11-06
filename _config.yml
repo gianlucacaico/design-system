@@ -1,0 +1,14 @@
+# The GC kit and its docs. GitHub Pages serves this repo at gianlucacaico.com/design-system,
+# because the main site's repo (gianlucacaico.github.io) owns the gianlucacaico.com domain.
+# Everything here is public unless listed under exclude. Do not add a .nojekyll file.
+
+title: "Design system | Gianluca Caico"
+description: "The tokens and components behind gianlucacaico.com, with a live playground and a one-line kit for building other things."
+url: https://gianlucacaico.com
+baseurl: /design-system
+timezone: Australia/Melbourne
+
+exclude:
+  - CLAUDE.md
+  - tools/
+  - .gitignore
