@@ -1,0 +1,5 @@
+---
+# The kit stylesheet, version 1. Only changes that cannot break a page that uses it land here.
+# A breaking change becomes v2 at its own address, and this file then keeps the last v1 copy.
+---
+{% include gc.css %}

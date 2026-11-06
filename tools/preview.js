@@ -2,6 +2,7 @@
 // Builds the site exactly as GitHub Pages does (tools/build.sh), then screenshots each page at
 // phone (390px) and desktop (1280px) size into tools/previews/ (git-ignored). It also reports any
 // file that fails to load, any script error, any em dash and any missing link preview tag.
+// Last, it runs the drift check (tools/drift.js) against the live gianlucacaico.com stylesheet.
 //
 // Usage: node tools/preview.js           both pages, first screen
 //        node tools/preview.js --full    whole pages
@@ -80,5 +81,9 @@ async function localInter(context) {
   }
   await browser.close();
   if (srv) srv.server.close();
+  // Is the kit still in step with the main site? (Exit 2 means the site could not be reached: a warning only.)
+  console.log('');
+  try { console.log(execFileSync('node', [path.join(__dirname, 'drift.js')], { encoding: 'utf8' }).trim()); }
+  catch (e) { console.log(String(e.stdout || e.message).trim()); if (e.status === 1) problems++; }
   process.exit(problems ? 1 : 0);
 })();
