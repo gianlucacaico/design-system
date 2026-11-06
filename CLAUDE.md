@@ -51,10 +51,10 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 
 ## Imagery
 
-The docs page's Imagery section holds the rules for the main site's drawn images, first written in gianlucacaico.github.io#10:
+The docs page's Imagery section holds the rules for the main site's drawn images, first written in gianlucacaico.github.io#10 (live since November 2026):
 - **Post artwork:** one illustration per post (banner, list thumbnail, featured card, link preview), 1200x630, important parts in the middle 80% of the width, bottom-left corner clear for the Featured label, only words and figures from the post.
-- **Project pictograms:** 240x156, the right of the work card at full height, cropped by the card. Name corner (x under 40, y under 56) and label corner (x under 110, y over 112) clear, one focal point fully inside, white plus exactly one tint (`--tint-cyan`, `--tint-coral`, `--tint-amber`), no words or figures.
-- **Client names:** written as text, top left of the card's art. Gianluca decided against client logos without formal permission (November 2026). If a client ever gives it: the brand's own white version, never recoloured, stretched or redrawn, about 18 to 32px high, name as alt text.
+- **Project pictograms:** 240x156, the right of the work card at full height, cropped by the card. Name corner (x under 60, y under 48) and label corner (x under 110, y over 112) clear, one focal point fully inside, white plus exactly one tint (`--tint-cyan`, `--tint-coral`, `--tint-amber`), no words or figures.
+- **Client names:** written as text (`.big`, 18px bold white), top left of the card's art. Gianluca decided against client logos without formal permission (November 2026). If a client ever gives it: the brand's own white version, never recoloured, stretched or redrawn, about 18 to 32px high, name as alt text.
 
 The main site makes the images (its `tools/art/` and `tools/art.js`); this repo holds the standard. When the main site's rules change, update the Imagery section, the Artwork colour group in `_data/kit.yml`, and the kit's `.work-art`, `.post-feature`, `.row-thumb` and `.article-hero` styles to match. The demo's samples are generic on purpose: never copy a client's pictogram, name artwork or logo into this repo.
 
@@ -76,8 +76,8 @@ The kit's dark surface values are derived from ink and the main site's on-dark t
 
 Run from the repo root.
 
-- `node tools/preview.js [--full] [--live]`: builds with GitHub Pages' own Jekyll, screenshots both pages at 390px and 1280px into `tools/previews/` (git-ignored), and fails on any missing file, script error, em dash or missing link preview tag, or on drift from the live site.
-- `node tools/drift.js [site.css] [more files...]`: the drift check on its own (see "Keeping it in step"). The first run in a fresh session installs the builder and a local copy of the Inter font (a minute or two).
+- `node tools/preview.js [--full] [--live]`: builds with GitHub Pages' own Jekyll, screenshots both pages at 390px and 1280px into `tools/previews/` (git-ignored), and fails on any missing file, script error, em dash or missing link preview tag, or on drift from the live site. The first run in a fresh session installs the builder and a local copy of the Inter font (a minute or two).
+- `node tools/drift.js [site.css] [more files...]`: the drift check on its own (see "Keeping it in step").
 - `bash tools/build.sh [source] [destination]`: the build on its own.
 
 Send previews to Gianluca with the SendUserFile tool, phone first.

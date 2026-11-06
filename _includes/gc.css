@@ -223,7 +223,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .work-card{display:flex; flex-direction:column; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; transition:transform .25s ease, box-shadow .25s ease;}
 .work-card:hover{transform:translateY(-3px); box-shadow:var(--lift);}
 .work-art{position:relative; overflow:hidden; height:156px; background:var(--art); display:flex; align-items:flex-end; gap:8px; padding:16px 18px;}
-.work-art .big{position:absolute; left:18px; top:14px; font-size:1.7rem; font-weight:800; letter-spacing:-0.03em; color:#fff;}
+.work-art .big{position:absolute; z-index:1; left:18px; top:16px; font-size:1.125rem; font-weight:700; letter-spacing:-0.02em; line-height:1.3; color:#fff; text-shadow:0 1px 10px rgba(0,0,0,0.2);}
 .work-art .chip-g, .post-art .chip-g{color:#fff;}
 /* Work card art, as on gianlucacaico.com: the project's pictogram fills the right side at full height and
    runs off the edges, the client's name sits top left (.big, or .big.logo for a white logo used with permission),
