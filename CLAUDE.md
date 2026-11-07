@@ -38,11 +38,11 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 | `gc.css`, `gc.js` | The latest kit, built from the same source. The demo and docs use it | `/design-system/gc.css`, `/gc.js` |
 | `tokens.json` | The kit's colour, card art and layout tokens as JSON (W3C design tokens layout), built from `_data/kit.yml`. gianlucacaico.com's drift check reads it, so keep its shape stable | `/design-system/tokens.json` |
 | `_data/kit.yml` | Every token: colours, card art, type, radii, motion, layout, breakpoints. One source for the kit and the docs | Build only |
-| `_data/model.yml` | The operating model's words: outcomes, players, the two systems, the eight steps and "What this means for your program" | Build only |
+| `_data/model.yml` | The operating model's words: the outcomes, the two traced changes and "What this means for your program" | Build only |
 | `_data/decisions.yml` | The decision log shown in the Governance section | Build only |
 | `_data/workflows.yml` | The workflow library's entries, one per skill, harness, hook or workflow | Build only |
 | `_layouts/default.html` | Docs page shell: head with link preview tags, header, footer, scripts | Build only |
-| `assets/docs.css`, `assets/docs.js` | Docs-only styles (built on the kit's tokens), and the script for the playground and the operating model | Published |
+| `assets/docs.css`, `assets/docs.js` | Docs-only styles (built on the kit's tokens), and the script for the playground and the operating model switch | Published |
 | `assets/avatar.webp`, `assets/og-image.jpg` | Copies of the main site's avatar and link preview image | Published |
 | `assets/sample-artwork.svg`, `assets/sample-pictogram.svg` | Generic sample post artwork (1200x630) and project pictogram (240x156) for the demo and the Imagery diagrams. No client content | Published |
 | `tools/` | `build.sh` (GitHub Pages' own Jekyll), `preview.js` and `drift.js` | Not published |
@@ -65,17 +65,17 @@ The main site makes the images (its `tools/art/` and `tools/art.js`); this repo 
 
 ## Operating model
 
-The docs page opens with the operating model, written for executives and program sponsors who want the outcome, not the build. Gianluca chose this direction (two linked loops, tap a step) in November 2026. In order:
-- **Hero** (`#model`): "Speed with control, by design." and six outcomes.
-- **Two systems, one loop** (`#loop`): the four players (people, agents, the standard, the product), the site and this design system side by side, each running steps 1 to 6 (request, draft, prove, approve, publish, verify live) with its own human gate, joined by steps 7 and 8 (catch drift, sync). Tapping a step shows who does it, what happens and what you get. `assets/docs.js` presses both copies of a step together.
+The docs page opens with the operating model, written for executives and program sponsors who want the outcome, not the build. Gianluca chose the format in November 2026, after a loop diagram proved too complex: two real changes, traced end to end. In order:
+- **Hero** (`#model`): "Speed with control, by design.", a one-paragraph summary and the six outcomes as a plain checklist.
+- **Follow one change** (`#trace`): a switch (the kit's segmented control) between two real changes, a token (`--cyan` becoming `--cyan-bright`) and a component (the scrolling filter's glass). Each shows a before and after, then ticked receipts, each with its time and a link to the record behind it. `assets/docs.js` shows the picked case when the switch sends its `gc:change` event.
 - **What this means for your program** (`#program`): a dark band mapping the model to many product teams sharing one design system.
 - **The standard, up close** (`#standard`): the old intro and its two buttons, leading into Foundations.
 
-Rules:
+All the words live in `_data/model.yml`. Rules:
 - **Facts only.** Every claim must be true and checkable from this build. No invented metrics, time savings or client results.
-- **Figures are counted, never typed.** `[tokens]`, `[templates]` and `[decisions]` in `_data/model.yml` are filled in by `index.html` from `kit.yml`, `workflows.yml` and `decisions.yml`. `[tokens]` counts what both drift checks compare: the colour tokens not marked `source: artwork`, the card art and `--max`.
-- **Keep it true to how things work.** "Verified byte for byte" applies to gianlucacaico.com only; this design system is checked live with screenshots. If the process, the checks or the roles change, update `_data/model.yml` in the same pull request, alongside Governance and the workflow library.
-- Colours: people violet and agents amber (as in the EXD model on gianlucacaico.com), the standard coral, the product cyan.
+- **Current figures are counted, never typed.** `[tokens]`, `[templates]` and `[decisions]` in `_data/model.yml` are filled in by `index.html` from `kit.yml`, `workflows.yml` and `decisions.yml`. `[tokens]` counts what both drift checks compare: the colour tokens not marked `source: artwork`, the card art and `--max`. Figures inside a case are historic: quote them exactly as their review page recorded them.
+- **Cases are real and linked.** Times are Melbourne time from GitHub's own records, and every receipt links to its public review page, commit or the decision log. Swap in a newer case only if it has a complete public trail, and never one that names a client.
+- **Keep it true to how things work.** "Byte for byte" applies to gianlucacaico.com only; this design system is checked live with screenshots. If the process, the checks or the roles change, update `_data/model.yml` in the same pull request, alongside Governance and the workflow library.
 
 ## Governance
 

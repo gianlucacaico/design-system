@@ -20,8 +20,6 @@ layout: default
 {%- for t in kit.layout %}{% if t.name == 'max' %}{% assign both_ways = both_ways | plus: 1 %}{% endif %}{% endfor %}
 {%- assign templates = site.data.workflows.size %}
 {%- assign decisions = site.data.decisions.size %}
-{%- assign track = m.steps | where_exp: "s", "s.bridge != true" %}
-{%- assign bridge = m.steps | where: "bridge", true %}
 <main id="docs">
   <section class="page-head sys-head sys-om-head" id="model">
     <div class="mesh" aria-hidden="true"></div>
@@ -31,71 +29,63 @@ layout: default
       <p class="lede">One owner approves every change. Agents draft, check and guard. One standard keeps the site and its design system in step. This is the operating model behind gianlucacaico.com.</p>
       <ul class="sys-outcomes">
         {%- for o in m.outcomes %}
-        <li class="glass"><span class="sys-tick" aria-hidden="true"></span><b>{{ o.title }}</b><span>{{ o.text | replace: '[tokens]', both_ways | replace: '[templates]', templates | replace: '[decisions]', decisions }}</span></li>
+        <li>{{ o }}</li>
         {%- endfor %}
       </ul>
       <div class="cta-row">
-        <a class="btn-pill" href="#loop">See the loop</a>
+        <a class="btn-pill" href="#trace">Follow a real change</a>
         <a class="btn-ghost" href="#program">Apply it to your program</a>
       </div>
     </div>
   </section>
 
-  <section class="section bordered" id="loop">
+  <section class="section bordered" id="trace">
     <div class="wrap">
       <div class="section-head">
-        <h2>Two systems, one loop</h2>
-        <span class="count">Tap any step</span>
+        <h2>Follow one change</h2>
+        <span class="count">Two real examples</span>
       </div>
-      <p class="section-intro">The site and its design system run the same loop, each with its own human gate. A two-way check on their shared tokens joins the two.</p>
-      <ul class="sys-players" aria-label="Who is in the model">
-        {%- for p in m.players %}
-        <li data-p="{{ p.id }}"><span class="sys-key" aria-hidden="true"></span><b>{{ p.name }}</b><small>{{ p.role }}</small></li>
+      <p class="section-intro">Every change leaves a trail. Here are two real ones, a token and a component, from first sign to live, with the record behind each step.</p>
+      <div class="seg glass sys-case-pick" role="group" aria-label="Example">
+        {%- for c in m.cases %}
+        <button type="button" data-value="{{ c.id }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">{{ c.label }}</button>
         {%- endfor %}
-      </ul>
-      <div class="sys-om">
-        {%- for sys in m.systems %}
-        {%- if forloop.index == 2 %}
-        <div class="sys-bridge">
-          <p class="sys-bridge-k"><svg class="sys-both" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4-4-4 4 4 4"/></svg><b>Checked both ways</b><small>Each reads what the other publishes</small></p>
-          {%- for s in bridge %}
-          <button type="button" class="sys-step" data-lead="{{ s.lead }}" aria-controls="om-{{ s.n }}" aria-pressed="false"><span class="sys-n">{{ s.n }}</span>{{ s.name }}</button>
-          {%- endfor %}
-        </div>
-        {%- endif %}
-        <div class="sys-sys" data-p="{{ sys.id }}">
-          <p class="sys-sys-k">{{ sys.kind }}</p>
-          <h3>{{ sys.name }}</h3>
-          <p class="sys-sys-d">{{ sys.text }}</p>
-          <ol class="sys-track">
-            {%- for s in track %}
-            <li><button type="button" class="sys-step{% if s.gate %} is-gate{% endif %}" data-lead="{{ s.lead }}" aria-controls="om-{{ s.n }}" aria-pressed="false"><span class="sys-n">{{ s.n }}</span>{{ s.name }}</button></li>
+      </div>
+      {%- for c in m.cases %}
+      <article class="sys-case" id="case-{{ c.id }}" data-case="{{ c.id }}">
+        <div class="sys-case-story">
+          <h3>{{ c.title }}</h3>
+          <p class="sys-case-sum">{{ c.summary }}</p>
+          <div class="sys-ba is-{{ c.visual }}">
+            {%- for side in (1..2) %}
+            {%- if side == 1 %}{% assign s = c.before %}{% assign label = 'Before' %}{% else %}{% assign s = c.after %}{% assign label = 'After, in both systems' %}{% endif %}
+            <div class="sys-ba-card{% if side == 2 %} after{% endif %}">
+              <p class="sys-ba-k">{{ label }}</p>
+              {%- if c.visual == 'tokens' %}
+              <ul class="sys-ba-sw">
+                {%- for w in s.swatches %}
+                <li><span style="background:var(--{{ w.token }})" aria-hidden="true"></span><code>{{ w.name }}</code><small>{{ w.value }}</small></li>
+                {%- endfor %}
+              </ul>
+              {%- else %}
+              <div class="sys-fx{% if side == 1 %} broken{% endif %}" role="img" aria-label="{{ s.alt }}"><span class="sys-fx-row"><span class="sys-fx-glass"><span>Skills</span><span>Harnesses</span><span>Hooks</span></span><span>Workflows</span></span></div>
+              {%- endif %}
+              <p class="sys-ba-note">{{ s.note }}</p>
+            </div>
             {%- endfor %}
-          </ol>
-        </div>
-        {%- endfor %}
-      </div>
-      <p class="sys-om-legend">Either side can start &middot; Each has its own human gate &middot; Then repeat</p>
-
-      <div class="sys-panels" aria-live="polite">
-        {%- for s in m.steps %}
-        <div class="sys-panel" id="om-{{ s.n }}">
-          <div class="sys-panel-head">
-            <p class="sys-panel-tags"><span>Step {{ s.n }} of {{ m.steps.size }}</span>{% if s.gate %}<span class="gate">Human gate</span>{% elsif s.bridge %}<span class="bridge">Between the two systems</span>{% else %}<span>On both systems</span>{% endif %}</p>
-            <h3>{{ s.name }}</h3>
-            <p>{{ s.sub }}</p>
           </div>
-          <div class="sys-lanes">
-            <div class="sys-lane who" data-lead="{{ s.lead }}"><span class="sys-lane-k">Who</span><span class="sys-who">{% for w in s.who %}{% assign pl = m.players | where: "id", w | first %}<i data-p="{{ w }}">{{ pl.name }}</i>{% endfor %}</span><strong>{{ s.who_t }}</strong><p>{{ s.who_p }}</p></div>
-            <div class="sys-lane"><span class="sys-lane-k">What happens</span><strong>{{ s.what_t }}</strong><p>{{ s.what_p | replace: '[tokens]', both_ways }}</p></div>
-            <div class="sys-lane gain"><span class="sys-lane-k">What you get</span><strong>{{ s.gain_t }}</strong><p>{{ s.gain_p }}</p></div>
-          </div>
-          {%- if s.example %}
-          <p class="sys-eg"><b>In practice:</b> {{ s.example }}</p>
-          {%- endif %}
         </div>
-        {%- endfor %}
-      </div>
+        <ol class="sys-receipts">
+          {%- for r in c.receipts %}
+          <li>
+            <p><b>{{ r.verb }}</b> {{ r.text }}</p>
+            <p class="sys-rc-meta">{% if r.when %}<span>{{ r.when }}</span>{% endif %}{% for l in r.links %}<a href="{{ l.url }}"{% if l.url contains "https://" %} target="_blank" rel="noopener"{% endif %}>{{ l.label }}</a>{% endfor %}</p>
+          </li>
+          {%- endfor %}
+        </ol>
+      </article>
+      {%- endfor %}
+      <p class="sys-case-foot">Times are Melbourne time, from GitHub's own records. Each link opens the record behind that step.</p>
     </div>
   </section>
 

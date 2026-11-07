@@ -96,26 +96,16 @@
   apply();
 })();
 
-// Operating model: tap a step to see who does it, what happens and what you get.
-// Steps 1 to 6 appear on both systems, so both copies press together.
+// Operating model: the switch shows one real change at a time. gc.js presses the button and
+// slides the lens, then says which was picked.
 (function(){
-  var steps = document.querySelectorAll('.sys-step');
-  var wrap = document.querySelector('.sys-panels');
-  if (!steps.length || !wrap) return;
-  var panels = wrap.querySelectorAll('.sys-panel');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function show(id, scroll){
-    steps.forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('aria-controls') === id ? 'true' : 'false'); });
-    panels.forEach(function(p){ p.hidden = p.id !== id; });
-    // On a phone the panel sits below both systems, so bring it into view when it is off screen.
-    var panel = document.getElementById(id);
-    if (scroll && panel.getBoundingClientRect().top > window.innerHeight - 160){
-      panel.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'nearest'});
-    }
-  }
-  steps.forEach(function(b){ b.addEventListener('click', function(){ show(b.getAttribute('aria-controls'), true); }); });
-  wrap.classList.add('is-live');
-  show('om-1', false);
+  var pick = document.querySelector('.sys-case-pick');
+  if (!pick) return;
+  var cases = document.querySelectorAll('.sys-case');
+  function show(id){ cases.forEach(function(c){ c.hidden = c.getAttribute('data-case') !== id; }); }
+  pick.addEventListener('gc:change', function(e){ show(e.detail.value); });
+  var on = pick.querySelector('[aria-pressed="true"]');
+  show(on ? on.getAttribute('data-value') : cases[0].getAttribute('data-case'));
 })();
 
 // Copy buttons, on every page: copy the text of the element named in data-copy.
