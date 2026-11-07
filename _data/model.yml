@@ -1,0 +1,152 @@
+# The operating model at the top of the docs page (index.html), written for executives and sponsors.
+# Only facts that are true and checkable from this build. Keep it true to how things actually work:
+# if the process, the checks or the roles change, update this file in the same pull request.
+# Figures are never typed in. These placeholders are counted at build time:
+#   [tokens]     tokens both drift checks compare (the site colours, card art and reading measure in kit.yml)
+#   [templates]  entries in workflows.yml
+#   [decisions]  entries in decisions.yml
+
+outcomes:
+  - title: "Speed with control"
+    text: "Approved changes are live in about a minute, then checked live."
+  - title: "Nothing ships without approval"
+    text: "One owner approves every change, one at a time."
+  - title: "Reversible in one step"
+    text: "Every change has its own review page, so it can be undone in one step."
+  - title: "One standard, checked both ways"
+    text: "[tokens] tokens checked automatically from both sides after every publish."
+  - title: "Every decision traceable"
+    text: "Every change keeps its review page, and every design decision is logged with why."
+  - title: "Reusable with any tool"
+    text: "[templates] templates that say what happens, not which tool does it."
+
+# The four players. Colours: people violet, agents amber (as in the EXD model on gianlucacaico.com),
+# the standard coral, the product cyan.
+players:
+  - { id: people, name: "People", role: "Approve every change at the gate" }
+  - { id: agents, name: "Agents", role: "Skills draft, harnesses check, hooks guard" }
+  - { id: standard, name: "The standard", role: "Tokens, components and rules" }
+  - { id: product, name: "The product", role: "The live site" }
+
+# The two systems. Both run steps 1 to 6; steps 7 and 8 run between them.
+systems:
+  - { id: product, kind: "The product", name: "gianlucacaico.com", text: "The source. New looks ship here first." }
+  - { id: standard, kind: "The standard", name: "This design system", text: "The tokens, components and rules, written down." }
+
+# lead: who leads the step (colours its number). who: the players named in its panel.
+steps:
+  - n: 1
+    name: "Request"
+    sub: "Start from the outcome"
+    lead: people
+    who: [people]
+    who_t: "Someone asks"
+    who_p: "In their own words. No ticket format, no technical brief."
+    what_t: "One change, one branch"
+    what_p: "Each request becomes one change on its own branch, so it can be reviewed, approved and undone on its own."
+    gain_t: "Small, safe changes"
+    gain_p: "One change at a time is easy to review and safe to undo."
+
+  - n: 2
+    name: "Draft"
+    sub: "Skills do the drafting"
+    lead: agents
+    who: [agents, standard]
+    who_t: "Skills draft, hooks guard"
+    who_p: "A skill follows the project's rules to draft the change. A hook stops an agent finishing with work left unsaved."
+    what_t: "Built from the standard"
+    what_p: "Drafts reuse the standard's tokens and components, and stop to ask about any fact, client, figure or design decision."
+    gain_t: "Pace that stays on brand"
+    gain_p: "No styles invented along the way, and no guessing on facts or decisions."
+
+  - n: 3
+    name: "Prove"
+    sub: "Evidence before approval"
+    lead: agents
+    who: [agents]
+    who_t: "Harnesses check"
+    who_p: "Automated checks that pass or fail, so nobody has to eyeball it."
+    what_t: "Previewed and tested"
+    what_p: "Built exactly as the host builds it, previewed at phone and desktop size, and checked page by page. On the site, changes meant to leave the look alone get pixel-level proof."
+    gain_t: "Decisions on evidence"
+    gain_p: "The owner reviews proof, not promises."
+
+  - n: 4
+    name: "Approve"
+    sub: "The human gate"
+    lead: people
+    gate: true
+    who: [people]
+    who_t: "The owner decides"
+    who_p: "Only a person can approve, and only one change at a time."
+    what_t: "See it before it ships"
+    what_p: "The current and proposed wording side by side, phone and desktop previews, and one review page for the change. Approval never carries over to the next."
+    gain_t: "Nothing ships without approval"
+    gain_p: "Control stays with the person accountable for the outcome."
+
+  - n: 5
+    name: "Publish"
+    sub: "Live in about a minute"
+    lead: people
+    who: [people, agents]
+    who_t: "A person starts it"
+    who_p: "Only a person can start a publish. Once approved, the change merges and deploys."
+    what_t: "One change, one step"
+    what_p: "The approved change merges as a single step and is live in about a minute."
+    gain_t: "Reversible in one step"
+    gain_p: "Any change can be undone by reverting its review page."
+
+  - n: 6
+    name: "Verify live"
+    sub: "Check what visitors see"
+    lead: agents
+    who: [agents, product]
+    who_t: "Harnesses check the live site"
+    who_p: "After every publish, not just the code."
+    what_t: "Live matches approved"
+    what_p: "The site rebuilds the approved code and compares every published file with what is live, byte for byte, then checks every page. The design system screenshots its live pages."
+    gain_t: "Confidence in what's live"
+    gain_p: "Any difference from what was approved is reported, never fixed silently."
+
+  - n: 7
+    name: "Catch drift"
+    sub: "The two systems check each other"
+    lead: agents
+    bridge: true
+    who: [agents, standard, product]
+    who_t: "A check on each side"
+    who_p: "Each side reads what the other publishes."
+    what_t: "Checked both ways"
+    what_p: "After every publish, the site reads the design system's tokens and the design system reads the site's live stylesheet. [tokens] tokens are compared from both sides, and colours that aren't tokens yet become a to-do list."
+    gain_t: "One standard, kept true"
+    gain_p: "A difference is caught whichever side changes first."
+    example: "It caught a clash between two colours both called cyan before the site's new artwork went live."
+
+  - n: 8
+    name: "Sync"
+    sub: "The other side follows"
+    lead: people
+    bridge: true
+    who: [people, agents]
+    who_t: "The owner picks the source of truth"
+    who_p: "The check reports the difference. The owner decides which side is right."
+    what_t: "Its own review page"
+    what_p: "The other side follows through its own review page and approval. Each side only ever changes itself."
+    gain_t: "Every decision traceable"
+    gain_p: "Each decision goes in the log with its reason, so nobody has to rediscover it."
+    example: "The site's artwork and the design system's imagery rules went live the same day, and three loose pictogram colours became tokens. Both decisions are in the <a href=\"#decision-log\">decision log</a>."
+
+# What this means for your program: the same model in a typical enterprise setting.
+program:
+  - title: "Every team checked against one standard"
+    text: "Each product team's site runs the same two-way check against the shared design system. A difference shows up on the change that caused it, and its owner decides which side is right."
+    here: "Here: [tokens] tokens, checked from both sides"
+  - title: "Agents for pace, owners for judgement"
+    text: "Agents draft and prove every change. A named owner for each product approves it at the gate, one change at a time."
+    here: "Here: one owner approves every change on both sites"
+  - title: "An audit trail by default"
+    text: "Every change is one review page with its wording, check results and approval, and can be undone in one step. Every design decision is logged with its reason."
+    here: "Here: [decisions] design decisions logged so far"
+  - title: "No lock-in"
+    text: "The templates say what happens, not which tool does it, so teams can swap in their own agent tools and delivery pipelines."
+    here: "Here: [templates] templates, from request to verified live"

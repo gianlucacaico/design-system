@@ -96,6 +96,28 @@
   apply();
 })();
 
+// Operating model: tap a step to see who does it, what happens and what you get.
+// Steps 1 to 6 appear on both systems, so both copies press together.
+(function(){
+  var steps = document.querySelectorAll('.sys-step');
+  var wrap = document.querySelector('.sys-panels');
+  if (!steps.length || !wrap) return;
+  var panels = wrap.querySelectorAll('.sys-panel');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function show(id, scroll){
+    steps.forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('aria-controls') === id ? 'true' : 'false'); });
+    panels.forEach(function(p){ p.hidden = p.id !== id; });
+    // On a phone the panel sits below both systems, so bring it into view when it is off screen.
+    var panel = document.getElementById(id);
+    if (scroll && panel.getBoundingClientRect().top > window.innerHeight - 160){
+      panel.scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block: 'nearest'});
+    }
+  }
+  steps.forEach(function(b){ b.addEventListener('click', function(){ show(b.getAttribute('aria-controls'), true); }); });
+  wrap.classList.add('is-live');
+  show('om-1', false);
+})();
+
 // Copy buttons, on every page: copy the text of the element named in data-copy.
 (function(){
   document.querySelectorAll('[data-copy]').forEach(function(btn){

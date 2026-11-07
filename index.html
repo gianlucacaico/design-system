@@ -9,14 +9,119 @@ layout: default
 {%- assign colour_count = 0 %}
 {%- for g in kit.colours %}{% assign colour_count = colour_count | plus: g.tokens.size %}{% endfor %}
 {%- assign token_count = colour_count | plus: kit.art.size | plus: kit.type.size | plus: kit.radii.size | plus: kit.motion.size | plus: kit.layout.size %}
+{%- comment -%}
+  The operating model comes first, for executives and sponsors. Its words live in _data/model.yml.
+  Figures are counted here, never typed: both_ways is the tokens both drift checks compare
+  (site colours, card art and the reading measure, as tokens.json marks them "site").
+{%- endcomment -%}
+{%- assign m = site.data.model %}
+{%- assign both_ways = kit.art.size %}
+{%- for g in kit.colours %}{% unless g.source == 'artwork' %}{% assign both_ways = both_ways | plus: g.tokens.size %}{% endunless %}{% endfor %}
+{%- for t in kit.layout %}{% if t.name == 'max' %}{% assign both_ways = both_ways | plus: 1 %}{% endif %}{% endfor %}
+{%- assign templates = site.data.workflows.size %}
+{%- assign decisions = site.data.decisions.size %}
+{%- assign track = m.steps | where_exp: "s", "s.bridge != true" %}
+{%- assign bridge = m.steps | where: "bridge", true %}
 <main id="docs">
-  <section class="page-head sys-head">
+  <section class="page-head sys-head sys-om-head" id="model">
     <div class="mesh" aria-hidden="true"></div>
     <div class="wrap">
-      <p class="eyebrow">Design system</p>
-      <h1 class="page-title">The system behind gianlucacaico.com</h1>
-      <p class="lede">A mini design system reverse engineered from gianlucacaico.com: the tokens and components every page is built from. Try them live in the playground, then use them anywhere with one line.</p>
+      <p class="eyebrow">Operating model</p>
+      <h1 class="page-title">Speed with control, <span class="grad-word">by design.</span></h1>
+      <p class="lede">One owner approves every change. Agents draft, check and guard. One standard keeps the site and its design system in step. This is the operating model behind gianlucacaico.com.</p>
+      <ul class="sys-outcomes">
+        {%- for o in m.outcomes %}
+        <li class="glass"><span class="sys-tick" aria-hidden="true"></span><b>{{ o.title }}</b><span>{{ o.text | replace: '[tokens]', both_ways | replace: '[templates]', templates | replace: '[decisions]', decisions }}</span></li>
+        {%- endfor %}
+      </ul>
       <div class="cta-row">
+        <a class="btn-pill" href="#loop">See the loop</a>
+        <a class="btn-ghost" href="#program">Apply it to your program</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bordered" id="loop">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Two systems, one loop</h2>
+        <span class="count">Tap any step</span>
+      </div>
+      <p class="section-intro">The site and its design system run the same loop, each with its own human gate. A two-way check on their shared tokens joins the two.</p>
+      <ul class="sys-players" aria-label="Who is in the model">
+        {%- for p in m.players %}
+        <li data-p="{{ p.id }}"><span class="sys-key" aria-hidden="true"></span><b>{{ p.name }}</b><small>{{ p.role }}</small></li>
+        {%- endfor %}
+      </ul>
+      <div class="sys-om">
+        {%- for sys in m.systems %}
+        {%- if forloop.index == 2 %}
+        <div class="sys-bridge">
+          <p class="sys-bridge-k"><svg class="sys-both" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h15m-4-4 4 4-4 4M20 16H5m4-4-4 4 4 4"/></svg><b>Checked both ways</b><small>Each reads what the other publishes</small></p>
+          {%- for s in bridge %}
+          <button type="button" class="sys-step" data-lead="{{ s.lead }}" aria-controls="om-{{ s.n }}" aria-pressed="false"><span class="sys-n">{{ s.n }}</span>{{ s.name }}</button>
+          {%- endfor %}
+        </div>
+        {%- endif %}
+        <div class="sys-sys" data-p="{{ sys.id }}">
+          <p class="sys-sys-k">{{ sys.kind }}</p>
+          <h3>{{ sys.name }}</h3>
+          <p class="sys-sys-d">{{ sys.text }}</p>
+          <ol class="sys-track">
+            {%- for s in track %}
+            <li><button type="button" class="sys-step{% if s.gate %} is-gate{% endif %}" data-lead="{{ s.lead }}" aria-controls="om-{{ s.n }}" aria-pressed="false"><span class="sys-n">{{ s.n }}</span>{{ s.name }}</button></li>
+            {%- endfor %}
+          </ol>
+        </div>
+        {%- endfor %}
+      </div>
+      <p class="sys-om-legend">Either side can start &middot; Each has its own human gate &middot; Then repeat</p>
+
+      <div class="sys-panels" aria-live="polite">
+        {%- for s in m.steps %}
+        <div class="sys-panel" id="om-{{ s.n }}">
+          <div class="sys-panel-head">
+            <p class="sys-panel-tags"><span>Step {{ s.n }} of {{ m.steps.size }}</span>{% if s.gate %}<span class="gate">Human gate</span>{% elsif s.bridge %}<span class="bridge">Between the two systems</span>{% else %}<span>On both systems</span>{% endif %}</p>
+            <h3>{{ s.name }}</h3>
+            <p>{{ s.sub }}</p>
+          </div>
+          <div class="sys-lanes">
+            <div class="sys-lane who" data-lead="{{ s.lead }}"><span class="sys-lane-k">Who</span><span class="sys-who">{% for w in s.who %}{% assign pl = m.players | where: "id", w | first %}<i data-p="{{ w }}">{{ pl.name }}</i>{% endfor %}</span><strong>{{ s.who_t }}</strong><p>{{ s.who_p }}</p></div>
+            <div class="sys-lane"><span class="sys-lane-k">What happens</span><strong>{{ s.what_t }}</strong><p>{{ s.what_p | replace: '[tokens]', both_ways }}</p></div>
+            <div class="sys-lane gain"><span class="sys-lane-k">What you get</span><strong>{{ s.gain_t }}</strong><p>{{ s.gain_p }}</p></div>
+          </div>
+          {%- if s.example %}
+          <p class="sys-eg"><b>In practice:</b> {{ s.example }}</p>
+          {%- endif %}
+        </div>
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
+  <section class="section bordered sys-program" id="program" data-surface="dark">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What this means for your program</h2>
+        <span class="count">From one site to many teams</span>
+      </div>
+      <p class="section-intro">The same model maps onto a typical enterprise setup: many product teams sharing one design system.</p>
+      <ul class="sys-map">
+        {%- for c in m.program %}
+        <li><b>{{ c.title }}</b><p>{{ c.text }}</p><small>{{ c.here | replace: '[tokens]', both_ways | replace: '[templates]', templates | replace: '[decisions]', decisions }}</small></li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="standard">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>The system behind gianlucacaico.com</h2>
+        <span class="count">The standard, up close</span>
+      </div>
+      <p class="section-intro sys-lead">A mini design system reverse engineered from gianlucacaico.com: the tokens and components every page is built from. Try them live in the playground, then use them anywhere with one line.</p>
+      <div class="cta-row sys-lead-cta">
         <a class="btn-pill" href="#playground">Open the playground</a>
         <a class="btn-ghost" href="#use">Use it anywhere</a>
       </div>
