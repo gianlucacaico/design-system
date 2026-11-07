@@ -16,6 +16,7 @@
 .ds-foot .wrap{display:flex; justify-content:space-between; gap:8px 24px; flex-wrap:wrap;}
 .ds-foot a{color:var(--accent-ink); font-weight:600;}
 .sys-head{padding-top:72px;}
+.sys-head .crumbs{margin-bottom:28px;}
 
 /* ---------- Helpers carried over from the main site ---------- */
 .ds-pairs{margin:4px 0 32px; border-top:1px solid var(--border);}
