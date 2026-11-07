@@ -96,6 +96,18 @@
   apply();
 })();
 
+// Operating model: the switch shows one real change at a time. gc.js presses the button and
+// slides the lens, then says which was picked.
+(function(){
+  var pick = document.querySelector('.sys-case-pick');
+  if (!pick) return;
+  var cases = document.querySelectorAll('.sys-case');
+  function show(id){ cases.forEach(function(c){ c.hidden = c.getAttribute('data-case') !== id; }); }
+  pick.addEventListener('gc:change', function(e){ show(e.detail.value); });
+  var on = pick.querySelector('[aria-pressed="true"]');
+  show(on ? on.getAttribute('data-value') : cases[0].getAttribute('data-case'));
+})();
+
 // Copy buttons, on every page: copy the text of the element named in data-copy.
 (function(){
   document.querySelectorAll('[data-copy]').forEach(function(btn){

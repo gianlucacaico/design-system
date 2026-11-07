@@ -1,0 +1,107 @@
+# The operating model at the top of the docs page (index.html), written for executives and sponsors.
+# Only facts that are true and checkable from this build. Keep it true to how things actually work:
+# if the process, the checks or the roles change, update this file in the same pull request.
+#
+# Current figures are never typed in. These placeholders are counted at build time:
+#   [tokens]     tokens both drift checks compare (the site colours, card art and reading measure in kit.yml)
+#   [templates]  entries in workflows.yml
+#   [decisions]  entries in decisions.yml
+# Figures inside a case are historic: quote them exactly as their review page recorded them.
+
+outcomes:
+  - "Speed with control"
+  - "Nothing ships without approval"
+  - "Reversible in one step"
+  - "One standard, checked both ways"
+  - "Every decision traceable"
+  - "Reusable with any tool"
+
+# Two real changes, traced end to end. Times are Melbourne time, from GitHub's own timestamps.
+# visual: tokens (swatch lists) or filter (an illustration of a scrolling filter).
+cases:
+  - id: token
+    label: "A token"
+    title: "A clash caught before it shipped."
+    summary: "The site's new artwork called a bright cyan <code>--cyan</code>, the name the site already used for a darker one."
+    visual: tokens
+    before:
+      note: "Two colours, one name."
+      swatches:
+        - { name: "--cyan", token: cyan, value: "#0E97AA" }
+        - { name: "--cyan", token: cyan-bright, value: "#12B5CB" }
+    after:
+      note: "One name each, checked both ways."
+      swatches:
+        - { name: "--cyan", token: cyan, value: "#0E97AA" }
+        - { name: "--cyan-bright", token: cyan-bright, value: "#12B5CB" }
+    receipts:
+      - verb: "Proposed"
+        text: "new artwork for the site, up for review."
+        when: "6 Nov, 9:22pm"
+        links: [{ label: "Review page", url: "https://github.com/gianlucacaico/gianlucacaico.github.io/pull/10" }]
+      - verb: "Caught"
+        text: "by the drift check, before the artwork went live."
+        when: "7 Nov, 10:27am"
+        links: [{ label: "Drift report", url: "https://github.com/gianlucacaico/design-system/pull/3" }]
+      - verb: "Decided"
+        text: "by the owner: it becomes <code>--cyan-bright</code>, logged with why."
+        links: [{ label: "Decision log", url: "#decision-log" }]
+      - verb: "Proved"
+        text: "every image came out identical after the rename."
+        when: "10:48am"
+        links: [{ label: "Change record", url: "https://github.com/gianlucacaico/gianlucacaico.github.io/pull/10/commits/926cdccdbe879c2dbfa8e0a6c9d00a6726042225" }]
+      - verb: "Approved"
+        text: "and live on the site."
+        when: "10:52am"
+        links: [{ label: "Review page", url: "https://github.com/gianlucacaico/gianlucacaico.github.io/pull/10" }]
+      - verb: "Followed"
+        text: "by the design system, approved and in step: 22 site and 17 artwork tokens match."
+        when: "10:58am"
+        links: [{ label: "Review page", url: "https://github.com/gianlucacaico/design-system/pull/4" }]
+
+  - id: component
+    label: "A component"
+    title: "Spotted on a phone, fixed in both systems."
+    summary: "Filters with more options than fit on a phone scroll sideways. Their glass ended partway along, leaving a hard edge."
+    visual: filter
+    before:
+      note: "The glass ended partway when the filter scrolled."
+      alt: "Illustration: a filter scrolled to the end, its glass stopping with a hard edge after Hooks."
+    after:
+      note: "The glass stays put while the options scroll."
+      alt: "Illustration: the same filter, its glass running the full width."
+    receipts:
+      - verb: "Spotted"
+        text: "by the owner, on a phone."
+        when: "7 Nov"
+      - verb: "Fixed"
+        text: "the same way in the kit and on the site: the filter now draws its own glass."
+        when: "8:31pm"
+        links:
+          - { label: "Kit review page", url: "https://github.com/gianlucacaico/design-system/pull/7" }
+          - { label: "Site review page", url: "https://github.com/gianlucacaico/gianlucacaico.github.io/pull/11" }
+      - verb: "Proved"
+        text: "on the site, under 0.1% of pixels changed, all inside the filters, and all 22 site tokens still match the design system."
+        when: "8:36pm"
+        links: [{ label: "Check results", url: "https://github.com/gianlucacaico/gianlucacaico.github.io/pull/11" }]
+      - verb: "Approved"
+        text: "the design system first, then the site, 17 seconds apart."
+        when: "8:37pm"
+        links:
+          - { label: "Kit", url: "https://github.com/gianlucacaico/design-system/pull/7" }
+          - { label: "Site", url: "https://github.com/gianlucacaico/gianlucacaico.github.io/pull/11" }
+
+# What this means for your program: the same model in a typical enterprise setting.
+program:
+  - title: "Every team checked against one standard"
+    text: "Each product team's site runs the same two-way check against the shared design system. A difference shows up on the change that caused it, and its owner decides which side is right."
+    here: "Here: [tokens] tokens, checked from both sides"
+  - title: "Agents for pace, owners for judgement"
+    text: "Agents draft and prove every change. A named owner for each product approves it at the gate, one change at a time."
+    here: "Here: one owner approves every change on both sites"
+  - title: "An audit trail by default"
+    text: "Every change is one review page with its wording, check results and approval, and can be undone in one step. Every design decision is logged with its reason."
+    here: "Here: [decisions] design decisions logged so far"
+  - title: "No lock-in"
+    text: "The templates say what happens, not which tool does it, so teams can swap in their own agent tools and delivery pipelines."
+    here: "Here: [templates] templates, from request to verified live"
