@@ -287,4 +287,76 @@ layout: default
       <p class="sys-note sys-poc">A proof of concept. Class names match gianlucacaico.com, and the kit is served from here, so any change to it reaches every page that uses it.</p>
     </div>
   </section>
+  <section class="section bordered" id="governance">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Governance</h2>
+        <span class="count">How it stays true</span>
+      </div>
+      <p class="section-intro">A design system is only useful while it matches what ships. These are the rules for keeping it in step with gianlucacaico.com, and for changing either one safely.</p>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Who owns what</h3>
+        <dl class="ds-pairs sys-roles">
+          <div><dt>gianlucacaico.com</dt><dd>The source. Pages, components and artwork are designed and shipped there first.</dd></div>
+          <div><dt>This design system</dt><dd>The standard. The tokens, components and rules, written down so any page can use them.</dd></div>
+          <div><dt>Gianluca</dt><dd>Approves every change before it goes live, on either site.</dd></div>
+          <div><dt>Claude sessions</dt><dd>Draft changes, preview them, open a review page, and check the live site after publishing.</dd></div>
+        </dl>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">How a change goes live</h3>
+        <figure class="flow sys-flow" aria-label="Draft, then preview, then review page, then approval, then publish, then check live">
+          <span>Draft</span><i aria-hidden="true">&rarr;</i><span>Preview</span><i aria-hidden="true">&rarr;</i><span>Review page</span><i aria-hidden="true">&rarr;</i><span>Approve</span><i aria-hidden="true">&rarr;</i><span>Publish</span><i aria-hidden="true">&rarr;</i><span>Check live</span>
+        </figure>
+        <ul class="sys-rules plain">
+          <li><b>Nothing goes live without approval,</b> and approval for one change doesn't carry over to the next.</li>
+          <li><b>One change per review page,</b> with the current and proposed wording side by side and phone and desktop previews.</li>
+          <li><b>Check the live site after publishing,</b> not just the code.</li>
+          <li><b>Every change can be undone</b> by reverting its review page on GitHub.</li>
+        </ul>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">The drift check</h3>
+        <p class="sys-note">The kit is a copy of the site's styles, so a check compares the two and says when they part ways. It runs at the end of every preview of this design system, and can be run on a main site change before it merges.</p>
+        <dl class="ds-pairs sys-checks">
+          <div><dt>Compares</dt><dd>Every colour, card art and layout token on the live site with the kit. It can also read the site's artwork template and pictograms.</dd></div>
+          <div><dt><span class="sys-flag drift">Drift</span></dt><dd>A token differs, or exists on only one side. Fix it before publishing, by updating the kit or asking whether the site is right.</dd></div>
+          <div><dt><span class="sys-flag info">Info</span></dt><dd>A colour is used but isn't a token yet. That's a to-do list for the kit, not a blocker.</dd></div>
+        </dl>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Versions</h3>
+        <ul class="sys-rules plain">
+          <li><b>Version 1 only gets changes that can't break a page:</b> new tokens, new components, fixes, and values that follow the site's look.</li>
+          <li><b>A breaking change becomes version 2,</b> at its own address, and only with Gianluca's approval. Version 1 then stays as it was.</li>
+          <li><b>The unversioned kit is always the latest.</b> Only this site's own pages rely on it.</li>
+        </ul>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Proposing a change</h3>
+        <ol class="sys-rules">
+          <li><b>Start on the main site</b> if it changes how something looks. The design system follows.</li>
+          <li><b>Name new colours and sizes as tokens,</b> each with a plain-English use.</li>
+          <li><b>Match the site's class names</b> for new components, and add each one to the demo with placeholder copy.</li>
+          <li><b>Run the preview.</b> It has to pass with no drift.</li>
+          <li><b>Open a review page</b> and record any design decision in the log below.</li>
+        </ol>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Decision log</h3>
+        <p class="sys-note">What has been decided and why, newest first, so nobody has to rediscover it.</p>
+        <ol class="sys-log">
+          {%- for d in site.data.decisions %}
+          <li><span class="sys-when">{{ d.when }}</span><div><b>{{ d.decision }}</b><span>{{ d.why }}</span></div></li>
+          {%- endfor %}
+        </ol>
+      </div>
+    </div>
+  </section>
 </main>

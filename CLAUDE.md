@@ -29,13 +29,14 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 
 | Path | What it is | Address |
 |---|---|---|
-| `index.html` | Docs page: foundations, imagery, playground, "Use it anywhere" | `/design-system/` |
+| `index.html` | Docs page: foundations, imagery, playground, "Use it anywhere", governance | `/design-system/` |
 | `demo.html` | Every component, loading only the kit. Also what the playground shows | `/design-system/demo` |
 | `_includes/gc.css` | The kit stylesheet's source. Tokens are filled in from `_data/kit.yml` at build time | Build only |
 | `_includes/gc.js` | The kit script's source: segmented controls and their sliding lens | Build only |
 | `v1/gc.css`, `v1/gc.js` | Version 1 of the kit, the address pages should use. Each is one line that includes the source | `/design-system/v1/gc.css`, `/v1/gc.js` |
 | `gc.css`, `gc.js` | The latest kit, built from the same source. The demo and docs use it | `/design-system/gc.css`, `/gc.js` |
 | `_data/kit.yml` | Every token: colours, card art, type, radii, motion, layout, breakpoints. One source for the kit and the docs | Build only |
+| `_data/decisions.yml` | The decision log shown in the Governance section | Build only |
 | `_layouts/default.html` | Docs page shell: head with link preview tags, header, footer, scripts | Build only |
 | `assets/docs.css`, `assets/docs.js` | Docs-only styles (built on the kit's tokens) and the playground script | Published |
 | `assets/avatar.webp`, `assets/og-image.jpg` | Copies of the main site's avatar and link preview image | Published |
@@ -57,6 +58,12 @@ The docs page's Imagery section holds the rules for the main site's drawn images
 - **Client names:** written as text (`.big`, 18px bold white), top left of the card's art. Gianluca decided against client logos without formal permission (November 2026). If a client ever gives it: the brand's own white version, never recoloured, stretched or redrawn, about 18 to 32px high, name as alt text.
 
 The main site makes the images (its `tools/art/` and `tools/art.js`); this repo holds the standard. When the main site's rules change, update the Imagery section, the Artwork colour group in `_data/kit.yml`, and the kit's `.work-art`, `.post-feature`, `.row-thumb` and `.article-hero` styles to match. The demo's samples are generic on purpose: never copy a client's pictogram, name artwork or logo into this repo.
+
+## Governance
+
+The docs page's Governance section explains, for anyone reading: who owns what (the main site is the source, this repo is the standard, Gianluca approves, Claude sessions draft and check), how a change goes live, what the drift check does, the version rules, how to propose a change, and a decision log.
+- **Decision log:** `_data/decisions.yml`, newest first, month and year only. Add an entry whenever Gianluca makes a design decision, in the same pull request as the change it explains.
+- Keep the section's wording true to how things actually work. If the process, the drift check or the version rules change, update it in the same pull request.
 
 ## Versions
 
