@@ -1,0 +1,309 @@
+# The workflow library, shown at /design-system/workflows.
+# One entry per skill, harness, hook or workflow used to build and keep gianlucacaico.com and this
+# design system true. Keep every entry true to how it works today. Each entry becomes a card with a
+# copyable, tool-agnostic template (built from the fields below).
+#   type: skill | harness | hook | workflow
+#   when: what starts it. inputs / steps / outputs / guardrails: the template itself.
+#   here: how this project does it, with which tool. works_with: ids of related entries.
+
+# ---------- Skills: named procedures an agent follows when asked ----------
+- id: edit
+  type: skill
+  name: Change copy or layout
+  summary: "Turns a plain-English request into a reviewed, previewed change that waits for approval."
+  when: "Someone asks for a change to a page, in their own words."
+  inputs: "The request, the site's content rules and its component library."
+  steps:
+    - "Find every place the change shows up."
+    - "Ask first if the request is ambiguous or touches a fact, client, figure or design decision."
+    - "Draft it to the content rules, reusing existing components and tokens."
+    - "Show the current and proposed wording side by side."
+    - "Make the change on its own branch and render phone and desktop previews."
+    - "Open a review page, then stop and wait."
+  outputs: "A review page with a wording table and previews. Nothing live."
+  guardrails:
+    - "Never publishes."
+    - "Never invents a new style when a component already exists."
+  here: "Claude Code skill /edit, in .claude/skills of the site's repo."
+  works_with: [preview, publish, gated-change]
+
+- id: new-post
+  type: skill
+  name: Publish-ready blog post from a draft
+  summary: "Turns a draft into one post file, its artwork and a review page."
+  when: "A new draft is ready to go on the blog."
+  inputs: "The draft, the voice and content rules, the artwork rules."
+  steps:
+    - "Gather the title, short title, address, date, summary, topics and read time, asking for anything missing."
+    - "Review the copy for voice, spelling, accuracy and banned characters before building anything."
+    - "Create the post file from the template."
+    - "Draw the post's artwork around its actual idea, using only words and figures from the post."
+    - "Preview the post, the blog page and the homepage list, and run the page check."
+    - "Open a review page, then stop and wait."
+  outputs: "One post file, its artwork, previews and a review page. Nothing live."
+  guardrails:
+    - "Never publishes."
+    - "Flags any newly named client, figure or outcome for confirmation first."
+  here: "Claude Code skill /new-post, in .claude/skills of the site's repo."
+  works_with: [preview, page-check, publish, gated-change]
+
+- id: preview
+  type: skill
+  name: Preview at phone and desktop size
+  summary: "Shows exactly how a page or section looks, before or after it goes live."
+  when: "Anyone asks to see how something looks."
+  inputs: "The page, an optional section, and whether to show the draft or the live site."
+  steps:
+    - "Work out the page and section from plain words."
+    - "Run the site preview harness at 390px and 1280px."
+    - "Send the screenshots, phone first, saying whether they show the draft or the live site."
+    - "Explain any warning in plain language."
+  outputs: "Phone and desktop screenshots."
+  guardrails:
+    - "Changes nothing."
+  here: "Claude Code skill /preview, running tools/preview.js in the site's repo."
+  works_with: [site-preview, edit]
+
+- id: publish
+  type: skill
+  name: Publish with a human gate
+  summary: "Puts one approved change live, then proves it on the live site."
+  when: "Only when the owner has explicitly approved this exact change."
+  inputs: "The approved review page."
+  steps:
+    - "Confirm the approval was for this exact change, after seeing its wording and previews."
+    - "Check what is about to ship: only the approved change, protected files untouched, no banned characters."
+    - "Merge it as one change, so it can be undone in one step."
+    - "Wait for the deployment to finish."
+    - "Run the live health check and preview the changed page on the live site."
+    - "Report what went live and how to undo it."
+  outputs: "The change live, verified, with a one-tap way to undo it."
+  guardrails:
+    - "Never runs on assumed approval. Only a person can start it."
+    - "Stops if anything unrelated is mixed in."
+  here: "Claude Code skill /publish (an agent cannot start it by itself), in .claude/skills of the site's repo."
+  works_with: [live-health, preview, gated-change]
+
+- id: health
+  type: skill
+  name: Site health report
+  summary: "Runs the live health check and explains the result in plain language."
+  when: "After every publish, or whenever someone asks if the site is OK."
+  inputs: "The live site."
+  steps:
+    - "Run the live health check harness."
+    - "Lead with the outcome: all good, or how many problems."
+    - "Explain each problem in one sentence: what it means for visitors and what to do."
+  outputs: "A plain-language health report."
+  guardrails:
+    - "Changes nothing without approval."
+  here: "Claude Code skill /health, running tools/health.sh in the site's repo."
+  works_with: [live-health, publish]
+
+# ---------- Harnesses: automated runs of checks that pass or fail ----------
+- id: site-preview
+  type: harness
+  name: Site preview harness
+  summary: "Builds the site exactly as the host does, then screenshots it at phone and desktop size."
+  when: "Every draft, before a review page opens."
+  inputs: "The working copy, or the live site."
+  steps:
+    - "Build the site with the host's own builder and settings."
+    - "Serve it locally with the same clean addresses as the live site."
+    - "Open each page at 390px and 1280px with motion reduced and the real font."
+    - "Warn if the font is missing or the wrong page is showing."
+  outputs: "Screenshots, plus warnings."
+  guardrails:
+    - "The build matches what the host publishes, byte for byte."
+  here: "tools/preview.js and tools/build.sh in the site's repo (Node, Playwright, Jekyll)."
+  works_with: [preview, edit]
+
+- id: page-check
+  type: harness
+  name: Page check
+  summary: "Follows every link on the site and checks each page works."
+  when: "Before any structural change ships, and inside the live health check."
+  inputs: "The working copy or the live site."
+  steps:
+    - "Start at the homepage and follow every internal link."
+    - "On each page, check the right page shows, every image loads and no script errors."
+    - "Check the link preview tags are present and point at the page's own address."
+    - "Check every in-page link has a target, old addresses redirect, and missing pages show the not-found page."
+    - "Fail on any banned character."
+  outputs: "A pass or fail line for every page and link."
+  guardrails:
+    - "Read-only."
+  here: "tools/check-views.js in the site's repo (Node, Playwright)."
+  works_with: [live-health, new-post]
+
+- id: live-health
+  type: harness
+  name: Live health check
+  summary: "Proves the live site is up, safe and exactly what was approved."
+  when: "After every publish."
+  inputs: "The live site and the approved code."
+  steps:
+    - "Check the domain, the www redirect and HTTPS."
+    - "Check the link preview tags and image."
+    - "Check private project files are not public."
+    - "Rebuild the approved code and compare every published file with the live site, byte for byte."
+    - "Check the domain file is intact, then run the page check."
+  outputs: "Pass, fail and warning lines, with a summary."
+  guardrails:
+    - "Read-only. A difference is reported, never fixed silently."
+  here: "tools/health.sh in the site's repo (Bash, curl, Jekyll)."
+  works_with: [page-check, health, publish]
+
+- id: before-after
+  type: harness
+  name: Before-and-after proof
+  summary: "Proves a change didn't move a single pixel it wasn't meant to."
+  when: "Any change meant to leave the look unchanged, such as a restructure."
+  inputs: "The live version and the draft."
+  steps:
+    - "Build both versions."
+    - "Screenshot every page of each, full length, at phone and desktop size."
+    - "Compare them pixel by pixel."
+    - "Save a red difference image for anything that changed."
+  outputs: "Same or different for every page, with difference images."
+  guardrails:
+    - "The result is quoted on the review page."
+  here: "tools/compare.js in the site's repo (Node, Playwright, pixelmatch)."
+  works_with: [edit, gated-change]
+
+- id: drift-check
+  type: harness
+  name: Drift check
+  summary: "Says when the design system and the site it describes part ways."
+  when: "At the end of every design system preview, and whenever it is run on a site change before that change merges."
+  inputs: "The site's live stylesheet, the design system's tokens, and optionally artwork files."
+  steps:
+    - "Read the site's colour, card art and layout tokens."
+    - "Compare each with the design system's tokens."
+    - "Report Drift for any token that differs or exists on only one side."
+    - "Report Info for colours used but not yet tokens."
+  outputs: "Drift and Info lines, and in step or not."
+  guardrails:
+    - "Drift blocks publishing until someone decides which side is right."
+    - "Info is a to-do list, not a blocker."
+  here: "tools/drift.js in the design system's repo (Node), run by its tools/preview.js."
+  works_with: [site-sync, playground]
+
+- id: playground
+  type: harness
+  name: Playground
+  summary: "A live, hands-on harness for the design system's theming."
+  when: "Whenever someone wants to see what the system can do, or test a theme."
+  inputs: "Accent and partner colours, light or dark, roundness and glass blur."
+  steps:
+    - "Show every component, rendered by the kit alone, in a frame."
+    - "Send each setting to the frame as it changes."
+    - "Write out the chosen settings, ready to paste into another page."
+  outputs: "A themed preview and a copyable theme."
+  guardrails:
+    - "Changes nothing outside the frame."
+  here: "The Playground on the design system's docs page (assets/docs.js and demo.html)."
+  works_with: [drift-check, plug-in]
+
+# ---------- Hooks: points where something fires by itself or plugs in ----------
+- id: end-of-turn
+  type: hook
+  name: End-of-turn save check
+  summary: "Stops an agent finishing with work left unsaved."
+  when: "Every time an agent is about to end its turn."
+  inputs: "The agent's working copy."
+  steps:
+    - "Look for changes not yet saved, or saved but not yet sent to the shared repo."
+    - "If any are found, tell the agent to send them before finishing."
+  outputs: "Nothing when all is saved. A prompt to push when it isn't."
+  guardrails:
+    - "It steps aside if it has already prompted once, so it can't loop."
+  here: "A Stop hook set by the cloud environment these Claude sessions run in, not by either repo."
+  works_with: [gated-change]
+
+- id: plug-in
+  type: hook
+  name: One-line plug-in
+  summary: "The point where any page hooks into the design system."
+  when: "A new page or prototype needs the look."
+  inputs: "Any page that takes HTML."
+  steps:
+    - "Add one stylesheet line for the look."
+    - "Optionally add one script line for interactive controls."
+    - "Optionally paste a theme from the playground."
+  outputs: "The page picks up the tokens and components, and follows future non-breaking updates."
+  guardrails:
+    - "Use the versioned address, so a breaking change never arrives unannounced."
+  here: "gianlucacaico.com/design-system/v1/gc.css and v1/gc.js."
+  works_with: [playground, change-event]
+
+- id: change-event
+  type: hook
+  name: Control change event
+  summary: "Lets any page react when someone picks an option."
+  when: "Someone taps an option in a segmented control."
+  inputs: "A segmented control on a page using the kit's script."
+  steps:
+    - "Press the chosen option and slide the glass highlight under it."
+    - "Announce the choice as an event any script on the page can listen for."
+  outputs: "A gc:change event carrying the chosen value."
+  guardrails:
+    - "Only fires on a person's choice."
+  here: "gc.js in the design system's kit. The playground's Light and Dark switch listens for it."
+  works_with: [plug-in, playground]
+
+# ---------- Workflows: skills, harnesses and hooks chained together ----------
+- id: gated-change
+  type: workflow
+  name: Human-gated change
+  summary: "Every change to either site, from request to verified live."
+  when: "Any change, big or small."
+  inputs: "A request in plain English."
+  steps:
+    - "Draft it with a skill, on its own branch."
+    - "Prove it with harnesses: previews, the page check, and the before-and-after proof where the look shouldn't change."
+    - "Open a review page with the wording side by side."
+    - "Wait for a person to approve that exact change."
+    - "Publish it, then run the live health check."
+  outputs: "One reviewed, verified change that can be undone in one step."
+  guardrails:
+    - "Approval for one change never carries over to the next."
+    - "One change per review page."
+  here: "Every change to gianlucacaico.com and this design system since November 2026."
+  works_with: [edit, publish, live-health, end-of-turn]
+
+- id: site-sync
+  type: workflow
+  name: Site-to-system sync
+  summary: "Keeps the design system following the site, before changes ship."
+  when: "A change to the site touches colour, components or artwork."
+  inputs: "The site's open review page."
+  steps:
+    - "Run the drift check against the site's change before it merges."
+    - "Pass any findings to the session that owns the site change."
+    - "That session fixes them, shows the person, and publishes once approved."
+    - "The design system takes the final values and rules, and publishes once approved."
+    - "Run the drift check again on the live site to confirm everything is in step."
+  outputs: "Both sites in step, each with its own approved change."
+  guardrails:
+    - "Each session changes only its own repo."
+  here: "The site's artwork (gianlucacaico.github.io#10) and the design system's Imagery rules (design-system#4), November 2026."
+  works_with: [drift-check, parallel-sessions, gated-change]
+
+- id: parallel-sessions
+  type: workflow
+  name: Parallel agent sessions
+  summary: "Two agents on two repos, coordinating without stepping on each other."
+  when: "Work spans more than one repo, or runs at the same time."
+  inputs: "One agent session per repo, each with its own task."
+  steps:
+    - "Give each session one repo and one change at a time."
+    - "Pass decisions and findings between sessions as messages."
+    - "Have the receiving session treat a message as information to act on through its own review page."
+    - "Have each session publish only with the person's approval."
+  outputs: "Coordinated changes across repos, each reviewed on its own."
+  guardrails:
+    - "A message from another session is never an approval."
+    - "No session writes to a repo it doesn't own."
+  here: "The design system session and the site artwork session, November 2026."
+  works_with: [site-sync, gated-change]

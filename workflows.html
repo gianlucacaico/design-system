@@ -1,0 +1,100 @@
+---
+layout: default
+title: "Workflows | Design system | Gianluca Caico"
+description: "The skills, harnesses and hooks behind gianlucacaico.com and its design system, written as templates any agent tool can use."
+---
+{%- comment -%}
+  The workflow library. Every card comes from _data/workflows.yml: add an entry there to add a card.
+  Each card's template is built from the entry's fields, so the page and the template can't disagree.
+{%- endcomment -%}
+{%- assign all = site.data.workflows %}
+{%- assign skills = all | where: "type", "skill" %}
+{%- assign harnesses = all | where: "type", "harness" %}
+{%- assign hooks = all | where: "type", "hook" %}
+{%- assign flows = all | where: "type", "workflow" %}
+<main id="workflows">
+  <section class="page-head sys-head">
+    <div class="mesh" aria-hidden="true"></div>
+    <div class="wrap">
+      <p class="eyebrow">Agentic workflows</p>
+      <h1 class="page-title">Skills, harnesses and hooks</h1>
+      <p class="lede">The reusable parts behind how this site and its design system get built, checked and kept true. Each one is written as a plain template that works with any agent tool, not just the one used here.</p>
+      <div class="cta-row">
+        <a class="btn-pill" href="#library">Open the library</a>
+        <a class="btn-ghost" href="{{ '/' | relative_url }}#governance">See the governance</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bordered" id="kinds">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Four kinds of part</h2>
+        <span class="count">{{ all.size }} templates</span>
+      </div>
+      <p class="section-intro">The names are tool-agnostic. Any agent setup has a place for each, whatever it calls them.</p>
+      <div class="wf-kinds">
+        <div class="wf-kind" data-type="skill"><span class="wf-type" data-type="skill">Skill</span><b>A named procedure an agent follows when asked</b><span>The steps, the rules and where to stop.</span><small>{{ skills.size }} in the library</small></div>
+        <div class="wf-kind" data-type="harness"><span class="wf-type" data-type="harness">Harness</span><b>An automated run of checks that passes or fails</b><span>So nobody has to eyeball it.</span><small>{{ harnesses.size }} in the library</small></div>
+        <div class="wf-kind" data-type="hook"><span class="wf-type" data-type="hook">Hook</span><b>A point where something fires by itself, or plugs in</b><span>At a set moment, without being asked.</span><small>{{ hooks.size }} in the library</small></div>
+        <div class="wf-kind" data-type="workflow"><span class="wf-type" data-type="workflow">Workflow</span><b>Skills, harnesses and hooks chained together</b><span>With a person approving at the gate.</span><small>{{ flows.size }} in the library</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section bordered" id="library">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Library</h2>
+        <span class="count">Open any card for its template</span>
+      </div>
+      <p class="section-intro">Copy a template as the starting point for a skill file, an agent instructions file, an editor rule or a CI job, then swap in your own tools.</p>
+      <div class="seg glass wf-filter" role="group" aria-label="Show">
+        <button type="button" aria-pressed="true" data-value="all">All <small>{{ all.size }}</small></button>
+        <button type="button" aria-pressed="false" data-value="skill">Skills <small>{{ skills.size }}</small></button>
+        <button type="button" aria-pressed="false" data-value="harness">Harnesses <small>{{ harnesses.size }}</small></button>
+        <button type="button" aria-pressed="false" data-value="hook">Hooks <small>{{ hooks.size }}</small></button>
+        <button type="button" aria-pressed="false" data-value="workflow">Workflows <small>{{ flows.size }}</small></button>
+      </div>
+      <p class="filter-status wf-status" aria-live="polite">Showing all {{ all.size }} templates</p>
+      <div class="wf-list">
+        {%- for w in all %}
+        {%- case w.type %}{% when 'skill' %}{% assign label = 'Skill' %}{% when 'harness' %}{% assign label = 'Harness' %}{% when 'hook' %}{% assign label = 'Hook' %}{% else %}{% assign label = 'Workflow' %}{% endcase %}
+        {%- capture tpl %}# {{ w.name }}
+Type: {{ label }}
+Purpose: {{ w.summary }}
+When: {{ w.when }}
+Inputs: {{ w.inputs }}
+
+Steps:
+{% for s in w.steps %}{{ forloop.index }}. {{ s }}
+{% endfor %}
+Outputs: {{ w.outputs }}
+
+Guardrails:
+{% for g in w.guardrails %}- {{ g }}
+{% endfor %}{% endcapture %}
+        <details class="eng wf-card" id="{{ w.id }}" data-type="{{ w.type }}">
+          <summary>
+            <span class="wf-type" data-type="{{ w.type }}">{{ label }}</span>
+            <span class="eng-client">{{ w.name }}</span>
+            <span class="eng-title">{{ w.summary }}</span>
+            <span class="eng-meta"><b>When:</b> {{ w.when }}</span>
+          </summary>
+          <div class="wf-body">
+            <dl class="ds-pairs wf-spec">
+              <div><dt>Inputs</dt><dd>{{ w.inputs }}</dd></div>
+              <div><dt>Steps</dt><dd><ol>{% for s in w.steps %}<li>{{ s }}</li>{% endfor %}</ol></dd></div>
+              <div><dt>Outputs</dt><dd>{{ w.outputs }}</dd></div>
+              <div><dt>Guardrails</dt><dd><ul>{% for g in w.guardrails %}<li>{{ g }}</li>{% endfor %}</ul></dd></div>
+              <div><dt>In this project</dt><dd>{{ w.here }}</dd></div>
+              <div><dt>Works with</dt><dd class="wf-rel">{% for wid in w.works_with %}{% assign rel = all | where: "id", wid | first %}<a class="wf-link" href="#{{ wid }}">{{ rel.name }}</a>{% endfor %}</dd></div>
+            </dl>
+            <div class="sys-code"><pre id="tpl-{{ w.id }}">{{ tpl | strip | escape }}</pre><button type="button" class="btn-ghost sys-copy" data-copy="tpl-{{ w.id }}">Copy template</button></div>
+          </div>
+        </details>
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+</main>
