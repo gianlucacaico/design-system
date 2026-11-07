@@ -1,6 +1,9 @@
 # Decision log for the design system, shown in the docs page's Governance section.
 # Add a line for every design decision Gianluca makes, newest first. Month and year only.
 - when: Nov 2026
+  decision: "Pages two levels down show a breadcrumb trail in the glass pill: the same <code>.crumbs</code> component on gianlucacaico.com's posts and on this site's Workflows and Kit demo pages."
+  why: "Readers who land deep from a shared link can see where they are and step up a level, and this site's pages show they belong to gianlucacaico.com."
+- when: Nov 2026
   decision: "Each site's footer links to the other: gianlucacaico.com's footer now links here, and this site's footer links back. This replaces \"no links from the main site\"."
   why: "Visitors to either site can find the other, and a footer link doesn't pull attention from the Work page, which was the reason for keeping them apart."
 - when: Nov 2026

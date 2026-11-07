@@ -70,7 +70,7 @@ description: "Every component in the GC kit, built from one stylesheet and one s
   <header class="page-head demo-head">
     <div class="mesh" aria-hidden="true"></div>
     <div class="wrap">
-      <a class="back glass" href="{{ '/' | relative_url }}">&larr; Design system</a>
+      <nav class="crumbs back glass" aria-label="Breadcrumb"><ol><li><a href="https://gianlucacaico.com/">gianlucacaico.com</a></li><li><a href="{{ '/' | relative_url }}">Design system</a></li><li aria-current="page">Kit demo</li></ol></nav>
       <p class="eyebrow demo-eyebrow">GC kit 0.1</p>
       <h1 class="page-title">Component demo</h1>
       <p class="lede">Everything on this page comes from one stylesheet and one small script. Open the code under any component to copy it into your own page.</p>
@@ -111,6 +111,16 @@ description: "Every component in the GC kit, built from one stylesheet and one s
           <a class="btn-ghost" href="#buttons">Read the blog</a>
           <a class="back glass" href="#buttons">&larr; All posts</a>
         </div>
+      </div>
+    </article>
+
+    <article class="spec" id="breadcrumbs">
+      <div class="spec-head">
+        <h2>Breadcrumb trail</h2>
+        <p>Where this page sits, one tap per level, in the glass pill. Only on pages two levels down. The current page is plain text and shortens with an ellipsis if the trail runs out of room.</p>
+      </div>
+      <div class="spec-stage">
+        <nav class="crumbs back glass" aria-label="Breadcrumb"><ol><li><a href="#breadcrumbs">Home</a></li><li><a href="#breadcrumbs">Section</a></li><li aria-current="page">Short page title</li></ol></nav>
       </div>
     </article>
 

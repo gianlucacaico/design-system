@@ -160,6 +160,13 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 }
 .btn-ghost:hover, .btn-ghost:focus-visible{border-color:var(--accent);}
 .back{display:inline-flex; align-items:center; gap:6px; padding:8px 16px; border-radius:var(--r-pill); font-size:0.88rem; font-weight:600; color:var(--accent-ink); text-decoration:none;}
+.crumbs{max-width:100%;}
+.crumbs ol{display:flex; align-items:center; min-width:0; margin:0; padding:0; list-style:none;}
+.crumbs li{flex:0 0 auto; white-space:nowrap;}
+.crumbs li + li::before{content:'/'; margin:0 8px; color:var(--faint); font-weight:400;}
+.crumbs a{display:inline-block; padding:8px 0; margin:-8px 0; color:var(--accent-ink); text-decoration:none;}
+.crumbs a:hover, .crumbs a:focus-visible{text-decoration:underline; text-underline-offset:3px;}
+.crumbs [aria-current]{flex:0 1 auto; min-width:0; overflow:hidden; text-overflow:ellipsis; color:var(--muted); font-weight:500;}
 
 /* ---------- Liquid glass ---------- */
 .glass{
@@ -371,4 +378,6 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 }
 @media (max-width:520px){
   .record{grid-template-columns:1fr;}
+  .crumbs{padding:8px 14px; font-size:0.82rem;}
+  .crumbs li + li::before{margin:0 6px;}
 }
