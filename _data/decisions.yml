@@ -4,10 +4,10 @@
   decision: "Client names are written as text on project cards, not shown as logos."
   why: "There is no formal permission from the clients to show their logos."
 - when: Nov 2026
-  decision: "The brighter artwork cyan is its own token, --cyan-bright (#12B5CB)."
-  why: "It kept clashing with the site's --cyan (#0E97AA) in the artwork template."
+  decision: "The brighter artwork cyan is its own token, <code>--cyan-bright</code> (#12B5CB)."
+  why: "It kept clashing with the site's <code>--cyan</code> (#0E97AA) in the artwork template."
 - when: Nov 2026
-  decision: "Pictogram highlights use three tints: --tint-cyan, --tint-coral and --tint-amber."
+  decision: "Pictogram highlights use three tints: <code>--tint-cyan</code>, <code>--tint-coral</code> and <code>--tint-amber</code>."
   why: "They were already in the site's pictograms but were not tokens anywhere."
 - when: Nov 2026
   decision: "The kit is served as version 1. Breaking changes become version 2, at their own address."
