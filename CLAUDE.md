@@ -41,7 +41,7 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 | `_data/model.yml` | The operating model's words: the outcomes, the two traced changes and "What this means for your program" | Build only |
 | `_data/decisions.yml` | The decision log shown in the Governance section | Build only |
 | `_data/workflows.yml` | The workflow library's entries, one per skill, harness, hook or workflow | Build only |
-| `_layouts/default.html` | Docs page shell: head with link preview tags, header, footer, scripts | Build only |
+| `_layouts/default.html` | Docs page shell: head with link preview tags, header, footer (with its site map: this site's sections and pages, and gianlucacaico.com's main pages), scripts | Build only |
 | `assets/docs.css`, `assets/docs.js` | Docs-only styles (built on the kit's tokens), and the script for the playground and the operating model switch | Published |
 | `assets/avatar.webp`, `assets/og-image.jpg` | Copies of the main site's avatar and link preview image | Published |
 | `assets/sample-artwork.svg`, `assets/sample-pictogram.svg` | Generic sample post artwork (1200x630) and project pictogram (240x156) for the demo and the Imagery diagrams. No client content | Published |

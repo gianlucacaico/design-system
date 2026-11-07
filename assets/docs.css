@@ -14,6 +14,11 @@
 .ds-home:hover{text-decoration:underline;}
 .ds-foot{padding:36px 0 48px; border-top:1px solid var(--border); font-size:0.85rem; color:var(--muted);}
 .ds-foot .wrap{display:flex; justify-content:space-between; gap:8px 24px; flex-wrap:wrap;}
+.ds-map{flex:1 0 100%; display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:32px; max-width:760px; margin-bottom:28px;}
+.ds-map p{margin:0 0 8px; font-size:0.8rem; font-weight:600; color:var(--faint);}
+.ds-map ul{list-style:none; margin:0; padding:0;}
+.ds-foot .ds-map a{display:inline-block; padding:5px 0; color:var(--text); font-size:0.9rem; font-weight:500; text-decoration:none;}
+.ds-foot .ds-map a:hover, .ds-foot .ds-map a:focus-visible{color:var(--accent-ink); text-decoration:underline; text-underline-offset:4px;}
 .ds-foot a{color:var(--accent-ink); font-weight:600;}
 .sys-head{padding-top:72px;}
 
@@ -26,6 +31,8 @@
 
 @media (max-width:760px){
   .ds-home{margin-left:auto;}
+  .ds-map{grid-template-columns:1fr 1fr; gap:24px 20px;}
+  .ds-map > div:first-child{grid-row:span 2;}
   .sys-head{padding-top:48px;}
 }
 
