@@ -36,6 +36,7 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 | `_includes/gc.js` | The kit script's source: segmented controls and their sliding lens | Build only |
 | `v1/gc.css`, `v1/gc.js` | Version 1 of the kit, the address pages should use. Each is one line that includes the source | `/design-system/v1/gc.css`, `/v1/gc.js` |
 | `gc.css`, `gc.js` | The latest kit, built from the same source. The demo and docs use it | `/design-system/gc.css`, `/gc.js` |
+| `tokens.json` | The kit's colour, card art and layout tokens as JSON (W3C design tokens layout), built from `_data/kit.yml`. gianlucacaico.com's drift check reads it, so keep its shape stable | `/design-system/tokens.json` |
 | `_data/kit.yml` | Every token: colours, card art, type, radii, motion, layout, breakpoints. One source for the kit and the docs | Build only |
 | `_data/decisions.yml` | The decision log shown in the Governance section | Build only |
 | `_data/workflows.yml` | The workflow library's entries, one per skill, harness, hook or workflow | Build only |
