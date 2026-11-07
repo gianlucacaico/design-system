@@ -147,12 +147,13 @@
     - "Check the link preview tags and image."
     - "Check private project files are not public."
     - "Rebuild the approved code and compare every published file with the live site, byte for byte."
-    - "Check the domain file is intact, then run the page check."
+    - "Check the domain file is intact, and that the site is still in step with its design system."
+    - "Run the page check."
   outputs: "Pass, fail and warning lines, with a summary."
   guardrails:
     - "Read-only. A difference is reported, never fixed silently."
   here: "tools/health.sh in the site's repo (Bash, curl, Jekyll)."
-  works_with: [page-check, health, publish]
+  works_with: [page-check, drift-check, health, publish]
 
 - id: before-after
   type: harness
@@ -174,19 +175,21 @@
 - id: drift-check
   type: harness
   name: Drift check
-  summary: "Says when the design system and the site it describes part ways."
-  when: "At the end of every design system preview, and whenever it is run on a site change before that change merges."
-  inputs: "The site's live stylesheet, the design system's tokens, and optionally artwork files."
+  summary: "Says when the design system and the site it describes part ways, from either side."
+  when: "At the end of every design system preview, after every site publish, and on any change before it merges."
+  inputs: "The site's stylesheet, the design system's published tokens, and the site's artwork files."
   steps:
-    - "Read the site's colour, card art and layout tokens."
-    - "Compare each with the design system's tokens."
+    - "Read what the other side publishes: the site's live stylesheet, or the design system's tokens file."
+    - "Compare every colour, card art and layout token on both sides."
     - "Report Drift for any token that differs or exists on only one side."
     - "Report Info for colours used but not yet tokens."
-  outputs: "Drift and Info lines, and in step or not."
+    - "Say what to do: ask the owner which side is right, then update the other side through its own review page."
+  outputs: "Drift and Info lines, in step or not, and the next step."
   guardrails:
-    - "Drift blocks publishing until someone decides which side is right."
+    - "Drift blocks publishing until the owner decides which side is right."
     - "Info is a to-do list, not a blocker."
-  here: "tools/drift.js in the design system's repo (Node), run by its tools/preview.js."
+    - "Each side changes only its own repo."
+  here: "tools/drift.js in both repos. The design system's reads the site's live stylesheet and runs in its tools/preview.js. The site's reads the design system's tokens.json and runs in its tools/health.sh."
   works_with: [site-sync, playground]
 
 - id: playground
@@ -279,11 +282,11 @@
   when: "A change to the site touches colour, components or artwork."
   inputs: "The site's open review page."
   steps:
-    - "Run the drift check against the site's change before it merges."
+    - "Run the drift check on the site's change before it merges. Either side can run it."
     - "Pass any findings to the session that owns the site change."
     - "That session fixes them, shows the person, and publishes once approved."
     - "The design system takes the final values and rules, and publishes once approved."
-    - "Run the drift check again on the live site to confirm everything is in step."
+    - "After each publish, the drift check runs again from that side to confirm everything is in step."
   outputs: "Both sites in step, each with its own approved change."
   guardrails:
     - "Each session changes only its own repo."

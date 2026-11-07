@@ -334,9 +334,9 @@ layout: default
 
       <div class="sys-block">
         <h3 class="sys-h">The drift check</h3>
-        <p class="sys-note">The kit is a copy of the site's styles, so a check compares the two and says when they part ways. It runs at the end of every preview of this design system, and can be run on a main site change before it merges.</p>
+        <p class="sys-note">The kit is a copy of the site's styles, so a check compares the two and says when they part ways. It runs from both sides, each reading what the other publishes: this design system reads the site's live stylesheet at the end of every preview, and the site reads this design system's tokens in its health check after every publish. Either side can also run it on a change before it merges.</p>
         <dl class="ds-pairs sys-checks">
-          <div><dt>Compares</dt><dd>Every colour, card art and layout token on the live site with the kit. It can also read the site's artwork template and pictograms.</dd></div>
+          <div><dt>Compares</dt><dd>Every colour, card art and layout token on the site with the kit, plus the colours in the site's artwork template and pictograms.</dd></div>
           <div><dt><span class="sys-flag drift">Drift</span></dt><dd>A token differs, or exists on only one side. Fix it before publishing, by updating the kit or asking whether the site is right.</dd></div>
           <div><dt><span class="sys-flag info">Info</span></dt><dd>A colour is used but isn't a token yet. That's a to-do list for the kit, not a blocker.</dd></div>
         </dl>

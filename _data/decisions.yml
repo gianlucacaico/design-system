@@ -1,6 +1,9 @@
 # Decision log for the design system, shown in the docs page's Governance section.
 # Add a line for every design decision Gianluca makes, newest first. Month and year only.
 - when: Nov 2026
+  decision: "The site and the design system check each other: the site reads the design system's tokens, and the design system reads the site's stylesheet."
+  why: "A difference is caught whichever side changes first, and each report says what the other side needs to do."
+- when: Nov 2026
   decision: "Client names are written as text on project cards, not shown as logos."
   why: "There is no formal permission from the clients to show their logos."
 - when: Nov 2026
