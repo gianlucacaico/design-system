@@ -12,7 +12,7 @@ const { execFileSync } = require('child_process');
 const { chromium } = require('playwright');
 
 const ROOT = path.resolve(__dirname, '..');
-const PAGES = { docs: '', demo: 'demo' };
+const PAGES = { docs: '', demo: 'demo', workflows: 'workflows' };
 const SIZES = { mobile: { width: 390, height: 844 }, desktop: { width: 1280, height: 800 } };
 const full = process.argv.includes('--full'), live = process.argv.includes('--live');
 

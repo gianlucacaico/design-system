@@ -83,22 +83,6 @@
     if (window.GC) window.GC.refresh();
   });
 
-  // Copy buttons for the code snippets.
-  page.querySelectorAll('[data-copy]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var text = document.getElementById(btn.getAttribute('data-copy')).textContent;
-      function done(){ btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = 'Copy'; }, 1600); }
-      function fallback(){
-        var t = document.createElement('textarea');
-        t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
-        document.body.appendChild(t); t.select();
-        try { document.execCommand('copy'); done(); } catch (err) {}
-        t.remove();
-      }
-      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
-    });
-  });
-
   // The demo reports its height, so the frame grows to fit and the page scrolls instead of the frame.
   var sized = false;
   window.addEventListener('message', function(e){
@@ -110,4 +94,54 @@
   // The demo may have loaded before this script ran (it often does on a repeat visit), so say hello now too.
   // It answers any settings message with its height.
   apply();
+})();
+
+// Copy buttons, on every page: copy the text of the element named in data-copy.
+(function(){
+  document.querySelectorAll('[data-copy]').forEach(function(btn){
+    var label = btn.textContent;
+    btn.addEventListener('click', function(){
+      var text = document.getElementById(btn.getAttribute('data-copy')).textContent;
+      function done(){ btn.textContent = 'Copied'; setTimeout(function(){ btn.textContent = label; }, 1600); }
+      function fallback(){
+        var t = document.createElement('textarea');
+        t.value = text; t.style.position = 'fixed'; t.style.opacity = '0';
+        document.body.appendChild(t); t.select();
+        try { document.execCommand('copy'); done(); } catch (err) {}
+        t.remove();
+      }
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+    });
+  });
+})();
+
+// Workflow library: filter by kind, and open a card when it is linked to.
+(function(){
+  var page = document.getElementById('workflows');
+  if (!page) return;
+  var cards = page.querySelectorAll('.wf-card');
+  var status = page.querySelector('.wf-status');
+  var names = {skill: 'skills', harness: 'harnesses', hook: 'hooks', workflow: 'workflows'};
+  page.querySelector('.wf-filter').addEventListener('gc:change', function(e){
+    var kind = e.detail.value, shown = 0;
+    cards.forEach(function(c){ var on = kind === 'all' || c.getAttribute('data-type') === kind; c.hidden = !on; if (on) shown++; });
+    status.textContent = kind === 'all' ? 'Showing all ' + cards.length + ' templates' : 'Showing ' + shown + ' ' + names[kind];
+  });
+  function open(id){
+    var card = id && document.getElementById(id);
+    if (!card || !card.classList.contains('wf-card')) return;
+    if (card.hidden){ var all = page.querySelector('.wf-filter button[data-value="all"]'); if (all) all.click(); }
+    card.open = true;
+    card.scrollIntoView({block: 'start'});
+  }
+  page.addEventListener('click', function(e){
+    var a = e.target.closest('.wf-link');
+    if (!a) return;
+    e.preventDefault();
+    var id = a.getAttribute('href').slice(1);
+    history.replaceState(null, '', '#' + id);
+    open(id);
+  });
+  window.addEventListener('hashchange', function(){ open(location.hash.slice(1)); });
+  open(location.hash.slice(1));
 })();
