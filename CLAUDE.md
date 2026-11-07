@@ -29,13 +29,16 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 
 | Path | What it is | Address |
 |---|---|---|
-| `index.html` | Docs page: foundations, imagery, playground, "Use it anywhere" | `/design-system/` |
+| `index.html` | Docs page: foundations, imagery, playground, "Use it anywhere", governance | `/design-system/` |
+| `workflows.html` | Workflow library: every skill, harness, hook and workflow behind both sites, as tool-agnostic templates | `/design-system/workflows` |
 | `demo.html` | Every component, loading only the kit. Also what the playground shows | `/design-system/demo` |
 | `_includes/gc.css` | The kit stylesheet's source. Tokens are filled in from `_data/kit.yml` at build time | Build only |
 | `_includes/gc.js` | The kit script's source: segmented controls and their sliding lens | Build only |
 | `v1/gc.css`, `v1/gc.js` | Version 1 of the kit, the address pages should use. Each is one line that includes the source | `/design-system/v1/gc.css`, `/v1/gc.js` |
 | `gc.css`, `gc.js` | The latest kit, built from the same source. The demo and docs use it | `/design-system/gc.css`, `/gc.js` |
 | `_data/kit.yml` | Every token: colours, card art, type, radii, motion, layout, breakpoints. One source for the kit and the docs | Build only |
+| `_data/decisions.yml` | The decision log shown in the Governance section | Build only |
+| `_data/workflows.yml` | The workflow library's entries, one per skill, harness, hook or workflow | Build only |
 | `_layouts/default.html` | Docs page shell: head with link preview tags, header, footer, scripts | Build only |
 | `assets/docs.css`, `assets/docs.js` | Docs-only styles (built on the kit's tokens) and the playground script | Published |
 | `assets/avatar.webp`, `assets/og-image.jpg` | Copies of the main site's avatar and link preview image | Published |
@@ -58,6 +61,19 @@ The docs page's Imagery section holds the rules for the main site's drawn images
 
 The main site makes the images (its `tools/art/` and `tools/art.js`); this repo holds the standard. When the main site's rules change, update the Imagery section, the Artwork colour group in `_data/kit.yml`, and the kit's `.work-art`, `.post-feature`, `.row-thumb` and `.article-hero` styles to match. The demo's samples are generic on purpose: never copy a client's pictogram, name artwork or logo into this repo.
 
+## Governance
+
+The docs page's Governance section explains, for anyone reading: who owns what (the main site is the source, this repo is the standard, Gianluca approves, Claude sessions draft and check), how a change goes live, what the drift check does, the version rules, how to propose a change, and a decision log.
+- **Decision log:** `_data/decisions.yml`, newest first, month and year only. Add an entry whenever Gianluca makes a design decision, in the same pull request as the change it explains.
+- Keep the section's wording true to how things actually work. If the process, the drift check or the version rules change, update it in the same pull request.
+
+## Workflow library
+
+`/design-system/workflows` lists every skill (a named procedure an agent follows when asked), harness (an automated run of checks that passes or fails), hook (a point where something fires by itself or plugs in) and workflow (those chained together with a human gate) behind gianlucacaico.com and this design system. Every card, and its copyable template, is built from `_data/workflows.yml`.
+- **Keep it true.** When a skill, harness or hook is added, changed or removed in either repo, update its entry in the same pull request (or the next one, for a change in the other repo).
+- **Keep templates tool-agnostic.** The name, summary, when, inputs, steps, outputs and guardrails say what happens, not which tool does it, and say "the owner" rather than naming Gianluca. Tools, file paths and names belong in `here`.
+- `works_with` lists the ids of related entries. Every id must exist, or its link shows empty.
+
 ## Versions
 
 - Pages use `/design-system/v1/gc.css` (and `/v1/gc.js`). Version 1 only takes changes that cannot break a page using it: new tokens, new components, fixes, values that move with the main site's look.
@@ -76,7 +92,7 @@ The kit's dark surface values are derived from ink and the main site's on-dark t
 
 Run from the repo root.
 
-- `node tools/preview.js [--full] [--live]`: builds with GitHub Pages' own Jekyll, screenshots both pages at 390px and 1280px into `tools/previews/` (git-ignored), and fails on any missing file, script error, em dash or missing link preview tag, or on drift from the live site. The first run in a fresh session installs the builder and a local copy of the Inter font (a minute or two).
+- `node tools/preview.js [--full] [--live]`: builds with GitHub Pages' own Jekyll, screenshots the docs, demo and workflows pages at 390px and 1280px into `tools/previews/` (git-ignored), and fails on any missing file, script error, em dash or missing link preview tag, or on drift from the live site. The first run in a fresh session installs the builder and a local copy of the Inter font (a minute or two).
 - `node tools/drift.js [site.css] [more files...]`: the drift check on its own (see "Keeping it in step").
 - `bash tools/build.sh [source] [destination]`: the build on its own.
 

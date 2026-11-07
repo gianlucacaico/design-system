@@ -1,0 +1,23 @@
+# Decision log for the design system, shown in the docs page's Governance section.
+# Add a line for every design decision Gianluca makes, newest first. Month and year only.
+- when: Nov 2026
+  decision: "Client names are written as text on project cards, not shown as logos."
+  why: "There is no formal permission from the clients to show their logos."
+- when: Nov 2026
+  decision: "The brighter artwork cyan is its own token, <code>--cyan-bright</code> (#12B5CB)."
+  why: "It kept clashing with the site's <code>--cyan</code> (#0E97AA) in the artwork template."
+- when: Nov 2026
+  decision: "Pictogram highlights use three tints: <code>--tint-cyan</code>, <code>--tint-coral</code> and <code>--tint-amber</code>."
+  why: "They were already in the site's pictograms but were not tokens anywhere."
+- when: Nov 2026
+  decision: "The kit is served as version 1. Breaking changes become version 2, at their own address."
+  why: "Pages that use the kit should never break without warning."
+- when: Nov 2026
+  decision: "A drift check compares the kit with the live site, at the end of every preview."
+  why: "The kit is a copy of the site's styles, so it has to be told when the site changes."
+- when: Nov 2026
+  decision: "The design system lives in its own repo, at gianlucacaico.com/design-system, with no links from the main site."
+  why: "As a page under Work it distracted from the Work page's purpose, and on its own it can never break the main site."
+- when: Nov 2026
+  decision: "The kit's dark surface is derived from ink and the site's on-dark colours."
+  why: "The main site has no dark mode of its own to copy."

@@ -30,10 +30,12 @@
   <div class="wrap">
     <a class="ds-mark" href="{{ '/' | relative_url }}"><span class="av av-xs" aria-hidden="true"><b>GC</b></span>Design system</a>
     <nav class="ds-links" aria-label="Sections">
-      <a href="#foundations">Foundations</a>
-      <a href="#imagery">Imagery</a>
-      <a href="#playground">Playground</a>
-      <a href="#use">Use it</a>
+      <a href="{{ '/' | relative_url }}#foundations">Foundations</a>
+      <a href="{{ '/' | relative_url }}#imagery">Imagery</a>
+      <a href="{{ '/' | relative_url }}#playground">Playground</a>
+      <a href="{{ '/' | relative_url }}#use">Use it</a>
+      <a href="{{ '/' | relative_url }}#governance">Governance</a>
+      <a href="{{ '/workflows' | relative_url }}"{% if page.url == '/workflows' %} aria-current="page"{% endif %}>Workflows</a>
     </nav>
     <a class="ds-home" href="https://gianlucacaico.com/">gianlucacaico.com &rarr;</a>
   </div>
