@@ -10,6 +10,9 @@
   decision: "The docs page opens with the operating model for executives and sponsors, shown through two real changes traced end to end, ahead of Foundations."
   why: "Leaders need the outcome and the way of working in under a minute. A real change with its record shows that better than a diagram of the process."
 - when: Nov 2026
+  decision: "Every footer carries a small site map. Here: this site's sections, its pages and gianlucacaico.com's main pages. On gianlucacaico.com: its pages, homepage sections and newest posts."
+  why: "The end of a long page offers a way on without scrolling back up, and both sites use the same pattern."
+- when: Nov 2026
   decision: "The site and the design system check each other: the site reads the design system's tokens, and the design system reads the site's stylesheet."
   why: "A difference is caught whichever side changes first, and each report says what the other side needs to do."
 - when: Nov 2026
