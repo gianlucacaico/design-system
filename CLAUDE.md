@@ -88,7 +88,7 @@ All the words live in `_data/model.yml`. Rules:
 
 ## Governance
 
-The Governance page explains, for anyone reading: who owns what (the main site is the source, this repo is the standard, Gianluca approves, Claude sessions draft and check, and may suggest an agent run that only Gianluca starts), how a change goes live, what the drift check does, the version rules, how to propose a change, and a decision log.
+The Governance page explains, for anyone reading: who owns what (the main site is the source, this repo is the standard, Gianluca approves, agent-driven sessions draft and check, and may suggest an agent run that only Gianluca starts), how a change goes live, what the drift check does, the version rules, how to propose a change, and a decision log.
 - **Decision log:** `_data/decisions.yml`, newest first, month and year only. Add an entry whenever Gianluca makes a design decision, in the same pull request as the change it explains.
 - Keep the section's wording true to how things actually work. If the process, the drift check or the version rules change, update it in the same pull request.
 

@@ -243,7 +243,7 @@
   outputs: "Nothing when all is saved. A prompt to push when it isn't."
   guardrails:
     - "It steps aside if it has already prompted once, so it can't loop."
-  here: "A Stop hook set by the cloud environment these Claude sessions run in, not by either repo."
+  here: "A Stop hook set by the cloud environment these agent-driven sessions run in, not by either repo."
   works_with: [gated-change]
 
 - id: agent-gate
