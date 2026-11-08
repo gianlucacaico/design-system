@@ -42,6 +42,7 @@ description: "Every component in the GC kit, built from one stylesheet and one s
   .spec-stage > *{margin-top:0; margin-bottom:0; max-width:100%;}
   .spec-stage.fill{align-items:stretch;}
   .spec-stage.bare{padding:0; overflow:hidden; background:var(--paper);}
+  .spec-stage.paper{background:var(--paper);}
   .spec-stage.on-colour{background:radial-gradient(60% 90% at 15% 25%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 70%), radial-gradient(55% 80% at 85% 75%, color-mix(in srgb, var(--accent-2) 50%, transparent), transparent 70%), var(--panel);}
   .glass-note{margin:2px 0 0; font-size:0.85rem; color:var(--muted);}
   .row{display:flex; flex-wrap:wrap; align-items:center; gap:12px;}
@@ -183,6 +184,38 @@ description: "Every component in the GC kit, built from one stylesheet and one s
       </div>
     </article>
 
+    <article class="spec" id="cards">
+      <div class="spec-head">
+        <h2>Plain cards</h2>
+        <p>The house card: a white surface, a hairline border and soft corners, with no accent line. It is the accordion card without the plus. Add practice-points for the same grid as plain text columns, with no card.</p>
+      </div>
+      <div class="spec-stage fill">
+        <div class="ev-outcomes">
+          <div><h3>A short, concrete claim</h3><p>One sentence on what changes and why it matters.</p></div>
+          <div><h3>Another claim</h3><p>Keep each card to a heading and a sentence or two.</p></div>
+          <div><h3>A third claim</h3><p>Three across on desktop, stacked on phones.</p></div>
+        </div>
+        <div class="ev-outcomes practice-points">
+          <div><h3>Without the card</h3><p>The same grid as plain text columns.</p></div>
+          <div><h3>For section intros</h3><p>Points that set up what follows.</p></div>
+          <div><h3>Kept short</h3><p>A heading and one sentence each.</p></div>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="panel">
+      <div class="spec-head">
+        <h2>Panel</h2>
+        <p>The detail of whatever is picked above it, such as one stage of a model. A step badge, a title and a one-line summary, then the content.</p>
+      </div>
+      <div class="spec-stage fill">
+        <div class="m-panel">
+          <div class="m-head"><span class="m-step">Stage 1 of 6</span><h3>Stage name</h3><p>What this stage is for</p></div>
+          <p class="m-solo">Two or three sentences on what happens at this stage and what it produces. Keep each panel to one idea.</p>
+        </div>
+      </div>
+    </article>
+
     <article class="spec" id="work-card">
       <div class="spec-head">
         <h2>Work card</h2>
@@ -243,6 +276,40 @@ description: "Every component in the GC kit, built from one stylesheet and one s
       </div>
     </article>
 
+    <article class="spec" id="bracket">
+      <div class="spec-head">
+        <h2>Bracket</h2>
+        <p>Groups a subset inside a larger item, like the engagements led inside one role. The accent edge says the cards belong to the item above, so the bracket is the only card with a coloured edge. Add a segmented control to its head when the group needs a filter.</p>
+      </div>
+      <div class="spec-stage fill paper">
+        <div class="bracket">
+          <div class="bracket-head">
+            <span class="bracket-label">Highlights inside this role<small>2 examples, newest first</small></span>
+          </div>
+          <div class="eng-grid">
+            <details class="eng">
+              <summary>
+                <span class="eng-client">Client name</span>
+                <span class="eng-meta">Industry &middot; 2026</span>
+                <span class="eng-title">What the engagement was</span>
+                <span class="eng-outcome">The outcome, in one line</span>
+              </summary>
+              <p class="eng-detail">The detail sits here: scope, approach and what happened next.</p>
+            </details>
+            <details class="eng">
+              <summary>
+                <span class="eng-client">Another client</span>
+                <span class="eng-meta">Industry &middot; 2024 &ndash; 25</span>
+                <span class="eng-title">A second engagement</span>
+                <span class="eng-outcome">Its outcome, in one line</span>
+              </summary>
+              <p class="eng-detail">Each card inside the bracket is the accordion card.</p>
+            </details>
+          </div>
+        </div>
+      </div>
+    </article>
+
     <article class="spec" id="link-card">
       <div class="spec-head">
         <h2>Link card</h2>
@@ -269,6 +336,36 @@ description: "Every component in the GC kit, built from one stylesheet and one s
             <li><span><span class="c-name">Item name</span><span class="c-issuer">Where it's from</span></span><span class="c-when">2026</span></li>
             <li><span><span class="c-name">Another item</span><span class="c-issuer">Source</span></span><span class="c-when">2024 &ndash; 25</span></li>
           </ul>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="dashed-card">
+      <div class="spec-head">
+        <h2>Dashed card</h2>
+        <p>Something that runs alongside the main line rather than in it, like freelance work that ran beside every role. The dashed edge keeps it apart from the list.</p>
+      </div>
+      <div class="spec-stage fill paper">
+        <div class="parallel">
+          <div class="tl-when">2009 &ndash; Present</div>
+          <div>
+            <p class="tl-org">Running in parallel</p>
+            <h3 class="tl-role">A practice that runs alongside</h3>
+            <p class="tl-summary">One or two sentences on what it is and why it matters next to the main story.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="spec" id="photo-card">
+      <div class="spec-head">
+        <h2>Photo card</h2>
+        <p>A soft panel with one tilted photo and a line about the person behind the work. One per page, near the end.</p>
+      </div>
+      <div class="spec-stage fill paper">
+        <div class="personal">
+          <div class="personal-photos"><div class="ph ph-snap"><img src="{{ '/assets/avatar.webp' | relative_url }}" alt="Sample photo"></div></div>
+          <p><strong>A short opener,</strong> then a sentence or two about life outside the work.</p>
         </div>
       </div>
     </article>
@@ -367,7 +464,7 @@ description: "Every component in the GC kit, built from one stylesheet and one s
     <article class="spec" id="flow">
       <div class="spec-head">
         <h2>Flow and roles</h2>
-        <p>Steps that end in the outcome, and three cards for three audiences.</p>
+        <p>Steps that end in the outcome, and three plain cards for three audiences.</p>
       </div>
       <div class="spec-stage fill">
         <figure class="flow" aria-label="Strategy, then blueprint, then delivery">

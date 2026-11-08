@@ -135,7 +135,7 @@ html{scroll-padding-top:calc(var(--ds-bar-h) + 16px);}
 .sys-program{background:radial-gradient(55% 90% at 0% 0%, color-mix(in srgb, var(--accent) 30%, transparent), transparent 70%), radial-gradient(45% 80% at 100% 100%, color-mix(in srgb, var(--accent-2) 16%, transparent), transparent 70%), var(--paper);}
 .sys-program .section-head h2{line-height:1.25;}
 .sys-map{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:12px;}
-.sys-map li{display:flex; flex-direction:column; padding:20px; border:1px solid var(--border); border-top:3px solid var(--accent); border-radius:var(--r-md); background:var(--surface);}
+.sys-map li{display:flex; flex-direction:column; padding:20px; border:1px solid var(--border); border-radius:var(--r-md); background:var(--surface);}
 .sys-map b{font-size:1.02rem; line-height:1.35; letter-spacing:-0.01em;}
 .sys-map p{margin:8px 0 0; font-size:0.9rem; line-height:1.55; color:var(--muted);}
 .sys-map small{margin-top:auto; padding-top:14px; font-size:0.8rem; font-weight:600; color:var(--accent-ink);}

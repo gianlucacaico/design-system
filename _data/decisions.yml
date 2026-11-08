@@ -1,6 +1,9 @@
 # Decision log for the design system, shown on its Governance page.
 # Add a line for every design decision Gianluca makes, newest first. Month and year only.
 - when: Nov 2026
+  decision: "Cards carry no decorative accent line. The plain card (white, a hairline border and soft corners, as on gianlucacaico.com's engagement cards) replaces the cards with a coloured top line, on both sites. A coloured edge stays only where it means something: the bracket that groups a subset, the outcome line inside a card and the pull quote."
+  why: "The top lines were decoration. The site's own cards are simpler and read better, and the bracket's edge earns its place because it shows the cards inside belong to the role above."
+- when: Nov 2026
   decision: "The design system becomes a portal: a home page that shows every page at a glance, in three groups, and eight short pages instead of one long one. The menu stays on screen, with a Menu button on phones, and every menu, the home page and the footer are built from one list (<code>_data/nav.yml</code>)."
   why: "The single page had reached 34 phone screens and was heading for about 60. People come to look one thing up, and a new page now takes one line to add."
 - when: Nov 2026

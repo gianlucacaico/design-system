@@ -286,6 +286,48 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .c-issuer{font-size:0.84rem; color:var(--muted);}
 .c-when{font-size:0.8rem; color:var(--faint); font-weight:500; white-space:nowrap;}
 
+/* Plain cards: the house card, as gianlucacaico.com's engagement cards without the plus (the same card as
+   .roles below). Cards carry no accent line: a coloured edge only marks a subset (.bracket) or the outcome
+   line inside a card. Add .practice-points for the same grid as plain text columns, with no card. */
+.ev-outcomes{display:grid; grid-template-columns:repeat(3, 1fr); gap:12px;}
+.ev-outcomes > div{padding:16px; background:var(--surface); border:1px solid var(--border); border-radius:var(--r-sm);}
+.ev-outcomes h3{font-size:1.02rem;}
+.ev-outcomes p{margin:8px 0 0; font-size:0.92rem; color:var(--muted);}
+.ev-outcomes.practice-points{gap:40px;}
+.ev-outcomes.practice-points > div{padding:0; background:none; border:0; border-radius:0;}
+
+/* Bracket: groups a subset inside a larger item, like the engagements led inside one role. The accent edge
+   says the cards belong to the item above, which is why it is the only card with a coloured edge. */
+.bracket{background:var(--panel); border:1px solid var(--border); border-left:3px solid var(--accent); border-radius:var(--r-md); padding:22px 22px 24px;}
+.bracket-head{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px 20px; margin-bottom:18px;}
+.bracket-label{font-size:0.95rem; font-weight:700;}
+.bracket-label small{display:block; font-size:0.8rem; font-weight:500; color:var(--muted);}
+.bracket .filter-status{margin:0 0 14px;}
+
+/* Panel: the detail of whatever is picked above it (a stage of a model, a step). Badge, title, summary, content. */
+.m-panel{border:1px solid var(--border); border-radius:var(--r-md); background:var(--surface); padding:24px;}
+.m-head{display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 14px; margin-bottom:18px;}
+.m-step{font-size:0.75rem; font-weight:700; color:var(--accent-ink); background:var(--accent-wash); padding:3px 10px; border-radius:var(--r-pill);}
+.m-head h3{font-size:1.3rem;}
+.m-head p{margin:0; color:var(--muted); font-size:0.92rem;}
+.m-solo{margin:0; max-width:var(--max); color:var(--muted); font-size:0.97rem;}
+
+/* Dashed card: something that runs alongside the main line, like freelance work beside every role */
+.parallel{display:grid; grid-template-columns:168px 1fr; column-gap:44px; border:1.5px dashed var(--border); border-radius:var(--r-md); padding:22px 24px;}
+.tl-when{font-size:0.85rem; font-weight:600; color:var(--accent-ink); padding-top:1px;}
+.tl-org{margin:0; font-size:0.85rem; font-weight:600; color:var(--muted);}
+.tl-role{font-size:1.25rem; margin-top:2px;}
+.tl-summary{margin:10px 0 0; color:var(--muted); font-size:0.97rem; max-width:var(--max);}
+
+/* Photo card: a soft panel with one tilted photo and a line about the person behind the work */
+.personal{display:grid; grid-template-columns:auto minmax(0,1fr); gap:32px; align-items:center; max-width:780px; padding:22px 26px; background:var(--panel); border:1px solid var(--border); border-radius:var(--r-lg);}
+.personal p{margin:0; color:var(--muted); font-size:0.97rem;}
+.personal strong{color:var(--text);}
+.personal-photos{position:relative; width:176px; height:176px;}
+.ph{position:relative; overflow:hidden; background:var(--art);}
+.ph img{display:block; width:100%; height:100%; object-fit:cover; object-position:var(--pos, 50% 30%);}
+.ph-snap{position:absolute; top:6px; left:4px; width:164px; aspect-ratio:1; border-radius:calc(14px * var(--round)); border:4px solid #fff; box-shadow:0 10px 24px rgba(10,37,64,0.16); transform:rotate(-3deg);}
+
 /* Featured post: artwork on one side, the story on the other */
 .post-feature{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); background:var(--surface); border:1px solid var(--border); border-radius:var(--r-lg); overflow:hidden; text-decoration:none; color:inherit; transition:transform .25s ease, box-shadow .25s ease;}
 .post-feature:hover{transform:translateY(-3px); box-shadow:var(--lift);}
@@ -349,7 +391,7 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
 .flow span:last-child{background:var(--accent); border-color:var(--accent); color:#fff;}
 .flow i{font-style:normal; color:var(--faint);}
 .roles{display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; margin:0 0 28px;}
-.roles div{padding:16px; border:1px solid var(--border); border-top:3px solid var(--accent); border-radius:var(--r-sm); background:var(--surface);}
+.roles div{padding:16px; border:1px solid var(--border); border-radius:var(--r-sm); background:var(--surface);}
 .roles b{display:block; font-size:0.95rem;}
 .roles span{display:block; margin-top:6px; font-size:0.9rem; line-height:1.5; color:var(--muted);}
 .defs{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:0 0 28px;}
@@ -372,9 +414,14 @@ a:focus-visible, button:focus-visible, summary:focus-visible, input:focus-visibl
   .post-art.has-img{min-height:0; aspect-ratio:1200/630; padding:10px;}
   .post-text{padding:22px;}
   .article-hero{margin-top:28px; border-radius:var(--r-md);}
+  .bracket{padding:18px 14px;}
+  .m-panel{padding:18px;}
+  .parallel{grid-template-columns:1fr; row-gap:6px; padding:20px;}
 }
 @media (max-width:640px){
-  .roles, .defs{grid-template-columns:1fr;}
+  .roles, .defs, .ev-outcomes{grid-template-columns:1fr;}
+  .ev-outcomes.practice-points{gap:28px;}
+  .personal{grid-template-columns:1fr; gap:20px; padding:20px;}
 }
 @media (max-width:520px){
   .record{grid-template-columns:1fr;}
