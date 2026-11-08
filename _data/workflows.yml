@@ -139,7 +139,7 @@
 - id: nav-map
   type: harness
   name: Navigation map
-  summary: "Maps every page of the site and its design system as one space, and checks how people find their way."
+  summary: "Maps every page of the site and its design system as one space, checks how people find their way, and spots pages growing too long."
   when: "The first step of every navigation sweep, and on any change to menus, footers or page structure."
   inputs: "Both sites: working copies or the live sites."
   steps:
@@ -149,7 +149,9 @@
     - "Fail on broken links, in-page links with no target, and pages with no way home."
     - "Warn on missing current-page markers, dead ends, orphan pages, address mismatches, vague labels and small tap targets."
     - "Count the links between the two sites, and the taps from each page to the main pages."
-  outputs: "A pass, warn or fail line for every check, a page-by-page map, and screenshots of every page's top and end."
+    - "Measure each page's length in phone screens and sections, count menu links that jump within it, and read its history to forecast its growth."
+    - "Flag a long reference page, or one growing towards that, to become sub-pages with a menu."
+  outputs: "A pass, warn or fail line for every check, a page-by-page map with each page's length and growth forecast, and screenshots of every page's top and end."
   guardrails:
     - "Read-only."
     - "Warnings are evidence for a review, not changes to make."
@@ -339,7 +341,8 @@
   inputs: "Both sites, the navigation standard and the decision log."
   steps:
     - "Map both sites with the navigation map."
-    - "Walk the key journeys at phone size first, and score each finding against usability heuristics, with a severity."
+    - "Walk the key journeys at phone size first, including looking one thing up, and score each finding against usability heuristics, with a severity."
+    - "Look ahead as well as at today: a page that is long and growing gets a proposed structure of sub-pages before it becomes hard to use."
     - "List the small clean-up fixes, each with the repo it belongs to."
     - "Check the decision log, then draft proposals such as breadcrumbs, footer site maps and cross-site links in a throwaway copy."
     - "Show each proposal as current and proposed, at phone and desktop size, with the decisions needed."
