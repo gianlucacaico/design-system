@@ -10,7 +10,7 @@
 .ds-links{display:flex; gap:4px; margin-left:auto;}
 .ds-links a{padding:6px 12px; border-radius:999px; font-size:0.88rem; font-weight:600; color:var(--muted); text-decoration:none; transition:color .2s, background .2s;}
 .ds-links a:hover{color:var(--text); background:var(--panel);}
-.ds-home{font-size:0.88rem; font-weight:600; color:var(--accent-ink); text-decoration:none; white-space:nowrap;}
+.ds-home{display:inline-block; padding:4px 0; margin:-4px 0; font-size:0.88rem; font-weight:600; color:var(--accent-ink); text-decoration:none; white-space:nowrap;}
 .ds-home:hover{text-decoration:underline;}
 .ds-foot{padding:36px 0 48px; border-top:1px solid var(--border); font-size:0.85rem; color:var(--muted);}
 .ds-foot .wrap{display:flex; justify-content:space-between; gap:8px 24px; flex-wrap:wrap;}
@@ -83,7 +83,7 @@
 .sys-receipts b{color:var(--text);}
 .sys-receipts .sys-rc-meta{display:flex; flex-wrap:wrap; gap:2px 14px; margin-top:3px; font-size:0.8rem; font-weight:600;}
 .sys-rc-meta span{color:var(--faint);}
-.sys-rc-meta a{color:var(--accent-ink); text-decoration:none;}
+.sys-rc-meta a{display:inline-block; padding:4px 0; margin:-4px 0; color:var(--accent-ink); text-decoration:none;}
 .sys-rc-meta a:hover{text-decoration:underline;}
 .sys-rc-meta a[target]::after{content:'\2197'; margin-left:3px;}
 .sys-case-foot{margin:14px 0 0; font-size:0.8rem; color:var(--faint);}
