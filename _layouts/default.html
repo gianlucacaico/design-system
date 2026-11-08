@@ -26,32 +26,43 @@
 <link rel="stylesheet" href="{{ '/assets/docs.css' | relative_url }}">
 </head>
 <body>
+{%- assign here = page.url | remove: '.html' %}
 <header class="ds-bar">
   <div class="wrap">
-    <a class="ds-mark" href="{{ '/' | relative_url }}"><span class="av av-xs" aria-hidden="true"><b>GC</b></span>Design system</a>
-    <nav class="ds-links" aria-label="Sections">
-      <a href="{{ '/' | relative_url }}#foundations">Foundations</a>
-      <a href="{{ '/' | relative_url }}#imagery">Imagery</a>
-      <a href="{{ '/' | relative_url }}#playground">Playground</a>
-      <a href="{{ '/' | relative_url }}#use">Use it</a>
-      <a href="{{ '/' | relative_url }}#governance">Governance</a>
-      <a href="{{ '/workflows' | relative_url }}"{% if page.url == '/workflows' %} aria-current="page"{% endif %}>Workflows</a>
+    <a class="ds-mark" href="{{ '/' | relative_url }}"{% if here == '/' %} aria-current="page"{% endif %}><span class="av av-xs" aria-hidden="true"><b>GC</b></span>Design system</a>
+    <nav class="ds-links" aria-label="Design system">
+      {%- for g in site.data.nav.groups %}{% for x in g.pages %}
+      <a href="{{ x.url | relative_url }}"{% if here == x.url %} aria-current="page"{% endif %}>{{ x.short | default: x.name }}</a>
+      {%- endfor %}{% endfor %}
     </nav>
     <a class="ds-home" href="https://gianlucacaico.com/">gianlucacaico.com &rarr;</a>
+    <details class="ds-menu">
+      <summary class="btn-ghost"><span class="ds-m-open">Menu</span><span class="ds-m-close">Close</span></summary>
+      <nav class="ds-sheet" aria-label="Design system">
+        <a class="ds-sheet-home" href="{{ '/' | relative_url }}"{% if here == '/' %} aria-current="page"{% endif %}>Design system home</a>
+        {%- for g in site.data.nav.groups %}
+        <p class="ds-sheet-k">{{ g.name }}</p>
+        <ul>
+          {%- for x in g.pages %}
+          <li><a href="{{ x.url | relative_url }}"{% if here == x.url %} aria-current="page"{% endif %}><b>{{ x.name }}</b><span>{{ x.summary }}</span></a></li>
+          {%- endfor %}
+        </ul>
+        {%- endfor %}
+        <a class="ds-sheet-site" href="https://gianlucacaico.com/">gianlucacaico.com &rarr;</a>
+      </nav>
+    </details>
   </div>
 </header>
 {{ content }}
 <footer class="ds-foot">
   <div class="wrap">
     <nav class="ds-map" aria-label="Site map">
+      {%- for g in site.data.nav.groups %}
       <div>
-        <p>Design system</p>
-        <ul><li><a href="{{ '/' | relative_url }}#model">Operating model</a></li><li><a href="{{ '/' | relative_url }}#foundations">Foundations</a></li><li><a href="{{ '/' | relative_url }}#imagery">Imagery</a></li><li><a href="{{ '/' | relative_url }}#playground">Playground</a></li><li><a href="{{ '/' | relative_url }}#use">Use it anywhere</a></li><li><a href="{{ '/' | relative_url }}#governance">Governance</a></li></ul>
+        <p>{{ g.name }}</p>
+        <ul>{% for x in g.pages %}<li><a href="{{ x.url | relative_url }}">{{ x.name }}</a></li>{% endfor %}</ul>
       </div>
-      <div>
-        <p>Pages</p>
-        <ul><li><a href="{{ '/workflows' | relative_url }}">Workflows</a></li><li><a href="{{ '/demo' | relative_url }}">Kit demo</a></li></ul>
-      </div>
+      {%- endfor %}
       <div>
         <p>gianlucacaico.com</p>
         <ul><li><a href="https://gianlucacaico.com/">Home</a></li><li><a href="https://gianlucacaico.com/work">Work</a></li><li><a href="https://gianlucacaico.com/blog/">Blog</a></li></ul>

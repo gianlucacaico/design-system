@@ -1,20 +1,38 @@
 /*
-  Docs page styles for the GC kit. gc.css loads first, so everything here
+  Design system page styles for the GC kit. gc.css loads first, so everything here
   uses the kit's own tokens and components: the docs are built from the kit.
 */
 
 /* ---------- Header and footer ---------- */
-.ds-bar{padding:14px 0; border-bottom:1px solid var(--border); background:var(--paper);}
+/* The header stays on screen on every page, so the menu is always one tap away. */
+:root{--ds-bar-h:64px;}
+html{scroll-padding-top:calc(var(--ds-bar-h) + 16px);}
+.ds-bar{position:sticky; top:0; z-index:40; padding:14px 0; border-bottom:1px solid var(--border); background:var(--paper);}
 .ds-bar .wrap{display:flex; align-items:center; gap:12px 24px;}
 .ds-mark{display:inline-flex; align-items:center; gap:10px; font-weight:700; letter-spacing:-0.02em; text-decoration:none; white-space:nowrap;}
-.ds-links{display:flex; gap:4px; margin-left:auto;}
-.ds-links a{padding:6px 12px; border-radius:999px; font-size:0.88rem; font-weight:600; color:var(--muted); text-decoration:none; transition:color .2s, background .2s;}
+.ds-links{display:flex; gap:2px; margin-left:auto;}
+.ds-links a{padding:6px 10px; border-radius:999px; font-size:0.88rem; font-weight:600; white-space:nowrap; color:var(--muted); text-decoration:none; transition:color .2s, background .2s;}
 .ds-links a:hover{color:var(--text); background:var(--panel);}
 .ds-home{display:inline-block; padding:4px 0; margin:-4px 0; font-size:0.88rem; font-weight:600; color:var(--accent-ink); text-decoration:none; white-space:nowrap;}
 .ds-home:hover{text-decoration:underline;}
+/* Phones and narrow windows: a Menu button opens every page, in its groups, under the header. */
+.ds-menu{display:none; margin-left:auto;}
+.ds-menu summary{list-style:none; cursor:pointer; padding:8px 18px; font-size:0.88rem; font-weight:600;}
+.ds-menu summary::-webkit-details-marker{display:none;}
+.ds-m-close, .ds-menu[open] .ds-m-open{display:none;}
+.ds-menu[open] .ds-m-close{display:inline;}
+.ds-sheet{position:absolute; left:0; right:0; top:100%; max-height:calc(100vh - var(--ds-bar-h)); max-height:calc(100dvh - var(--ds-bar-h)); overflow-y:auto; padding:12px 20px 28px; background:var(--paper); border-bottom:1px solid var(--border); box-shadow:0 24px 40px rgba(10,37,64,0.12);}
+.ds-sheet-k{margin:16px 0 4px; font-size:0.78rem; font-weight:600; color:var(--faint);}
+.ds-sheet ul{list-style:none; margin:0; padding:0;}
+.ds-sheet li a{display:block; margin:0 -12px; padding:9px 12px; border-radius:var(--r-md); color:var(--text); text-decoration:none;}
+.ds-sheet li a b{display:block; font-size:0.98rem;}
+.ds-sheet li a span{display:block; margin-top:2px; font-size:0.84rem; line-height:1.45; color:var(--muted);}
+.ds-sheet a[aria-current="page"]{background:var(--panel);}
+.ds-sheet-home, .ds-sheet-site{display:block; padding:10px 0; font-size:0.92rem; font-weight:600; color:var(--accent-ink); text-decoration:none;}
+.ds-sheet-site{margin-top:14px; padding-top:16px; border-top:1px solid var(--border);}
 .ds-foot{padding:36px 0 48px; border-top:1px solid var(--border); font-size:0.85rem; color:var(--muted);}
 .ds-foot .wrap{display:flex; justify-content:space-between; gap:8px 24px; flex-wrap:wrap;}
-.ds-map{flex:1 0 100%; display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:32px; max-width:760px; margin-bottom:28px;}
+.ds-map{flex:1 0 100%; display:grid; grid-template-columns:repeat(4, minmax(0, 1fr)); gap:32px; max-width:900px; margin-bottom:28px;}
 .ds-map p{margin:0 0 8px; font-size:0.8rem; font-weight:600; color:var(--faint);}
 .ds-map ul{list-style:none; margin:0; padding:0;}
 .ds-foot .ds-map a{display:inline-block; padding:5px 0; color:var(--text); font-size:0.9rem; font-weight:500; text-decoration:none;}
@@ -22,6 +40,20 @@
 .ds-foot a{color:var(--accent-ink); font-weight:600;}
 .sys-head{padding-top:72px;}
 .sys-head .crumbs{margin-bottom:28px;}
+.ds-page-fig{font-weight:500; color:var(--faint);}
+.ds-carry{margin:0 0 12px;}
+
+/* ---------- Home: every page at a glance, in its group ---------- */
+.ds-group{margin-top:36px;}
+.ds-group .sys-h{margin-bottom:2px;}
+.ds-doors{list-style:none; margin:14px 0 0; padding:0; display:grid; grid-template-columns:repeat(3, minmax(0, 1fr)); gap:16px;}
+.ds-door{display:flex; flex-direction:column; gap:6px; height:100%; padding:20px; border:1px solid var(--border); border-radius:var(--r-md); background:var(--paper); color:var(--text); text-decoration:none; transition:border-color .2s, box-shadow .2s, transform .2s;}
+.ds-door:hover, .ds-door:focus-visible{border-color:var(--accent); box-shadow:0 12px 28px rgba(10,37,64,0.08); transform:translateY(-2px);}
+.ds-door-fig{font-size:0.78rem; font-weight:600; color:var(--accent-ink);}
+.ds-door b{font-size:1.06rem; letter-spacing:-0.01em;}
+.ds-door b::after{content:' \2192'; color:var(--accent-ink);}
+.ds-door-sum{font-size:0.9rem; line-height:1.5; color:var(--muted);}
+@media (prefers-reduced-motion: reduce){ .ds-door{transition:none;} .ds-door:hover{transform:none;} }
 
 /* ---------- Helpers carried over from the main site ---------- */
 .ds-pairs{margin:4px 0 32px; border-top:1px solid var(--border);}
@@ -30,11 +62,22 @@
 .ds-pairs dd{margin:0; font-size:0.95rem;}
 .ds-n{display:inline-flex; align-items:center; justify-content:center; width:24px; height:24px; border-radius:50%; font-size:0.75rem; font-weight:700; background:var(--panel); color:var(--violet-deep); border:1px solid var(--border);}
 
+/* The full menu needs about 1010px; below that, the Menu button takes over. */
+@media (max-width:1080px){
+  :root{--ds-bar-h:70px;}
+  .ds-links, .ds-home{display:none;}
+  .ds-menu{display:block;}
+}
+@media (max-width:900px){
+  .ds-doors{grid-template-columns:1fr 1fr;}
+}
 @media (max-width:760px){
-  .ds-home{margin-left:auto;}
   .ds-map{grid-template-columns:1fr 1fr; gap:24px 20px;}
-  .ds-map > div:first-child{grid-row:span 2;}
   .sys-head{padding-top:48px;}
+}
+@media (max-width:640px){
+  .ds-doors{grid-template-columns:1fr; gap:12px;}
+  .ds-door{padding:16px 18px;}
 }
 
 /* ---------- Operating model: outcomes, two real changes traced, and what it means for a program ---------- */
@@ -154,7 +197,7 @@
 .sys-pairs code{display:block; margin-top:2px; font:0.76rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; color:var(--faint);}
 
 .sys-play{display:grid; grid-template-columns:280px minmax(0,1fr); gap:28px; align-items:start;}
-.sys-controls{position:sticky; top:16px; z-index:5; display:flex; flex-direction:column; gap:18px; padding:20px; border-radius:24px; background:linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,255,255,0.78));}
+.sys-controls{position:sticky; top:calc(var(--ds-bar-h) + 16px); z-index:5; display:flex; flex-direction:column; gap:18px; padding:20px; border-radius:24px; background:linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,255,255,0.78));}
 .sys-ctl .sys-k{display:flex; justify-content:space-between; gap:8px; margin:0 0 8px;}
 .sys-ctl output{font-weight:600; letter-spacing:0; text-transform:none; color:var(--muted);}
 .sys-dots{display:flex; flex-wrap:wrap; gap:8px;}
@@ -184,7 +227,7 @@
 
 @media (max-width:900px){
   .sys-play{grid-template-columns:1fr; gap:16px;}
-  .sys-controls{top:10px; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px 16px; padding:14px 16px; border-radius:22px;}
+  .sys-controls{top:calc(var(--ds-bar-h) + 10px); display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:12px 16px; padding:14px 16px; border-radius:22px;}
   .sys-ctl-accent{grid-column:1 / -1;}
   .sys-ctl .sys-k{margin-bottom:6px; font-size:0.66rem;}
   .sys-dot{width:28px; height:28px;}
@@ -285,12 +328,6 @@
 .wf-link{font-size:0.8rem; font-weight:600; color:var(--accent-ink); background:var(--accent-wash); padding:3px 10px; border-radius:999px; text-decoration:none;}
 .wf-link:hover{text-decoration:underline;}
 .wf-body .sys-code pre{white-space:pre-wrap; overflow-wrap:anywhere;}
-@media (max-width:760px){
-  .ds-bar .wrap{flex-wrap:wrap; row-gap:8px;}
-  .ds-links{display:flex; order:3; width:calc(100% + 16px); margin:0 -8px; overflow-x:auto; scrollbar-width:none;}
-  .ds-links::-webkit-scrollbar{display:none;}
-  .ds-links a{flex:0 0 auto; padding:6px 10px; font-size:0.82rem;}
-}
 @media (max-width:640px){
   .wf-spec div{grid-template-columns:1fr;}
 }

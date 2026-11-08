@@ -1,0 +1,62 @@
+---
+layout: sub
+permalink: /use
+title: "Use it anywhere | Design system | Gianluca Caico"
+description: "The kit is one stylesheet hosted here. Paste it into any page or prototype that takes HTML and it picks up this look."
+---
+{%- include counts.html %}
+  <section class="section ds-body" id="use">
+    <div class="wrap">
+      <ol class="sys-steps">
+        <li>
+          <span class="ds-n">1</span>
+          <div>
+            <h3>Add the look</h3>
+            <p>Paste this line inside the page's head. Colours, type, buttons, glass and cards come with it. Version 1 only ever gets changes that won't break your page; anything bigger would arrive as version 2 at its own address.</p>
+            <div class="sys-code"><pre id="code-css">&lt;link rel="stylesheet" href="{{ '/v1/gc.css' | absolute_url }}"&gt;</pre><button type="button" class="btn-ghost sys-copy" data-copy="code-css">Copy</button></div>
+          </div>
+        </li>
+        <li>
+          <span class="ds-n">2</span>
+          <div>
+            <h3>Add the interactions</h3>
+            <p>Only needed for segmented controls. Everything else works without it.</p>
+            <div class="sys-code"><pre id="code-js">&lt;script src="{{ '/v1/gc.js' | absolute_url }}" defer&gt;&lt;/script&gt;</pre><button type="button" class="btn-ghost sys-copy" data-copy="code-js">Copy</button></div>
+          </div>
+        </li>
+        <li id="theme">
+          <span class="ds-n">3</span>
+          <div>
+            <h3>Make it yours</h3>
+            <p>Your <a href="{{ '/playground' | relative_url }}">playground</a> settings, ready to paste after the first line.</p>
+            <div class="sys-code"><pre id="code-theme">&lt;style&gt;
+  :root{
+    --accent:#635BFF;
+    --accent-deep:#4B44D6;
+    --accent-2:#EB5D76;
+    --round:1;
+    --glass-blur:20px;
+  }
+&lt;/style&gt;</pre><button type="button" class="btn-ghost sys-copy" data-copy="code-theme">Copy</button></div>
+          </div>
+        </li>
+        <li>
+          <span class="ds-n">4</span>
+          <div>
+            <h3>Copy the components you need</h3>
+            <p>Every component in the demo has its code underneath, ready to paste.</p>
+            <div class="cta-row sys-cta"><a class="btn-pill" href="{{ '/demo' | relative_url }}">Open the demo</a></div>
+          </div>
+        </li>
+        <li>
+          <span class="ds-n">5</span>
+          <div>
+            <h3>Use the tokens in other tools</h3>
+            <p>The kit's colours, card art and layout as a JSON file, laid out like the W3C design tokens format, for design tools, build tools or agents.</p>
+            <div class="sys-code"><pre id="code-tokens">{{ '/tokens.json' | absolute_url }}</pre><button type="button" class="btn-ghost sys-copy" data-copy="code-tokens">Copy</button></div>
+          </div>
+        </li>
+      </ol>
+      <p class="sys-note sys-poc">A proof of concept. Class names match gianlucacaico.com, and the kit is served from here, so any change to it reaches every page that uses it.</p>
+    </div>
+  </section>

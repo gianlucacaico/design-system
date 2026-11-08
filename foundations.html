@@ -1,0 +1,84 @@
+---
+layout: sub
+permalink: /foundations
+title: "Foundations | Design system | Gianluca Caico"
+description: "The decisions every component inherits. Change one and everything built on it follows."
+---
+{%- include counts.html %}
+  <section class="section ds-body" id="foundations">
+    <div class="wrap">
+
+      <div class="sys-block">
+        <h3 class="sys-h">Colour</h3>
+        <p class="sys-note">Ink and violet carry the brand, coral partners violet in gradients, and the neutrals do the rest.</p>
+        {%- for group in kit.colours %}
+        <p class="sys-k">{{ group.group }}</p>
+        <ul class="sys-swatches">
+          {%- for t in group.tokens %}
+          <li class="sys-swatch"><span class="sys-chip" style="background:{{ t.value }}"></span><span class="sys-name">--{{ t.name }}</span><span class="sys-val">{{ t.value }}</span><span class="sys-use">{{ t.use }}</span></li>
+          {%- endfor %}
+        </ul>
+        {%- endfor %}
+        <p class="sys-k">Card art</p>
+        <ul class="sys-swatches art">
+          {%- for t in kit.art %}
+          <li class="sys-swatch"><span class="sys-chip" style="background:{{ t.value }}"></span><span class="sys-name">--{{ t.name }}</span><span class="sys-use">{{ t.use }}</span></li>
+          {%- endfor %}
+        </ul>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Type</h3>
+        <p class="sys-note">Inter throughout, from 400 to 800. Headings are 700 with tight tracking, body copy is 16px with generous line height.</p>
+        <ul class="sys-type">
+          {%- for t in kit.type %}
+          <li><p class="sys-sample" style="font-size:{{ t.size }}; font-weight:{{ t.weight }};{% if t.weight == 700 %} letter-spacing:-0.025em;{% endif %}{% if t.colour %} color:var(--{{ t.colour }});{% endif %}">{{ t.sample }}</p><p class="sys-spec"><b>{{ t.label }}</b>{{ t.spec }}</p></li>
+          {%- endfor %}
+        </ul>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Shape</h3>
+        <p class="sys-note">Pills for anything you tap, softer corners as things get bigger. In the kit, every radius scales with one setting.</p>
+        <ul class="sys-radii">
+          {%- for t in kit.radii %}
+          <li><span class="sys-shape" style="border-radius:{{ t.value }}"></span><span class="sys-name">--{{ t.name }}</span><span class="sys-val">{{ t.value }}</span><span class="sys-use">{{ t.use }}</span></li>
+          {%- endfor %}
+        </ul>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Material and motion</h3>
+        <p class="sys-note">Liquid glass for anything that floats, and a spring for anything that moves. Tap the control to feel it.</p>
+        <div class="sys-material">
+          <div class="sys-stage">
+            <div class="glass sys-pane"><strong>Liquid glass</strong><span>Blur, saturation and a light inner edge</span></div>
+            <div class="seg glass" role="group" aria-label="Motion demo">
+              <span class="lens" aria-hidden="true"></span>
+              <button type="button" aria-pressed="true">Home</button>
+              <button type="button" aria-pressed="false">Work</button>
+              <button type="button" aria-pressed="false">Blog</button>
+            </div>
+          </div>
+          <dl class="ds-pairs sys-pairs">
+            {%- for t in kit.motion %}
+            <div><dt>--{{ t.name }}</dt><dd>{{ t.use }}<code>{{ t.value }}</code></dd></div>
+            {%- endfor %}
+          </dl>
+        </div>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Layout</h3>
+        <p class="sys-note">One page width, one reading measure and five breakpoints, from wide screens down to phones.</p>
+        <dl class="ds-pairs sys-pairs">
+          {%- for t in kit.layout %}
+          <div><dt>--{{ t.name }}</dt><dd>{{ t.use }}<code>{{ t.value }}</code></dd></div>
+          {%- endfor %}
+          {%- for t in kit.breakpoints %}
+          <div><dt>Under {{ t.value }}</dt><dd>{{ t.use }}</dd></div>
+          {%- endfor %}
+        </dl>
+      </div>
+    </div>
+  </section>

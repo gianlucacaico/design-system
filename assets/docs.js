@@ -1,18 +1,49 @@
 /*
-  Docs page script. The playground sends its settings to the demo frame as
-  messages, and the demo replies with its height so the frame fits it.
+  Design system script, on every page. The playground sends its settings to the demo frame as
+  messages, and the demo replies with its height so the frame fits it. The settings are also kept
+  in this browser, so "Use it anywhere" can show them as code on its own page.
   Segmented controls (the lens and pressed state) come from gc.js.
 */
+var GCDocs = (function(){
+  var KEY = 'gc-kit-playground';
+  var DEFAULTS = {accent: '#635BFF', deep: '#4B44D6', partner: '#EB5D76', surface: 'light', round: 100, glass: 20};
+  function vars(s){
+    return [['--accent', s.accent], ['--accent-deep', s.deep], ['--accent-2', s.partner], ['--round', String(s.round / 100)], ['--glass-blur', s.glass + 'px']];
+  }
+  function code(s){
+    var lines = s.surface === 'dark' ? ['<!-- Also add data-surface="dark" to the <html> tag -->'] : [];
+    lines.push('<style>', '  :root{');
+    vars(s).forEach(function(v){ lines.push('    ' + v[0] + ':' + v[1] + ';'); });
+    lines.push('  }', '</style>');
+    return lines.join('\n');
+  }
+  // Browser storage can be missing or blocked (private windows), so every read and write is guarded.
+  function load(){
+    try { var v = JSON.parse(localStorage.getItem(KEY)); return v && v.accent ? v : null; } catch (e) { return null; }
+  }
+  function save(s){ try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} }
+  return {DEFAULTS: DEFAULTS, vars: vars, code: code, load: load, save: save};
+})();
+
+// Use it anywhere: show the playground's last settings as code (the page ships with the defaults).
 (function(){
-  var page = document.getElementById('docs');
-  if (!page) return;
-  var frame = page.querySelector('.sys-frame');
+  var codeTheme = document.getElementById('code-theme');
+  if (!codeTheme || document.querySelector('.sys-frame')) return;
+  var saved = GCDocs.load();
+  if (saved) codeTheme.textContent = GCDocs.code(saved);
+})();
+
+// Playground
+(function(){
+  var frame = document.querySelector('.sys-frame');
+  if (!frame) return;
+  var page = frame.closest('main');
   var codeTheme = document.getElementById('code-theme');
   var round = document.getElementById('ctl-round'), glass = document.getElementById('ctl-glass');
   var picker = page.querySelector('.sys-pick input');
-  var DEFAULTS = {accent: '#635BFF', deep: '#4B44D6', partner: '#EB5D76', surface: 'light', round: 100, glass: 20};
-  var s = {};
-  Object.keys(DEFAULTS).forEach(function(k){ s[k] = DEFAULTS[k]; });
+  var DEFAULTS = GCDocs.DEFAULTS;
+  var s = {}, saved = GCDocs.load();
+  Object.keys(DEFAULTS).forEach(function(k){ s[k] = saved && saved[k] !== undefined ? saved[k] : DEFAULTS[k]; });
 
   // A deeper shade for hovers: the accent mixed with 22% ink, as violet is to violet-deep.
   function deepen(hex){
@@ -22,20 +53,15 @@
     }).join('').toUpperCase();
   }
 
-  function vars(){
-    return [['--accent', s.accent], ['--accent-deep', s.deep], ['--accent-2', s.partner], ['--round', String(s.round / 100)], ['--glass-blur', s.glass + 'px']];
-  }
+  function vars(){ return GCDocs.vars(s); }
 
   // The demo lives in a frame, so settings travel to it as a message (this works wherever the demo is hosted).
   function apply(){
     var v = {};
     vars().forEach(function(x){ v[x[0]] = x[1]; });
     if (frame.contentWindow) frame.contentWindow.postMessage({type: 'gc-kit-theme', vars: v, surface: s.surface}, '*');
-    var lines = s.surface === 'dark' ? ['<!-- Also add data-surface="dark" to the <html> tag -->'] : [];
-    lines.push('<style>', '  :root{');
-    vars().forEach(function(v){ lines.push('    ' + v[0] + ':' + v[1] + ';'); });
-    lines.push('  }', '</style>');
-    codeTheme.textContent = lines.join('\n');
+    if (codeTheme) codeTheme.textContent = GCDocs.code(s);
+    GCDocs.save(s);
     round.previousElementSibling.querySelector('output').textContent = s.round + '%';
     glass.previousElementSibling.querySelector('output').textContent = s.glass + 'px';
   }
@@ -73,15 +99,22 @@
   page.querySelector('.sys-surface').addEventListener('gc:change', function(e){ s.surface = e.detail.value; apply(); });
   round.addEventListener('input', function(){ s.round = +round.value; apply(); });
   glass.addEventListener('input', function(){ s.glass = +glass.value; apply(); });
-  page.querySelector('.sys-reset').addEventListener('click', function(){
-    Object.keys(DEFAULTS).forEach(function(k){ s[k] = DEFAULTS[k]; });
+  // Show the current settings on the controls (after a reset, or when coming back with saved ones).
+  function sync(){
     page.querySelectorAll('.sys-dots').forEach(function(g){ press(g, g.getAttribute('data-set') === 'accent' ? s.accent : s.partner); });
     press(page.querySelector('.sys-surface'), s.surface);
-    picker.value = s.accent; picker.parentNode.classList.remove('is-on');
+    picker.value = s.accent;
+    var custom = !page.querySelector('.sys-dots[data-set="accent"] button[aria-pressed="true"]');
+    picker.parentNode.classList.toggle('is-on', custom);
     round.value = s.round; glass.value = s.glass;
-    apply();
     if (window.GC) window.GC.refresh();
+  }
+  page.querySelector('.sys-reset').addEventListener('click', function(){
+    Object.keys(DEFAULTS).forEach(function(k){ s[k] = DEFAULTS[k]; });
+    sync();
+    apply();
   });
+  if (saved) sync();
 
   // The demo reports its height, so the frame grows to fit and the page scrolls instead of the frame.
   var sized = false;
@@ -156,4 +189,31 @@
   });
   window.addEventListener('hashchange', function(){ open(location.hash.slice(1)); });
   open(location.hash.slice(1));
+})();
+
+// Home: addresses that jumped to a section of the old single page (#foundations and so on) go to
+// that section's own page now.
+(function(){
+  var home = document.querySelector('.ds-portal');
+  if (!home) return;
+  var base = home.getAttribute('data-base');
+  var moved = {trace: 'operating-model#trace', program: 'operating-model#program', foundations: 'foundations', imagery: 'imagery',
+    playground: 'playground', use: 'use', governance: 'governance', 'decision-log': 'governance#decision-log', standard: '#explore'};
+  function go(){
+    var to = moved[location.hash.slice(1)];
+    if (!to) return;
+    if (to.charAt(0) === '#') location.hash = to; else location.replace(base + to);
+  }
+  go();
+  window.addEventListener('hashchange', go);
+})();
+
+// Phone menu: closes on a tap outside it, or with Escape.
+(function(){
+  var menu = document.querySelector('.ds-menu');
+  if (!menu) return;
+  document.addEventListener('click', function(e){ if (menu.open && !menu.contains(e.target)) menu.open = false; });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && menu.open){ menu.open = false; menu.querySelector('summary').focus(); }
+  });
 })();

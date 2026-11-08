@@ -1,0 +1,22 @@
+---
+layout: default
+---
+{%- comment -%}
+  A design system sub-page: breadcrumb trail, group, name, figure and opening paragraph, all from the
+  page's entry in _data/nav.yml (matched by its address), then the page's own content.
+{%- endcomment -%}
+{%- include counts.html %}
+{%- assign here = page.url | remove: '.html' %}
+{%- for g in site.data.nav.groups %}{% for x in g.pages %}{% if x.url == here %}{% assign entry = x %}{% assign group = g %}{% endif %}{% endfor %}{% endfor %}
+<main id="{{ page.main_id | default: 'docs' }}" class="ds-page">
+  <header class="page-head sys-head ds-page-head">
+    <div class="mesh" aria-hidden="true"></div>
+    <div class="wrap">
+      <nav class="crumbs back glass" aria-label="Breadcrumb"><ol><li><a href="https://gianlucacaico.com/">gianlucacaico.com</a></li><li><a href="{{ '/' | relative_url }}">Design system</a></li><li aria-current="page">{{ entry.name }}</li></ol></nav>
+      <p class="eyebrow">{{ group.name }} <span class="ds-page-fig">&middot; {% include figure.html p=entry %}</span></p>
+      <h1 class="page-title">{{ entry.name }}</h1>
+      <p class="lede">{{ entry.intro }}</p>
+    </div>
+  </header>
+{{ content }}
+</main>

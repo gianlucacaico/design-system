@@ -1,0 +1,71 @@
+---
+layout: sub
+permalink: /operating-model
+title: "Operating model | Design system | Gianluca Caico"
+description: "How a change goes from first sign to live on gianlucacaico.com and this design system, with the record behind every step, and how the same model maps onto many product teams."
+---
+{%- include counts.html %}
+  <section class="section" id="trace">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Follow one change</h2>
+        <span class="count">Two real examples</span>
+      </div>
+      <p class="section-intro">Every change leaves a trail. Here are two real ones, a token and a component, from first sign to live, with the record behind each step.</p>
+      <div class="seg glass sys-case-pick" role="group" aria-label="Example">
+        {%- for c in m.cases %}
+        <button type="button" data-value="{{ c.id }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}">{{ c.label }}</button>
+        {%- endfor %}
+      </div>
+      {%- for c in m.cases %}
+      <article class="sys-case" id="case-{{ c.id }}" data-case="{{ c.id }}">
+        <div class="sys-case-story">
+          <h3>{{ c.title }}</h3>
+          <p class="sys-case-sum">{{ c.summary }}</p>
+          <div class="sys-ba is-{{ c.visual }}">
+            {%- for side in (1..2) %}
+            {%- if side == 1 %}{% assign s = c.before %}{% assign label = 'Before' %}{% else %}{% assign s = c.after %}{% assign label = 'After, in both systems' %}{% endif %}
+            <div class="sys-ba-card{% if side == 2 %} after{% endif %}">
+              <p class="sys-ba-k">{{ label }}</p>
+              {%- if c.visual == 'tokens' %}
+              <ul class="sys-ba-sw">
+                {%- for w in s.swatches %}
+                <li><span style="background:var(--{{ w.token }})" aria-hidden="true"></span><code>{{ w.name }}</code><small>{{ w.value }}</small></li>
+                {%- endfor %}
+              </ul>
+              {%- else %}
+              <div class="sys-fx{% if side == 1 %} broken{% endif %}" role="img" aria-label="{{ s.alt }}"><span class="sys-fx-row"><span class="sys-fx-glass"><span>Skills</span><span>Harnesses</span><span>Hooks</span></span><span>Workflows</span></span></div>
+              {%- endif %}
+              <p class="sys-ba-note">{{ s.note }}</p>
+            </div>
+            {%- endfor %}
+          </div>
+        </div>
+        <ol class="sys-receipts">
+          {%- for r in c.receipts %}
+          <li>
+            <p><b>{{ r.verb }}</b> {{ r.text }}</p>
+            <p class="sys-rc-meta">{% if r.when %}<span>{{ r.when }}</span>{% endif %}{% for l in r.links %}{% assign first = l.url | slice: 0 %}<a href="{% if first == '/' %}{{ l.url | relative_url }}{% else %}{{ l.url }}{% endif %}"{% if l.url contains "https://" %} target="_blank" rel="noopener"{% endif %}>{{ l.label }}</a>{% endfor %}</p>
+          </li>
+          {%- endfor %}
+        </ol>
+      </article>
+      {%- endfor %}
+      <p class="sys-case-foot">Times are Melbourne time, from GitHub's own records. Each link opens the record behind that step.</p>
+    </div>
+  </section>
+
+  <section class="section bordered sys-program" id="program" data-surface="dark">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>What this means for your program</h2>
+        <span class="count">From one site to many teams</span>
+      </div>
+      <p class="section-intro">The same model maps onto a typical enterprise setup: many product teams sharing one design system.</p>
+      <ul class="sys-map">
+        {%- for c in m.program %}
+        <li><b>{{ c.title }}</b><p>{{ c.text }}</p><small>{{ c.here | replace: '[tokens]', both_ways | replace: '[templates]', templates | replace: '[decisions]', decisions }}</small></li>
+        {%- endfor %}
+      </ul>
+    </div>
+  </section>

@@ -1,5 +1,8 @@
-# Decision log for the design system, shown in the docs page's Governance section.
+# Decision log for the design system, shown on its Governance page.
 # Add a line for every design decision Gianluca makes, newest first. Month and year only.
+- when: Nov 2026
+  decision: "The design system becomes a portal: a home page that shows every page at a glance, in three groups, and eight short pages instead of one long one. The menu stays on screen, with a Menu button on phones, and every menu, the home page and the footer are built from one list (<code>_data/nav.yml</code>)."
+  why: "The single page had reached 34 phone screens and was heading for about 60. People come to look one thing up, and a new page now takes one line to add."
 - when: Nov 2026
   decision: "Pages two levels down show a breadcrumb trail in the glass pill: the same <code>.crumbs</code> component on gianlucacaico.com's posts and on this site's Workflows and Kit demo pages."
   why: "Readers who land deep from a shared link can see where they are and step up a level, and this site's pages show they belong to gianlucacaico.com."
