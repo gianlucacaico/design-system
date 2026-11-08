@@ -8,6 +8,7 @@ This file is not published (see `_config.yml`). Keep it current whenever the str
 
 - **Nothing goes live without explicit approval.** Before any publish, show the exact current and proposed wording side by side, plus phone and desktop previews (`node tools/preview.js`). Approval for one change does not carry over to the next.
 - **Every change goes through a pull request.** Merging to `main` is what puts it live (GitHub Pages, about a minute). Never push directly to `main`.
+- **Agents run only when Gianluca says so.** Never start an agent (such as gianlucacaico.com's navigation agent), a scheduled task or a background run on your own initiative, from a schedule or a hook, or because another agent suggested it. Suggesting one in a line is fine, for example after adding a page or changing the menu; running it is his call.
 - **One change per commit**, with a plain-English commit message.
 - **After every publish, check the live site** with `node tools/preview.js --live`.
 - **Never add a `.nojekyll` file.** It would publish this manual and `tools/`.
@@ -87,7 +88,7 @@ All the words live in `_data/model.yml`. Rules:
 
 ## Governance
 
-The Governance page explains, for anyone reading: who owns what (the main site is the source, this repo is the standard, Gianluca approves, Claude sessions draft and check), how a change goes live, what the drift check does, the version rules, how to propose a change, and a decision log.
+The Governance page explains, for anyone reading: who owns what (the main site is the source, this repo is the standard, Gianluca approves, Claude sessions draft and check, and may suggest an agent run that only Gianluca starts), how a change goes live, what the drift check does, the version rules, how to propose a change, and a decision log.
 - **Decision log:** `_data/decisions.yml`, newest first, month and year only. Add an entry whenever Gianluca makes a design decision, in the same pull request as the change it explains.
 - Keep the section's wording true to how things actually work. If the process, the drift check or the version rules change, update it in the same pull request.
 
