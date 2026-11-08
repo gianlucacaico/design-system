@@ -1,0 +1,56 @@
+---
+layout: sub
+permalink: /playground
+title: "Playground | Design system | Gianluca Caico"
+description: "Every component here comes from the kit's single stylesheet and nothing else. Pick an accent, flip the surface, change the roundness or the frost, and watch them all follow."
+---
+{%- include counts.html %}
+  <section class="section ds-body" id="playground">
+    <div class="wrap">
+      <div class="sys-play">
+        <aside class="sys-controls glass" aria-label="Playground settings">
+          <div class="sys-ctl sys-ctl-accent">
+            <span class="sys-k" id="ctl-accent">Accent</span>
+            <div class="sys-dots" role="group" aria-labelledby="ctl-accent" data-set="accent">
+              <button type="button" class="sys-dot" style="--c:#635BFF" data-value="#635BFF" data-deep="#4B44D6" aria-pressed="true" aria-label="Violet"></button>
+              <button type="button" class="sys-dot" style="--c:#EB5D76" data-value="#EB5D76" aria-pressed="false" aria-label="Coral"></button>
+              <button type="button" class="sys-dot" style="--c:#0E97AA" data-value="#0E97AA" aria-pressed="false" aria-label="Cyan"></button>
+              <button type="button" class="sys-dot" style="--c:#D9822B" data-value="#D9822B" aria-pressed="false" aria-label="Amber"></button>
+              <button type="button" class="sys-dot" style="--c:#0A2540" data-value="#0A2540" aria-pressed="false" aria-label="Ink"></button>
+              <label class="sys-dot sys-pick"><input type="color" value="#635BFF" aria-label="Choose any accent colour"></label>
+            </div>
+          </div>
+          <div class="sys-ctl">
+            <span class="sys-k" id="ctl-partner">Gradient partner</span>
+            <div class="sys-dots" role="group" aria-labelledby="ctl-partner" data-set="partner">
+              <button type="button" class="sys-dot" style="--c:#EB5D76" data-value="#EB5D76" aria-pressed="true" aria-label="Coral"></button>
+              <button type="button" class="sys-dot" style="--c:#FFA659" data-value="#FFA659" aria-pressed="false" aria-label="Amber"></button>
+              <button type="button" class="sys-dot" style="--c:#0E97AA" data-value="#0E97AA" aria-pressed="false" aria-label="Cyan"></button>
+              <button type="button" class="sys-dot" style="--c:#635BFF" data-value="#635BFF" aria-pressed="false" aria-label="Violet"></button>
+            </div>
+          </div>
+          <div class="sys-ctl">
+            <span class="sys-k" id="ctl-surface">Surface</span>
+            <div class="seg glass sys-surface" role="group" aria-labelledby="ctl-surface">
+              <span class="lens" aria-hidden="true"></span>
+              <button type="button" aria-pressed="true" data-value="light">Light</button>
+              <button type="button" aria-pressed="false" data-value="dark">Dark</button>
+            </div>
+          </div>
+          <div class="sys-ctl">
+            <label class="sys-k" for="ctl-round">Roundness <output>100%</output></label>
+            <input class="sys-range" id="ctl-round" type="range" min="0" max="150" step="5" value="100">
+          </div>
+          <div class="sys-ctl">
+            <label class="sys-k" for="ctl-glass">Glass frost <output>20px</output></label>
+            <input class="sys-range" id="ctl-glass" type="range" min="0" max="40" step="1" value="20">
+          </div>
+          <button type="button" class="btn-ghost sys-reset">Reset</button>
+        </aside>
+        <div class="sys-canvas">
+          <p class="sys-note ds-carry">Your settings carry over to <a href="{{ '/use' | relative_url }}#theme">Use it anywhere</a>, ready to paste.</p>
+          <iframe class="sys-frame" src="{{ '/demo' | relative_url }}" title="Kit components, rendered by the kit alone"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>

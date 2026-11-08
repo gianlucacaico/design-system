@@ -29,7 +29,11 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 
 | Path | What it is | Address |
 |---|---|---|
-| `index.html` | Docs page: the operating model (for executives), then the standard: foundations, imagery, playground, "Use it anywhere", governance | `/design-system/` |
+| `index.html` | Home page (a portal): the operating model's opening (for executives), then every page as a card, in its group | `/design-system/` |
+| `operating-model.html` | "Follow one change" (two real changes traced) and "What this means for your program" | `/design-system/operating-model` |
+| `governance.html` | Who owns what, how a change goes live, the drift check, versions, proposing a change, the decision log | `/design-system/governance` |
+| `foundations.html`, `imagery.html` | The tokens; the rules for the main site's drawn images | `/design-system/foundations`, `/imagery` |
+| `playground.html`, `use.html` | The playground; "Use it anywhere" (the one-line plug-in, your theme, the tokens) | `/design-system/playground`, `/use` |
 | `workflows.html` | Workflow library: every skill, harness, hook and workflow behind both sites, as tool-agnostic templates | `/design-system/workflows` |
 | `demo.html` | Every component, loading only the kit. Also what the playground shows | `/design-system/demo` |
 | `_includes/gc.css` | The kit stylesheet's source. Tokens are filled in from `_data/kit.yml` at build time | Build only |
@@ -41,14 +45,18 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 | `_data/model.yml` | The operating model's words: the outcomes, the two traced changes and "What this means for your program" | Build only |
 | `_data/decisions.yml` | The decision log shown in the Governance section | Build only |
 | `_data/workflows.yml` | The workflow library's entries, one per skill, harness, hook or workflow | Build only |
-| `_layouts/default.html` | Docs page shell: head with link preview tags, header, footer (with its site map: this site's sections and pages, and gianlucacaico.com's main pages), scripts | Build only |
-| `assets/docs.css`, `assets/docs.js` | Docs-only styles (built on the kit's tokens), and the script for the playground and the operating model switch | Published |
+| `_data/nav.yml` | Every page, in three groups (The model, The standard, Use it): name, short name, address, summary, opening paragraph and figure. The header menu, phone menu, home page cards, page heads and footer site map are all built from it | Build only |
+| `_layouts/sub.html` | A sub-page: breadcrumb trail, group, name, figure and opening paragraph from `_data/nav.yml`, then the page's content | Build only |
+| `_includes/counts.html`, `_includes/figure.html` | Figures counted from the data files (tokens, decisions, templates and so on), and the figure shown on a page's card and head | Build only |
+| `_layouts/default.html` | Page shell: head with link preview tags, the header that stays on screen (every page on desktop, a Menu button below 1080px), footer (site map of every page plus gianlucacaico.com's main pages), scripts | Build only |
+| `assets/docs.css`, `assets/docs.js` | Docs-only styles (built on the kit's tokens), and the script for the playground (its settings are kept in the browser for "Use it anywhere"), the operating model switch, the phone menu, and sending old `#section` addresses on the home page to their new page | Published |
 | `assets/avatar.webp`, `assets/og-image.jpg` | Copies of the main site's avatar and link preview image | Published |
 | `assets/sample-artwork.svg`, `assets/sample-pictogram.svg` | Generic sample post artwork (1200x630) and project pictogram (240x156) for the demo and the Imagery diagrams. No client content | Published |
 | `tools/` | `build.sh` (GitHub Pages' own Jekyll), `preview.js` and `drift.js` | Not published |
 
 ## How it works
 
+- **A portal of short pages.** The home page shows every page at a glance; each page stays short (the navigation map's rule: a page people look things up in fits in about 12 phone screens). To add a page, add its entry to `_data/nav.yml` and a file using `layout: sub` with its `permalink`: menus, cards, the trail and the footer follow. Old addresses like `/design-system/#foundations` still work: the home page sends them to the new page.
 - **The kit.** Class names match gianlucacaico.com (`.btn-pill`, `.glass`, `.seg`, `.work-card` and so on), so markup copied from the site works here. Components use roles rather than raw colours: `--accent`, `--accent-deep`, `--accent-2`, `--accent-ink`, `--surface`, `--strong`. Every radius scales with `--round` and glass blur with `--glass-blur`. `data-surface="dark"` on `<html>` or any block remaps the neutrals for dark.
 - **The docs are built from the kit.** The layout loads `gc.css`, then `assets/docs.css` for the docs-only `sys-*` and `ds-*` classes.
 - **The playground.** `assets/docs.js` posts `{type: 'gc-kit-theme', vars, surface}` to the demo frame. The demo applies it and posts back `{type: 'gc-kit-size', height}` so the frame fits. This works wherever the demo is hosted.
@@ -56,7 +64,7 @@ The same as the main site: Australian English, never an em dash anywhere (copy, 
 
 ## Imagery
 
-The docs page's Imagery section holds the rules for the main site's drawn images, first written in gianlucacaico.github.io#10 (live since November 2026):
+The Imagery page holds the rules for the main site's drawn images, first written in gianlucacaico.github.io#10 (live since November 2026):
 - **Post artwork:** one illustration per post (banner, list thumbnail, featured card, link preview), 1200x630, important parts in the middle 80% of the width, bottom-left corner clear for the Featured label, only words and figures from the post.
 - **Project pictograms:** 240x156, the right of the work card at full height, cropped by the card. Name corner (x under 60, y under 48) and label corner (x under 110, y over 112) clear, one focal point fully inside, white plus exactly one tint (`--tint-cyan`, `--tint-coral`, `--tint-amber`), no words or figures.
 - **Client names:** written as text (`.big`, 18px bold white), top left of the card's art. Gianluca decided against client logos without formal permission (November 2026). If a client ever gives it: the brand's own white version, never recoloured, stretched or redrawn, about 18 to 32px high, name as alt text.
@@ -65,11 +73,11 @@ The main site makes the images (its `tools/art/` and `tools/art.js`); this repo 
 
 ## Operating model
 
-The docs page opens with the operating model, written for executives and program sponsors who want the outcome, not the build. Gianluca chose the format in November 2026, after a loop diagram proved too complex: two real changes, traced end to end. In order:
-- **Hero** (`#model`): "Speed with control, by design.", a one-paragraph summary and the six outcomes as a plain checklist.
-- **Follow one change** (`#trace`): a switch (the kit's segmented control) between two real changes, a token (`--cyan` becoming `--cyan-bright`) and a component (the scrolling filter's glass). Each shows a before and after, then ticked receipts, each with its time and a link to the record behind it. `assets/docs.js` shows the picked case when the switch sends its `gc:change` event.
-- **What this means for your program** (`#program`): a dark band mapping the model to many product teams sharing one design system.
-- **The standard, up close** (`#standard`): the old intro and its two buttons, leading into Foundations.
+The home page opens with the operating model, written for executives and program sponsors who want the outcome, not the build. Gianluca chose the format in November 2026, after a loop diagram proved too complex: two real changes, traced end to end. In order:
+- **Hero** (home page, `#model`): "Speed with control, by design.", a one-paragraph summary and the six outcomes as a plain checklist, with buttons to the two parts below.
+- **Follow one change** (`operating-model.html#trace`): a switch (the kit's segmented control) between two real changes, a token (`--cyan` becoming `--cyan-bright`) and a component (the scrolling filter's glass). Each shows a before and after, then ticked receipts, each with its time and a link to the record behind it. `assets/docs.js` shows the picked case when the switch sends its `gc:change` event.
+- **What this means for your program** (`operating-model.html#program`): a dark band mapping the model to many product teams sharing one design system.
+- **Explore the system** (home page, `#explore`): every page as a card, in its group, with a counted figure each.
 
 All the words live in `_data/model.yml`. Rules:
 - **Facts only.** Every claim must be true and checkable from this build. No invented metrics, time savings or client results.
@@ -79,7 +87,7 @@ All the words live in `_data/model.yml`. Rules:
 
 ## Governance
 
-The docs page's Governance section explains, for anyone reading: who owns what (the main site is the source, this repo is the standard, Gianluca approves, Claude sessions draft and check), how a change goes live, what the drift check does, the version rules, how to propose a change, and a decision log.
+The Governance page explains, for anyone reading: who owns what (the main site is the source, this repo is the standard, Gianluca approves, Claude sessions draft and check), how a change goes live, what the drift check does, the version rules, how to propose a change, and a decision log.
 - **Decision log:** `_data/decisions.yml`, newest first, month and year only. Add an entry whenever Gianluca makes a design decision, in the same pull request as the change it explains.
 - Keep the section's wording true to how things actually work. If the process, the drift check or the version rules change, update it in the same pull request.
 
@@ -110,7 +118,7 @@ The kit's dark surface values are derived from ink and the main site's on-dark t
 
 Run from the repo root.
 
-- `node tools/preview.js [--full] [--live]`: builds with GitHub Pages' own Jekyll, screenshots the docs, demo and workflows pages at 390px and 1280px into `tools/previews/` (git-ignored), and fails on any missing file, script error, em dash or missing link preview tag, or on drift from the live site. The first run in a fresh session installs the builder and a local copy of the Inter font (a minute or two).
+- `node tools/preview.js [--full] [--live]`: builds with GitHub Pages' own Jekyll, screenshots every page (add new ones to `PAGES` in the script) at 390px and 1280px into `tools/previews/` (git-ignored), and fails on any missing file, script error, em dash or missing link preview tag, or on drift from the live site. The first run in a fresh session installs the builder and a local copy of the Inter font (a minute or two).
 - `node tools/drift.js [site.css] [more files...]`: the drift check on its own (see "Keeping it in step").
 - `bash tools/build.sh [source] [destination]`: the build on its own.
 

@@ -205,7 +205,7 @@
   outputs: "A themed preview and a copyable theme."
   guardrails:
     - "Changes nothing outside the frame."
-  here: "The Playground on the design system's docs page (assets/docs.js and demo.html)."
+  here: "The design system's Playground page (playground.html, assets/docs.js and demo.html). Settings carry over to the Use it anywhere page as code."
   works_with: [drift-check, plug-in]
 
 # ---------- Hooks: points where something fires by itself or plugs in ----------

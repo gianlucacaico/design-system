@@ -1,0 +1,63 @@
+# Every page of the design system, in three groups. The header menu, the phone menu, the portal home
+# page, each page's head and the footer site map are all built from this list: add a page here and it
+# appears everywhere at once.
+#   name: the page's name (menus, cards, breadcrumb trail, page heading)
+#   short: a shorter name for the desktop menu, where space is tight (optional)
+#   url: the page's address inside the design system (no /design-system prefix)
+#   summary: one line for cards and the phone menu
+#   intro: the page's opening paragraph (pages using the "sub" layout)
+#   figure: a figure counted at build time (cases, decisions, templates, tokens, components),
+#   or figure_text for words instead
+groups:
+  - name: "The model"
+    for: "How changes go live, who decides, and the workflows behind it."
+    pages:
+      - name: "Operating model"
+        short: "Model"
+        url: /operating-model
+        figure: cases
+        summary: "Speed with control: two real changes traced from first sign to live, and what that means for a program of many teams."
+        intro: "How a change goes from first sign to live on gianlucacaico.com and this design system, with the record behind every step, and how the same model maps onto many product teams."
+      - name: "Governance"
+        url: /governance
+        figure: decisions
+        summary: "Who owns what, how a change goes live, the drift check, versions and the decision log."
+        intro: "A design system is only useful while it matches what ships. These are the rules for keeping it in step with gianlucacaico.com, and for changing either one safely."
+      - name: "Workflows"
+        url: /workflows
+        figure: templates
+        summary: "Every skill, harness, hook and workflow behind both sites, as templates any agent tool can use."
+
+  - name: "The standard"
+    for: "The tokens, components and imagery every page is built from."
+    pages:
+      - name: "Foundations"
+        url: /foundations
+        figure: tokens
+        summary: "Colour, type, shape, material, motion and layout: the tokens every component inherits."
+        intro: "The decisions every component inherits. Change one and everything built on it follows."
+      - name: "Imagery"
+        url: /imagery
+        figure_text: "No stock photos"
+        summary: "Post artwork, project pictograms and client names: how each image is drawn and where it sits."
+        intro: "Three kinds of image, all drawn in the system's own colours, glass and type. Each one shows real content from where it sits, never decoration."
+      - name: "Kit demo"
+        short: "Demo"
+        url: /demo
+        figure: components
+        summary: "Every component, built from one stylesheet and one small script, with its code underneath."
+
+  - name: "Use it"
+    for: "Try the kit live, then plug it into any page."
+    pages:
+      - name: "Playground"
+        url: /playground
+        figure_text: "Rendered by the kit alone"
+        summary: "Pick an accent, flip the surface, change the roundness and frost, and watch every component follow."
+        intro: "Every component here comes from the kit's single stylesheet and nothing else. Pick an accent, flip the surface, change the roundness or the frost, and watch them all follow."
+      - name: "Use it anywhere"
+        short: "Use it"
+        url: /use
+        figure_text: "One line"
+        summary: "One line adds the look to any page, then your theme, the components and the tokens."
+        intro: "The kit is one stylesheet hosted here. Paste it into any page or prototype that takes HTML and it picks up this look."

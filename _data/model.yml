@@ -1,4 +1,5 @@
-# The operating model at the top of the docs page (index.html), written for executives and sponsors.
+# The operating model, written for executives and sponsors: its opening (outcomes) is on the design system's
+# home page (index.html), and the two traced changes and the program mapping are on operating-model.html.
 # Only facts that are true and checkable from this build. Keep it true to how things actually work:
 # if the process, the checks or the roles change, update this file in the same pull request.
 #
@@ -45,7 +46,7 @@ cases:
         links: [{ label: "Drift report", url: "https://github.com/gianlucacaico/design-system/pull/3" }]
       - verb: "Decided"
         text: "by the owner: it becomes <code>--cyan-bright</code>, logged with why."
-        links: [{ label: "Decision log", url: "#decision-log" }]
+        links: [{ label: "Decision log", url: "/governance#decision-log" }]
       - verb: "Proved"
         text: "every image came out identical after the rename."
         when: "10:48am"

@@ -1,0 +1,12 @@
+{%- comment -%}
+  A page's figure for cards and page heads, counted at build time. Include counts.html first.
+  Usage: include figure.html p=<an entry from _data/nav.yml>
+{%- endcomment -%}
+{%- case include.p.figure -%}
+{%- when 'cases' -%}{{ site.data.model.cases.size }} real changes, traced
+{%- when 'decisions' -%}{{ site.data.decisions.size }} decisions logged
+{%- when 'templates' -%}{{ site.data.workflows.size }} templates
+{%- when 'tokens' -%}{{ token_count }} tokens
+{%- when 'components' -%}{%- assign demo_page = site.pages | where: "url", "/demo" | first -%}{{ demo_page.content | split: '<article class="spec"' | size | minus: 1 }} components
+{%- else -%}{{ include.p.figure_text }}
+{%- endcase -%}

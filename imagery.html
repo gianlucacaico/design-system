@@ -1,0 +1,76 @@
+---
+layout: sub
+permalink: /imagery
+title: "Imagery | Design system | Gianluca Caico"
+description: "Three kinds of image, all drawn in the system's own colours, glass and type. Each one shows real content from where it sits, never decoration."
+---
+{%- include counts.html %}
+  <section class="section ds-body" id="imagery">
+    <div class="wrap">
+
+      <div class="sys-block">
+        <h3 class="sys-h">Post artwork</h3>
+        <p class="sys-note">One illustration per post, used three ways: the banner under the title, the thumbnail in post lists and the featured card, and the image people see when the post is shared.</p>
+        <div class="sys-img-rule">
+          <figure class="sys-diagram">
+            <svg viewBox="0 0 1200 630" role="img" aria-label="Artwork canvas, 1200 by 630. The middle 80 percent of the width is the safe area. The bottom-left corner is kept clear.">
+              <defs><clipPath id="post-clip"><rect width="1200" height="630" rx="28"/></clipPath></defs>
+              <g clip-path="url(#post-clip)">
+                <rect class="d-canvas" width="1200" height="630"/>
+                <rect class="d-safe" x="120" y="28" width="960" height="574" rx="18"/>
+                <rect class="d-clear" x="-4" y="540" width="344" height="94"/>
+              </g>
+              <circle class="d-mark" cx="176" cy="88" r="36"/><text class="d-num" x="176" y="102">1</text>
+              <circle class="d-mark warn" cx="290" cy="586" r="30"/><text class="d-num" x="290" y="600">2</text>
+            </svg>
+            <figcaption>1200 &times; 630, the shape of a link preview</figcaption>
+          </figure>
+          <ol class="sys-rules">
+            <li><b>Keep what matters in the middle 80%.</b> The featured card trims the sides.</li>
+            <li><b>Keep the bottom-left corner clear.</b> The Featured label sits there.</li>
+            <li><b>Draw the post's actual idea.</b> Ink background, colour fields, glass panels and Inter, using only words, figures and labels from the post.</li>
+            <li><b>Check it small.</b> It has to read as a thumbnail as well as a banner.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Project pictograms</h3>
+        <p class="sys-note">Each project's key artefact, drawn for the right side of its card at full height and cropped by the card's edges. The eye goes from the client's name, to the pictogram's focal point, to the labels, with no frame or tile around it. The tints are under Colour, in Artwork.</p>
+        <div class="sys-img-rule">
+          <figure class="sys-diagram">
+            <svg viewBox="0 0 240 156" role="img" aria-label="Pictogram canvas, 240 by 156, with the name corner and label corner kept clear and one focal point inside">
+              <defs><clipPath id="pic-clip"><rect width="240" height="156" rx="8"/></clipPath></defs>
+              <g clip-path="url(#pic-clip)">
+                <rect class="d-canvas" width="240" height="156"/>
+                <image href="{{ '/assets/sample-pictogram.svg' | relative_url }}" width="240" height="156"/>
+                <rect class="d-clear" x="-2" y="-2" width="62" height="50"/>
+                <rect class="d-clear" x="-2" y="112" width="112" height="46"/>
+              </g>
+              <circle class="d-ring" cx="178" cy="66" r="28"/>
+              <circle class="d-mark" cx="28" cy="23" r="9"/><text class="d-num s" x="28" y="27">1</text>
+              <circle class="d-mark" cx="55" cy="134" r="9"/><text class="d-num s" x="55" y="138">2</text>
+              <circle class="d-mark" cx="210" cy="104" r="9"/><text class="d-num s" x="210" y="108">3</text>
+            </svg>
+            <figcaption>240 &times; 156, the right of the card at full height (sample pictogram)</figcaption>
+          </figure>
+          <ol class="sys-rules">
+            <li><b>Name corner stays clear:</b> x under 60, y under 48. Check any name longer than "Generation Life" at phone width.</li>
+            <li><b>Label corner stays clear:</b> x under 110, y over 112.</li>
+            <li><b>One focal point, fully inside.</b> Draw big and let context run off the right, top or bottom edge, fading in from the left. A half-cut icon reads as a mistake.</li>
+            <li><b>White, then one tint.</b> White for main shapes, white at 20 to 45% for secondary ones, and exactly one tint for the insight, picked to contrast with the card.</li>
+            <li><b>No words or figures.</b> Only what the card itself already says.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="sys-block">
+        <h3 class="sys-h">Client names</h3>
+        <p class="sys-note">Project cards write the client's name as text, top left, rather than showing its logo. A logo needs the client's formal permission, so the written name is the default.</p>
+        <ul class="sys-rules plain">
+          <li><b>Name as text.</b> 18px, bold and white, top left of the card's art, clear of the pictogram.</li>
+          <li><b>Logos only with formal permission.</b> If a client ever gives it: use the brand's own white version, never recoloured, stretched or redrawn, about 18 to 32px high, with the name as alt text.</li>
+        </ul>
+      </div>
+    </div>
+  </section>

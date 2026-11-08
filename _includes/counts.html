@@ -1,0 +1,18 @@
+{%- comment -%}
+  Figures shared by the portal and its pages, counted from the data files, never typed.
+{%- endcomment -%}
+{%- assign kit = site.data.kit %}
+{%- assign colour_count = 0 %}
+{%- for g in kit.colours %}{% assign colour_count = colour_count | plus: g.tokens.size %}{% endfor %}
+{%- assign token_count = colour_count | plus: kit.art.size | plus: kit.type.size | plus: kit.radii.size | plus: kit.motion.size | plus: kit.layout.size %}
+{%- comment -%}
+  The operating model comes first, for executives and sponsors. Its words live in _data/model.yml.
+  Figures are counted here, never typed: both_ways is the tokens both drift checks compare
+  (site colours, card art and the reading measure, as tokens.json marks them "site").
+{%- endcomment -%}
+{%- assign m = site.data.model %}
+{%- assign both_ways = kit.art.size %}
+{%- for g in kit.colours %}{% unless g.source == 'artwork' %}{% assign both_ways = both_ways | plus: g.tokens.size %}{% endunless %}{% endfor %}
+{%- for t in kit.layout %}{% if t.name == 'max' %}{% assign both_ways = both_ways | plus: 1 %}{% endif %}{% endfor %}
+{%- assign templates = site.data.workflows.size %}
+{%- assign decisions = site.data.decisions.size %}

@@ -4,7 +4,7 @@
 // file that fails to load, any script error, any em dash and any missing link preview tag.
 // Last, it runs the drift check (tools/drift.js) against the live gianlucacaico.com stylesheet.
 //
-// Usage: node tools/preview.js           both pages, first screen
+// Usage: node tools/preview.js           every page, first screen
 //        node tools/preview.js --full    whole pages
 //        node tools/preview.js --live    the live site (gianlucacaico.com/design-system) instead
 const fs = require('fs'), http = require('http'), path = require('path');
@@ -12,7 +12,7 @@ const { execFileSync } = require('child_process');
 const { chromium } = require('playwright');
 
 const ROOT = path.resolve(__dirname, '..');
-const PAGES = { docs: '', demo: 'demo', workflows: 'workflows' };
+const PAGES = { docs: '', 'operating-model': 'operating-model', governance: 'governance', workflows: 'workflows', foundations: 'foundations', imagery: 'imagery', demo: 'demo', playground: 'playground', use: 'use' };
 const SIZES = { mobile: { width: 390, height: 844 }, desktop: { width: 1280, height: 800 } };
 const full = process.argv.includes('--full'), live = process.argv.includes('--live');
 
