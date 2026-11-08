@@ -98,7 +98,7 @@ program:
     text: "Each product team's site runs the same two-way check against the shared design system. A difference shows up on the change that caused it, and its owner decides which side is right."
     here: "Here: [tokens] tokens, checked from both sides"
   - title: "Agents for pace, owners for judgement"
-    text: "Agents draft and prove every change. A named owner for each product approves it at the gate, one change at a time."
+    text: "Agents draft and prove every change. A named owner for each product approves it at the gate, one change at a time, and decides when any agent runs."
     here: "Here: one owner approves every change on both sites"
   - title: "An audit trail by default"
     text: "Every change is one review page with its wording, check results and approval, and can be undone in one step. Every design decision is logged with its reason."

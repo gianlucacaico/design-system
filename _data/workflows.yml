@@ -243,8 +243,25 @@
   outputs: "Nothing when all is saved. A prompt to push when it isn't."
   guardrails:
     - "It steps aside if it has already prompted once, so it can't loop."
-  here: "A Stop hook set by the cloud environment these Claude sessions run in, not by either repo."
+  here: "A Stop hook set by the cloud environment these agent-driven sessions run in, not by either repo."
   works_with: [gated-change]
+
+- id: agent-gate
+  type: hook
+  name: Agent launch gate
+  summary: "Holds every agent run until the owner approves it."
+  when: "Any time an agent is about to start."
+  inputs: "The agent that is about to run, and what it was asked to do."
+  steps:
+    - "Stop before the agent starts."
+    - "Show the owner which agent is about to run."
+    - "Start it only if the owner approves. Otherwise nothing runs."
+  outputs: "An agent run the owner chose, or no run at all."
+  guardrails:
+    - "Agents never start by themselves, on a schedule, or because another agent suggested it."
+    - "Suggesting a run is fine. Starting one is the owner's call."
+  here: "An ask rule for Agent(navigator) in .claude/settings.json of the site's repo, plus the working agreement in both repos' CLAUDE.md. Claude Code's bypass permissions mode skips all prompts, so there the written rule still applies."
+  works_with: [navigation-sweep, gated-change]
 
 - id: plug-in
   type: hook
@@ -337,7 +354,7 @@
   type: workflow
   name: Navigation sweep
   summary: "Strengthens how people move through the site and its design system, within each and between them."
-  when: "Asked for, after a new page or section ships, or on a regular schedule."
+  when: "Only when the owner asks. After a new page or section ships, an agent may suggest a run, but never starts one."
   inputs: "Both sites, the navigation standard and the decision log."
   steps:
     - "Map both sites with the navigation map."
@@ -350,7 +367,8 @@
   outputs: "A map, a prioritised review, previews of each proposal, and a list of decisions for the owner."
   guardrails:
     - "Changes nothing on either site by itself."
+    - "Runs only when the owner starts it, and every launch waits for their approval."
     - "A proposal that reverses a logged decision is a question for the owner, not a draft."
     - "One change per review page."
-  here: "Claude Code skill /navigate in the site's repo, first run in November 2026 (gianlucacaico.github.io#12)."
-  works_with: [nav-map, preview, edit, gated-change]
+  here: "Claude Code skill /navigate in the site's repo, or the navigator agent (.claude/agents/navigator.md), which runs the whole sweep and reports back. Only the owner starts it (/navigator), and .claude/settings.json makes Claude Code ask before every launch. First run November 2026 (gianlucacaico.github.io#12)."
+  works_with: [nav-map, agent-gate, preview, edit, gated-change]
