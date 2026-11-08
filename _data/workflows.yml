@@ -136,6 +136,28 @@
   here: "tools/check-views.js in the site's repo (Node, Playwright)."
   works_with: [live-health, new-post]
 
+- id: nav-map
+  type: harness
+  name: Navigation map
+  summary: "Maps every page of the site and its design system as one space, checks how people find their way, and spots pages growing too long."
+  when: "The first step of every navigation sweep, and on any change to menus, footers or page structure."
+  inputs: "Both sites: working copies or the live sites."
+  steps:
+    - "Crawl both sites from both front doors and the sitemap, at 390px and 1280px."
+    - "On each page, record every link: where it sits (menu, trail, page, footer), its words, where it goes, whether it shows and how big it is to tap."
+    - "Ask three questions of every page: where am I, where can I go, how do I get back."
+    - "Fail on broken links, in-page links with no target, and pages with no way home."
+    - "Warn on missing current-page markers, dead ends, orphan pages, address mismatches, vague labels and small tap targets."
+    - "Count the links between the two sites, and the taps from each page to the main pages."
+    - "Measure each page's length in phone screens and sections, count menu links that jump within it, and read its history to forecast its growth."
+    - "Flag a long reference page, or one growing towards that, to become sub-pages with a menu."
+  outputs: "A pass, warn or fail line for every check, a page-by-page map with each page's length and growth forecast, and screenshots of every page's top and end."
+  guardrails:
+    - "Read-only."
+    - "Warnings are evidence for a review, not changes to make."
+  here: "tools/nav-map.js in the site's repo (Node, Playwright, Jekyll), with --ds to include a local design system checkout."
+  works_with: [navigation-sweep, page-check, site-preview]
+
 - id: live-health
   type: harness
   name: Live health check
@@ -310,3 +332,25 @@
     - "No session writes to a repo it doesn't own."
   here: "The design system session and the site artwork session, November 2026."
   works_with: [site-sync, gated-change]
+
+- id: navigation-sweep
+  type: workflow
+  name: Navigation sweep
+  summary: "Strengthens how people move through the site and its design system, within each and between them."
+  when: "Asked for, after a new page or section ships, or on a regular schedule."
+  inputs: "Both sites, the navigation standard and the decision log."
+  steps:
+    - "Map both sites with the navigation map."
+    - "Walk the key journeys at phone size first, including looking one thing up, and score each finding against usability heuristics, with a severity."
+    - "Look ahead as well as at today: a page that is long and growing gets a proposed structure of sub-pages before it becomes hard to use."
+    - "List the small clean-up fixes, each with the repo it belongs to."
+    - "Check the decision log, then draft proposals such as breadcrumbs, footer site maps and cross-site links in a throwaway copy."
+    - "Show each proposal as current and proposed, at phone and desktop size, with the decisions needed."
+    - "Stop. Each approved item becomes its own human-gated change, and new components then follow into the design system."
+  outputs: "A map, a prioritised review, previews of each proposal, and a list of decisions for the owner."
+  guardrails:
+    - "Changes nothing on either site by itself."
+    - "A proposal that reverses a logged decision is a question for the owner, not a draft."
+    - "One change per review page."
+  here: "Claude Code skill /navigate in the site's repo, first run in November 2026 (gianlucacaico.github.io#12)."
+  works_with: [nav-map, preview, edit, gated-change]
